@@ -14,8 +14,8 @@ def shift(index, dir, amount, dims, adims):
         if wdi == 0:
             res = res + adims[dir]
         res = res - adims[dir + 1]
-    
-    return res
+    return int(res)  # needs explicit cast, otherwise 'res' promoted to a float otherwise. this is new behaviour.
+
 
 
 @myjit
