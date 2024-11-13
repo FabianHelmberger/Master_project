@@ -16,11 +16,13 @@ if scal_precision == 'single':
     print("Using single precision")
     SCAL_TYPE = np.complex64
     SCAL_TYPE_REAL = np.float32
+    LATT_TYPE = np.int32
 
 elif scal_precision == 'double':
     print("Using double precision")
     SCAL_TYPE = np.complex128
     SCAL_TYPE_REAL = np.float64
-    
+    LATT_TYPE = np.int32
+
 else:
     print("Unsupported precision: " + scal_precision)
