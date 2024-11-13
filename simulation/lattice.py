@@ -1,12 +1,14 @@
 import numpy as np
-import src.scal as scal
 
+import src.scal as scal
 import src.utils as utils
+from .config import Config
 
 class Lattice:
-    def __init__(self, dims):
-        self.dims = np.array(dims, dtype=scal.LATT_TYPE)
+    def __init__(self, conf: Config):
+        self.dims = np.array(conf.dims, dtype=scal.LATT_TYPE)
         self.n_dims = len(self.dims)
+        self.n_cells = int(np.prod(self.dims))
 
         cumprod_dims = np.cumprod(self.dims[::-1], dtype=scal.LATT_TYPE)[::-1]
         self.adims = np.zeros(self.n_dims + 1, dtype=scal.LATT_TYPE)
