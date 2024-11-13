@@ -1,4 +1,6 @@
 from src.numba_target import myjit
+import math
+
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -24,3 +26,11 @@ def get_index(pos, dims):
     for d in range(1, len(dims)):
         index = index * dims[d] + pos[d]
     return index
+
+
+@myjit
+def evolve_kernel(idx, phi0, phi1, dS, eta, dt):
+    dt_sqrt = math.sqrt(dt)
+    etaterm = eta[idx] * dt_sqrt
+    update = etaterm - dt * dS[idx]
+    phi1[idx] = phi0[idx] + update
