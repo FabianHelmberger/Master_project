@@ -5,16 +5,18 @@
 import cmath, math
 import numba
 import numpy as np
-
-import cle_fun.lattice as l
-import cle_fun.scal as scal
-from .numba_target import use_cuda, myjit, my_parallel_loop, prange, threadsperblock
 from numpy import abs as arr_abs
 from numpy import around, amax, mean, imag, real, reshape
+
+import src.lattice as l
+import src.scal as scal
+from src.numba_target import use_cuda, myjit, my_parallel_loop, prange, threadsperblock
+
 
 # global parameters
 DEBUG = False
 SQRT2 = math.sqrt(2.0)
+
 # upper and lower limits for the norm of the drift term
 DS_MAX_UPPER = 1e12
 DS_MAX_LOWER = 1e-12
