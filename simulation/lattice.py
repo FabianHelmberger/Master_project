@@ -14,7 +14,7 @@ class Lattice:
         self.adims[-1] = 1
 
     def shift(self, index, dir, amount):
-        return utils.shift(index, dir, amount, self.adims, self.dims)
+        return utils.shift(index, dir, amount, self.dims, self.adims)
 
     def get_index(self, pos):
         return utils.get_index(pos, self.dims)
