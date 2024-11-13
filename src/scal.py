@@ -6,11 +6,11 @@ import os
 scal_type = os.environ.get('SCAL_TYPE', 'complex').lower()
 
 if scal_type == 'real':
-    from .cn_scal import *
+    from .rn_scal import *
     print(f"Using R^{N}")
 
 elif scal_type == 'complex':
-    from .rn_scal import *
+    from .cn_scal import *
     print(f"Using C^{N}")
     
 else:
