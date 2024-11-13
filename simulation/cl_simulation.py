@@ -18,6 +18,6 @@ class ComplexLangevinSimulation:
         
         self.config = config
         self.lattice = Lattice(self.config)
-        self.field = Field(self.lattice, self.config)
+        self.field = Field(self.lattice)
         # self.dynamics = LangevinDynamics(self.config, self.field)
         # self.observables = Observables(self.config, self.field)

@@ -1,13 +1,18 @@
 # simulation/field.py
 
+import numpy as np
+import src.scal as scal
+from .lattice import Lattice
+
 class Field:
-    def __init__(self, config):
-        self.config = config
+    def __init__(self, latt: Lattice):
+        self.latt = latt
         self.initialize_field()
 
     def initialize_field(self):
-        # Logic for initializing the scalar field
-        pass
+        self.phi0 = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE)
+        self.phi1 = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE)
+
 
     def update_field(self, new_values):
         # Update field values based on Langevin dynamics
