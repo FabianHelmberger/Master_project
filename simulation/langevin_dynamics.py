@@ -2,49 +2,26 @@
 import math
 import numpy as np
 
-from .config import Config
+import src.scal as scal
 from .field import Field
-from .lattice import Lattice
 from src.numba_target import my_parallel_loop
-from src.utils import euclidean_drift_kernel, mexican_hat_kernel_real, mexican_hat_kernel_complex
+from .config import Config
 
-class LangevinDynamics:
-    def __init__(self, config: Config, field: Field, latt: Lattice):
-        self.config = config
-        self.field = field
-        self.latt = latt
-        self.sqrt2 = config.sqrt2
-        self.noise_factor = self.config.noise_factor
+class LangevinDynamics(Field):
+    """
+    A class that takes care of the dynamics of the stochastic process.
+    """
+    def __init__(self, config: Config):
+        super().__init__(config)
+        self.dS   = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
+        self.eta  = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
         
     def update_noise(self):
-        self.field.eta = self.noise_factor * self.sqrt2 * np.random.normal(size=self.field.eta.shape)
+        self.eta = scal.SCAL_TYPE_REAL(self.noise_factor * self.sqrt2 * np.random.normal(size=self.eta.shape))
 
-    def update_drift(self):
-        # my_parallel_loop(
-        #     euclidean_drift_kernel,
-        #     self.latt.n_cells,
-        #     self.field.phi0,
-        #     self.latt.dims,
-        #     self.latt.adims,
-        #     self.field.dS,
-        #     self.config.mass_real,
-        #     self.config.mass_imag,
-        #     )
-
-        # my_parallel_loop(
-        #     mexican_hat_kernel_real,
-        #     self.latt.n_cells,
-        #     self.field.phi0,
-        #     self.field.dS,
-        #     self.config.mass_real,
-        #     self.config.interaction,
-        #     )
-
+    def update_drift(self, drift_kernel):
         my_parallel_loop(
-            mexican_hat_kernel_complex,
-            self.latt.n_cells,
-            self.field.phi0,
-            self.field.dS,
-            self.config.mass_real,
-            self.config.interaction,
+            drift_kernel,
+            self.n_cells,
+            self
             )

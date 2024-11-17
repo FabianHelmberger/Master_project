@@ -12,11 +12,6 @@ from .langevin_dynamics import *
 from .observables import *
 from .lattice import *
 
-class ComplexLangevinSimulation:
-
-    def __init__(self, config):
-        self.config = config
-        self.lattice = Lattice(self.config)
-        self.field = Field(self.config, self.lattice)
-        self.dynamics = LangevinDynamics(self.config, self.field, self.lattice)
-        # self.observables = Observables(self.config, self.field)
+class ComplexLangevinSimulation(LangevinDynamics):
+    def __init__(self, config: Config):
+        super().__init__(config)

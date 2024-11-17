@@ -1,5 +1,15 @@
-from src.numba_target import myjit
 import math
+import numpy as np
+from typing import TYPE_CHECKING
+
+from src.numba_target import myjit
+import src.scal as scal
+
+if TYPE_CHECKING:
+    # Import only for type checking
+    from simulation.langevin_dynamics import LangevinDynamics
+    from simulation.cl_simulation import ComplexLangevinSimulation
+
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -24,8 +34,14 @@ def get_index(pos, dims):
         index = index * dims[d] + pos[d]
     return index
 
+
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, dt):
+def update_noise_kernel(idx, eta, dt):
+    eta[idx] = scal.SCAL_TYPE_REAL(math.sqrt(dt) * np.random.normal())
+
+
+@myjit
+def evolve_kernel(idx, phi0, phi1, dS, eta, dt, **kwargs):
     dt_sqrt = math.sqrt(dt)
     etaterm = eta[idx] * dt_sqrt
     update = etaterm - dt * dS[idx]
@@ -66,13 +82,22 @@ def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag
     dS_out[idx] = out
 
 @myjit
-def mexican_hat_kernel_real(idx, field, dS_out, mass_real, interaction):
-    phi_idx = field[idx]
+def mexican_hat_kernel_real(idx, phi0, dS, mass_real, interaction):
+    phi_idx = phi0[idx]
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
 
-    dS_out[idx] = out
+    dS[idx] = out
+
+
+# @myjit
+# def mexican_hat_kernel_real(idx, obj: "LangevinDynamics"):
+#     phi_idx = obj.field.phi0[idx]
+#     out = 0
+#     out += obj.config.mass_real * phi_idx
+#     out += obj.config.interaction/6 * phi_idx*phi_idx*phi_idx
+#     obj.field.dS[idx] = out
 
 @myjit
 def mexican_hat_kernel_complex(idx, field, dS_out, mass_real, interaction):
@@ -80,5 +105,17 @@ def mexican_hat_kernel_complex(idx, field, dS_out, mass_real, interaction):
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
-
     dS_out[idx] = out
+
+# def arg_map(sim: "ComplexLangevinSimulation"):
+#     return {
+#         'iter_max': sim.lattice.n_cells, 
+#         'field': sim.field.phi0, 
+#         'dS_out': sim.field.dS, 
+#         'mass_real' : sim.config.mass_real, 
+#         'mass_imag' : sim.config.mass_imag, 
+#         'interaction' : sim.config.interaction
+#         }
+
+# kernel_args = {}
+# kernel_args[mexican_hat_kernel_real] = arg_map()['iter_max',]

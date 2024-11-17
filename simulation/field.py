@@ -7,27 +7,17 @@ from .config import Config
 from src.numba_target import my_parallel_loop
 from src.utils import evolve_kernel
 
-class Field:
-    def __init__(self, config: Config, latt: Lattice):
-        self.latt = latt
-        self.config = config
-        self.initialize_field()
+class Field(Lattice):
+    def __init__(self, config):
+        super().__init__(config)
 
-    def initialize_field(self):
-        self.phi0 = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE)
-        self.phi1 = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE)
-        self.dS   = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE)
-        self.eta  = np.zeros(self.latt.n_cells, dtype=scal.SCAL_TYPE_REAL)
+        self.phi0 = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
+        self.phi1 = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
 
-    def update_field(self):
+    def update_field(self, evolve_kernel_func, kernel_args):
         my_parallel_loop(
-            evolve_kernel,
-            self.latt.n_cells,
-            self.phi0,
-            self.phi1,
-            self.dS,
-            self.eta,
-            self.config.dt,
+            evolve_kernel_func,
+            *kernel_args
             )
 
     def swap(self):
