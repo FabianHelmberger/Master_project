@@ -36,12 +36,13 @@ def get_index(pos, dims):
 
 
 @myjit
-def update_noise_kernel(idx, eta, dt):
+def noise_kernel(idx, eta, dt):
     eta[idx] = scal.SCAL_TYPE_REAL(math.sqrt(dt) * np.random.normal())
 
 
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, dt, **kwargs):
+def evolve_kernel(idx, phi0, phi1, dS, eta, dt):
+    # TODO: move dt_sqrt
     dt_sqrt = math.sqrt(dt)
     etaterm = eta[idx] * dt_sqrt
     update = etaterm - dt * dS[idx]
@@ -87,7 +88,6 @@ def mexican_hat_kernel_real(idx, phi0, dS, mass_real, interaction):
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
-
     dS[idx] = out
 
 

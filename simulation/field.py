@@ -14,11 +14,5 @@ class Field(Lattice):
         self.phi0 = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.phi1 = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
 
-    def update_field(self, evolve_kernel_func, kernel_args):
-        my_parallel_loop(
-            evolve_kernel_func,
-            *kernel_args
-            )
-
     def swap(self):
         self.phi0, self.phi1 = self.phi1, self.phi0

@@ -15,13 +15,21 @@ class LangevinDynamics(Field):
         super().__init__(config)
         self.dS   = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.eta  = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
-        
-    def update_noise(self):
-        self.eta = scal.SCAL_TYPE_REAL(self.noise_factor * self.sqrt2 * np.random.normal(size=self.eta.shape))
 
-    def update_drift(self, drift_kernel):
+    def update_drift(self, drift_kernel, *kernel_param):
         my_parallel_loop(
             drift_kernel,
-            self.n_cells,
-            self
+            *kernel_param
+            )
+
+    def update_noise(self, noise_kernel, *kernel_param):
+        my_parallel_loop(
+            noise_kernel,
+            *kernel_param
+            )
+
+    def update_field(self, evolve_kernel, *kernel_param):
+        my_parallel_loop(
+            evolve_kernel,
+            *kernel_param
             )
