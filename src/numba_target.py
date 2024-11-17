@@ -60,6 +60,11 @@ threadsperblock = 256
 # Unique counter for compiling python or CUDA functions
 _unique_counter = 0
 
+##############################################################################
+# dict with compiled kernels, indexed with original function
+compiled_kernels = {}
+##############################################################################
+
 #TODO: create decorator version of functionality? i.e. @my_parallel_jit
 
 def my_parallel_loop(kernel_function, iter_max, *args, stream=None):
@@ -103,23 +108,40 @@ def my_parallel_loop(kernel_function, iter_max, *args, stream=None):
         blockspergrid = math.ceil(iter_max / threadsperblock)
         kernel_function.compiled_cuda_kernel[blockspergrid, threadsperblock,stream](iter_max, *args)
 
+    # else: # use_numba
+    #     if not hasattr(kernel_function, 'compiled_numba_prange'):
+    #         # Create compiled prange loop for given kernel function
+
+    #         # Create string of arguments 'c1, c2, c3, [...]' for len(args)
+    #         args_string = ', '.join('c' + str(i) for i in range(len(args)))
+    #         _unique_counter += 1
+    #         original_name = kernel_function.py_func.__name__
+    #         code = """def {}_numba_prange(iter_max, {}):
+    #                       for xi in prange(iter_max):
+    #                           _kernel_function_{}(xi, {})""".format(original_name, args_string, _unique_counter, args_string)
+    #         locals_copy = locals()
+    #         globals()['_kernel_function_{}'.format(_unique_counter)] = kernel_function
+    #         exec(code, globals(), locals_copy)
+    #         numba_prange = locals_copy[original_name + '_numba_prange']
+    #         kernel_function.compiled_numba_prange = numba.jit(numba_prange, nogil=True, fastmath=True, parallel=True)
+
+    #     # Call the compiled numba prange function:
+    #     kernel_function.compiled_numba_prange(iter_max, *args)
+
     else: # use_numba
-        if not hasattr(kernel_function, 'compiled_numba_prange'):
-            # Create compiled prange loop for given kernel function
-
-            # Create string of arguments 'c1, c2, c3, [...]' for len(args)
-            args_string = ', '.join('c' + str(i) for i in range(len(args)))
-            _unique_counter += 1
-            original_name = kernel_function.py_func.__name__
-            code = """def {}_numba_prange(iter_max, {}):
-                          for xi in prange(iter_max):
-                              _kernel_function_{}(xi, {})""".format(original_name, args_string, _unique_counter, args_string)
-            locals_copy = locals()
-            globals()['_kernel_function_{}'.format(_unique_counter)] = kernel_function
-            exec(code, globals(), locals_copy)
-            numba_prange = locals_copy[original_name + '_numba_prange']
-            kernel_function.compiled_numba_prange = numba.jit(numba_prange, nogil=True, fastmath=True, parallel=True)
-
-        # Call the compiled numba prange function:
-        kernel_function.compiled_numba_prange(iter_max, *args)
-
+            # Cache or compile the Numba-prange function
+        if kernel_function not in compiled_kernels:
+            # Define the function dynamically
+            @numba.njit(parallel=True, nogil=True, fastmath=True)
+            def numba_prange_func(iter_max, *args):
+                for idx in prange(iter_max):
+                    kernel_function(idx, *args)
+            
+            # Store in the dictionary
+            compiled_kernels[kernel_function] = numba_prange_func
+        
+        # Retrieve the compiled version
+        compiled_function = compiled_kernels[kernel_function]
+        
+        # Execute the compiled function
+        compiled_function(iter_max, *args)

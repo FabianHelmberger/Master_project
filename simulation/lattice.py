@@ -3,10 +3,13 @@ import numpy as np
 import src.scal as scal
 import src.utils as utils
 from .config import Config
+from .constants import Constants
 
-class Lattice:
-    def __init__(self, conf: Config):
-        self.dims = np.array(conf.dims, dtype=scal.LATT_TYPE)
+class Lattice(Config, Constants):
+    def __init__(self, config: Config):
+        super().__init__(**config.__dict__)  # Use super() to handle both parent initializations
+
+        self.dims = np.array(self.dims, dtype=scal.LATT_TYPE)
         self.n_dims = len(self.dims)
         self.n_cells = int(np.prod(self.dims))
 

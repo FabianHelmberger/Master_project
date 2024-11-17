@@ -1,10 +1,35 @@
 # simulation/langevin_dynamics.py
+import math
+import numpy as np
 
-class LangevinDynamics:
-    def __init__(self, config, field):
-        self.config = config
-        self.field = field
+import src.scal as scal
+from .field import Field
+from src.numba_target import my_parallel_loop
+from .config import Config
 
-    def update(self):
-        # Perform Langevin update for the field
-        pass
+class LangevinDynamics(Field):
+    """
+    A class that takes care of the dynamics of the stochastic process.
+    """
+    def __init__(self, config: Config):
+        super().__init__(config)
+        self.dS   = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
+        self.eta  = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
+
+    def update_drift(self, drift_kernel, *kernel_param):
+        my_parallel_loop(
+            drift_kernel,
+            *kernel_param
+            )
+
+    def update_noise(self, noise_kernel, *kernel_param):
+        my_parallel_loop(
+            noise_kernel,
+            *kernel_param
+            )
+
+    def update_field(self, evolve_kernel, *kernel_param):
+        my_parallel_loop(
+            evolve_kernel,
+            *kernel_param
+            )
