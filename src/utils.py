@@ -1,15 +1,18 @@
 import math
 import numpy as np
+import inspect
 from typing import TYPE_CHECKING
 
-from src.numba_target import myjit
 import src.scal as scal
+from src.numba_target import myjit
+
 
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
     from simulation.cl_simulation import ComplexLangevinSimulation
 
+from simulation.constants import SQRT2
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -34,11 +37,9 @@ def get_index(pos, dims):
         index = index * dims[d] + pos[d]
     return index
 
-
 @myjit
-def noise_kernel(idx, eta, dt):
-    eta[idx] = scal.SCAL_TYPE_REAL(math.sqrt(dt) * np.random.normal())
-
+def noise_kernel(idx, eta):
+    eta[idx] = SQRT2 * scal.SCAL_TYPE_REAL(np.random.normal())
 
 @myjit
 def evolve_kernel(idx, phi0, phi1, dS, eta, dt):
@@ -91,14 +92,6 @@ def mexican_hat_kernel_real(idx, phi0, dS, mass_real, interaction):
     dS[idx] = out
 
 
-# @myjit
-# def mexican_hat_kernel_real(idx, obj: "LangevinDynamics"):
-#     phi_idx = obj.field.phi0[idx]
-#     out = 0
-#     out += obj.config.mass_real * phi_idx
-#     out += obj.config.interaction/6 * phi_idx*phi_idx*phi_idx
-#     obj.field.dS[idx] = out
-
 @myjit
 def mexican_hat_kernel_complex(idx, field, dS_out, mass_real, interaction):
     phi_idx = field[idx]
@@ -107,15 +100,51 @@ def mexican_hat_kernel_complex(idx, field, dS_out, mass_real, interaction):
     out += interaction/6 * phi_idx*phi_idx*phi_idx
     dS_out[idx] = out
 
-# def arg_map(sim: "ComplexLangevinSimulation"):
-#     return {
-#         'iter_max': sim.lattice.n_cells, 
-#         'field': sim.field.phi0, 
-#         'dS_out': sim.field.dS, 
-#         'mass_real' : sim.config.mass_real, 
-#         'mass_imag' : sim.config.mass_imag, 
-#         'interaction' : sim.config.interaction
-#         }
 
-# kernel_args = {}
-# kernel_args[mexican_hat_kernel_real] = arg_map()['iter_max',]
+class KernelBridge:
+    """
+    Interface to the `my_parallel_loop` function in numba_target. 
+    Automates the generation of parameter dictionaries for kernel functions.
+
+    The kernel functions must:
+    - Have parameters that are attributes of `ComplexLangevinSimulation`.
+    - Include 'idx' as the first parameter, mapped to 'n_cells' in the parameter dictionary.
+
+    Attributes:
+        sim: Instance of ComplexLangevinSimulation providing simulation parameters.
+        kernel_funcs: Dictionary mapping kernel functions to their parameter lists.
+        current_params: Dictionary of current kernel parameters for each function.
+    """
+    def __init__(self, sim: 'ComplexLangevinSimulation', kernel_funcs):
+        self.sim = sim
+        self.kernel_funcs = {}
+        self.current_params = {}
+
+        # Validate and process kernel functions
+        for kernel_func in kernel_funcs:
+            kernel_params = inspect.signature(kernel_func).parameters.keys()
+            
+            if 'idx' not in kernel_params:
+                raise ValueError("Each kernel function must include an 'idx' argument")
+            
+            # Replace 'idx' with 'n_cells' in parameter mapping
+            self.kernel_funcs[kernel_func] = [
+                param if param != 'idx' else 'n_cells' 
+                for param in kernel_params
+            ]
+
+    def get_current_params(self):
+        """
+        Generates a dictionary of current kernel parameters based on the simulation state.
+
+        Returns:
+            A dictionary mapping each kernel function to its resolved parameter dictionary.
+        """
+        self.current_params = {
+            kernel_func: {
+                param: getattr(self.sim, param) if param != 'n_cells' else self.sim.n_cells
+                for param in params
+            }
+            for kernel_func, params in self.kernel_funcs.items()
+        }
+        return self.current_params
