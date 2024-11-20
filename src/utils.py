@@ -1,7 +1,7 @@
 import math
 import numpy as np
 import inspect
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable, Dict, Any, List
 
 import src.scal as scal
 from src.numba_target import myjit
@@ -106,45 +106,57 @@ class KernelBridge:
     Interface to the `my_parallel_loop` function in numba_target. 
     Automates the generation of parameter dictionaries for kernel functions.
 
-    The kernel functions must:
-    - Have parameters that are attributes of `ComplexLangevinSimulation`.
-    - Include 'idx' as the first parameter, mapped to 'n_cells' in the parameter dictionary.
-
     Attributes:
         sim: Instance of ComplexLangevinSimulation providing simulation parameters.
         kernel_funcs: Dictionary mapping kernel functions to their parameter lists.
         current_params: Dictionary of current kernel parameters for each function.
+        const_param: Constant parameters that don't change during simulation.
     """
-    def __init__(self, sim: 'ComplexLangevinSimulation', kernel_funcs):
+    def __init__(self, sim: 'LangevinDynamics', kernel_funcs: List[Callable[..., Any]], 
+                 result: np.ndarray = None, const_param: Dict[Callable, Dict] = None,):
         self.sim = sim
-        self.kernel_funcs = {}
-        self.current_params = {}
+        self.kernel_funcs: Dict[Callable, list] = {}
+        # self.const_param:  Dict[Callable, Dict] = {}
+        self.const_param = const_param
+        self.result = result
 
         # Validate and process kernel functions
-        for kernel_func in kernel_funcs:
-            kernel_params = inspect.signature(kernel_func).parameters.keys()
-            
-            if 'idx' not in kernel_params:
-                raise ValueError("Each kernel function must include an 'idx' argument")
-            
-            # Replace 'idx' with 'n_cells' in parameter mapping
-            self.kernel_funcs[kernel_func] = [
-                param if param != 'idx' else 'n_cells' 
-                for param in kernel_params
-            ]
+        for kf in kernel_funcs:
+            kernel_params = inspect.signature(kf).parameters.keys()
+            self.kernel_funcs[kf] = [param for param in kernel_params]
 
-    def get_current_params(self):
+            # fill constant parameters for the current kernel function
+            # if kf in const_param: 
+            #     self.const_param[kf] = const_param[kf]
+
+
+    def get_current_params(self) -> Dict[Callable, Dict[str, Any]]:
         """
         Generates a dictionary of current kernel parameters based on the simulation state.
-
+        
         Returns:
             A dictionary mapping each kernel function to its resolved parameter dictionary.
         """
-        self.current_params = {
-            kernel_func: {
-                param: getattr(self.sim, param) if param != 'n_cells' else self.sim.n_cells
-                for param in params
-            }
-            for kernel_func, params in self.kernel_funcs.items()
-        }
-        return self.current_params
+        current_params: Dict[Callable, list] = {}
+
+        for kernel_func, params in self.kernel_funcs.items():
+            param_dict = {}
+
+            for param in params:
+                if param == 'result': 
+                    # result is always tied to self.result (observables) and is unique
+                    param_dict[param] = self.result; continue 
+                
+                if param == 'idx':
+                    # idx is always tied to self.n_cells (parallel for loop)
+                    param_dict[param] = self.sim.n_cells; continue 
+                # check if param is instance of sim (eg. field)
+                elif hasattr(self.sim, param): param_dict[param] = getattr(self.sim, param) 
+
+                if self.const_param is not None:
+                    if param in self.const_param.keys(): 
+                        # constant parameters may be passed (eg. order of moment)
+                        param_dict[param] = self.const_param[param]
+
+            current_params[kernel_func] = param_dict
+        return current_params

@@ -15,6 +15,8 @@ class LangevinDynamics(Field):
         super().__init__(config)
         self.dS   = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.eta  = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
+        self.langevin_time: scal.SCAL_TYPE_REAL = 0.0
+        self.dt_ada = self.dt
 
     def update_drift(self, drift_kernel, *kernel_param):
         my_parallel_loop(
@@ -33,3 +35,4 @@ class LangevinDynamics(Field):
             evolve_kernel,
             *kernel_param
             )
+        self.langevin_time += self.dt_ada
