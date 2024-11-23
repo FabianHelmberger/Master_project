@@ -13,10 +13,16 @@ class LangevinDynamics(Field):
     """
     def __init__(self, config: Config):
         super().__init__(config)
-        self.dS   = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
-        self.eta  = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
+        self.dS = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
+        self.dS_norm = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
+        self.eta = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
         self.langevin_time: scal.SCAL_TYPE_REAL = 0.0
         self.dt_ada = self.dt
+        self.dS_max: scal.SCAL_TYPE_REAL = 0.0
+        self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
+        self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
+        self.DS_MAX_UPPER = 1e12
+        self.DS_MAX_LOWER = 1e-12
 
     def update_drift(self, drift_kernel, *kernel_param):
         my_parallel_loop(
@@ -36,3 +42,16 @@ class LangevinDynamics(Field):
             *kernel_param
             )
         self.langevin_time += self.dt_ada
+    
+    
+    def set_apative_stepsize(self):
+        self.dt_ada = self.dt
+        self.dS_max = max(self.dS_norm)
+        self.dS_mean = np.mean(self.dS_norm)
+
+        if self.dS_max > self.DS_MAX_LOWER:
+            self.dt_ada = (
+                (self.dt_ada * self.mean_dS_max / self.dS_mean)
+                if self.mean_dS_max < self.dS_max
+                else self.dt_ada
+            )

@@ -42,11 +42,11 @@ def noise_kernel(idx, eta):
     eta[idx] = SQRT2 * scal.SCAL_TYPE_REAL(np.random.normal())
 
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, dt):
+def evolve_kernel(idx, phi0, phi1, dS, eta, dt_ada):
     # TODO: move dt_sqrt
-    dt_sqrt = math.sqrt(dt)
+    dt_sqrt = math.sqrt(dt_ada)
     etaterm = eta[idx] * dt_sqrt
-    update = etaterm - dt * dS[idx]
+    update = etaterm - dt_ada * dS[idx]
     phi1[idx] = phi0[idx] + update
 
 
@@ -84,21 +84,14 @@ def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag
     dS_out[idx] = out
 
 @myjit
-def mexican_hat_kernel_real(idx, phi0, dS, mass_real, interaction):
+def mexican_hat_kernel_real(idx, phi0, dS,dS_norm, mass_real, interaction):
     phi_idx = phi0[idx]
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
     dS[idx] = out
+    dS_norm[idx] = abs(out)
 
-
-@myjit
-def mexican_hat_kernel_complex(idx, field, dS_out, mass_real, interaction):
-    phi_idx = field[idx]
-    out = 0
-    out += mass_real * phi_idx
-    out += interaction/6 * phi_idx*phi_idx*phi_idx
-    dS_out[idx] = out
 
 
 class KernelBridge:
@@ -125,11 +118,6 @@ class KernelBridge:
             kernel_params = inspect.signature(kf).parameters.keys()
             self.kernel_funcs[kf] = [param for param in kernel_params]
 
-            # fill constant parameters for the current kernel function
-            # if kf in const_param: 
-            #     self.const_param[kf] = const_param[kf]
-
-
     def get_current_params(self) -> Dict[Callable, Dict[str, Any]]:
         """
         Generates a dictionary of current kernel parameters based on the simulation state.
@@ -150,6 +138,7 @@ class KernelBridge:
                 if param == 'idx':
                     # idx is always tied to self.n_cells (parallel for loop)
                     param_dict[param] = self.sim.n_cells; continue 
+                
                 # check if param is instance of sim (eg. field)
                 elif hasattr(self.sim, param): param_dict[param] = getattr(self.sim, param) 
 
@@ -160,3 +149,109 @@ class KernelBridge:
 
             current_params[kernel_func] = param_dict
         return current_params
+    
+
+
+from collections import deque
+
+import numpy as np
+
+
+class RollingStats:
+    """
+    Computes rolling mean, variance, and error statistics over a sample stream.
+    """
+
+    def __init__(self):
+        self.sample_counter = 0
+        self.shape = None
+        self.rolling_mean = None
+        self.rolling_sqr_mean = None
+        self.data = []
+
+    def update(self, next_sample_array: np.ndarray) -> None:
+        """
+        Update the rolling statistics with the next sample.
+        Dynamically determines shape on the first update.
+        """
+        if self.sample_counter == 0:
+            self.shape = next_sample_array.shape
+            self.rolling_mean = next_sample_array.copy()
+            self.rolling_sqr_mean = np.power(next_sample_array, 2)
+        else:
+            if next_sample_array.shape != self.shape:
+                raise ValueError(
+                    f"Shape of new sample ({next_sample_array.shape}) does not match ({self.shape})!"
+                )
+            self.rolling_mean += next_sample_array
+            self.rolling_sqr_mean += np.power(next_sample_array, 2)
+
+        self.sample_counter += 1
+        self.store_data(next_sample_array)
+
+    def store_data(self, next_sample_array: np.ndarray) -> None:
+        """
+        Optionally stores the raw data for additional analysis.
+        """
+        if self.data is not None:
+            self.data.append(next_sample_array.copy())
+
+    def get_data(self) -> list:
+        """
+        Return all stored data samples.
+        """
+        return self.data
+
+    def get_rolling_mean(self) -> np.ndarray:
+        """
+        Return the rolling mean of the data samples.
+        """
+        if self.sample_counter == 0:
+            raise ValueError("No samples provided yet.")
+
+        return self._to_numpy(self.rolling_mean / self.sample_counter)
+
+    def get_rolling_std(self) -> np.ndarray:
+        """
+        Return the rolling standard deviation.
+        """
+        if self.sample_counter == 0:
+            raise ValueError("No samples provided yet.")
+
+        rolling_mean = self.rolling_mean / self.sample_counter
+        rolling_variance = (
+            self.rolling_sqr_mean / self.sample_counter - np.power(rolling_mean, 2)
+        )
+        rolling_std = np.sqrt(rolling_variance)
+        return self._to_numpy(rolling_std)
+
+    def get_rolling_err_mean(self) -> np.ndarray:
+        """
+        Return the rolling relative error of the mean.
+        """
+        if self.sample_counter == 0:
+            raise ValueError("No samples provided yet.")
+
+        rolling_mean = self.rolling_mean / self.sample_counter
+        rolling_variance = (
+            self.rolling_sqr_mean / self.sample_counter - np.power(rolling_mean, 2)
+        )
+        rolling_err_mean = np.sqrt(rolling_variance) / np.sqrt(self.sample_counter)
+        return self._to_numpy(rolling_err_mean)
+
+    def reset(self) -> None:
+        """
+        Reset the rolling statistics to start over.
+        """
+        self.sample_counter = 0
+        self.shape = None
+        self.rolling_mean = None
+        self.rolling_sqr_mean = None
+        self.data = []
+
+    
+    def _to_numpy(self, array: np.ndarray) -> np.ndarray:
+        """
+        Convert to numpy array, handling GPU support if enabled.
+        """
+        return np.array(array)
