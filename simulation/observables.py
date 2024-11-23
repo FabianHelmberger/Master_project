@@ -5,7 +5,7 @@ from typing import Dict, Callable, Tuple
 from .langevin_dynamics import *
 from .config import *
 from src.utils import KernelBridge
-
+import src.scal as scal
 
 class ObservableTracker:
     """
@@ -15,9 +15,9 @@ class ObservableTracker:
         self.obs_kernel = obs_kernel
         self.shape = shape
         self.langevin_history = langevin_history
-        self.history = [] if langevin_history else None
+        self.history = []
         self.langevin_steps = 0
-        self.result = np.empty(shape=self.shape)
+        self.result = np.empty(shape=self.shape, dtype=scal.SCAL_TYPE)
 
     def update(self):
         """
