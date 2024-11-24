@@ -11,11 +11,11 @@ class ObservableTracker:
     """
     Tracks an observable's Langevin time trajectory and/or rolling statistics.
     """
-    def __init__(self, shape: tuple, obs_kernel: Callable, langevin_history=False):
+    def __init__(self, shape: tuple, obs_kernel: Callable, langevin_history=False, init_history_size = int(1e5)):
         self.obs_kernel = obs_kernel
         self.shape = shape
         self.langevin_history = langevin_history
-        self.history = []
+        self.history = np.empty(shape=(init_history_size, *self.shape), dtype=scal.SCAL_TYPE)
         self.langevin_steps = 0
         self.result = np.empty(shape=self.shape, dtype=scal.SCAL_TYPE)
 
@@ -23,10 +23,10 @@ class ObservableTracker:
         """
         Update the tracker with a new observable value at the current Langevin step.
         """
-        
-        self.langevin_steps += 1
+        result = self.result.copy()
         if self.langevin_history:
-            self.history.append(copy.copy(self.result))
+            self.history[self.langevin_steps] = result
+        self.langevin_steps += 1
 
     def get_full_history(self):
         """Return the full history of observables (if enabled)."""
@@ -57,7 +57,7 @@ class Observables(LangevinDynamics):
 
         if name in self.trackers.keys():
             raise ValueError(f"Observable '{name}' is already registered.")
-        if shape is None: shape = (self.n_cells)
+        if shape is None: shape = (self.n_cells,)
 
         self.trackers[name] = ObservableTracker(shape=shape, obs_kernel=obs_kernel, 
                                                 langevin_history=langevin_history)
@@ -79,5 +79,10 @@ class Observables(LangevinDynamics):
 
         obs_kernel = tracker.obs_kernel
         kernel_args = bridge.get_current_params()[obs_kernel].values()
-        tracker.update()
         my_parallel_loop(obs_kernel, *kernel_args)
+        tracker.update()
+
+    def finish(self):
+        for tr in self.trackers.values():
+            if tr.langevin_history:
+                tr.history = tr.history[:tr.langevin_steps]
