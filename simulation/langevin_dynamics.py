@@ -42,9 +42,12 @@ class LangevinDynamics(Field):
             *kernel_param
             )
         self.langevin_time += self.dt_ada
-    
+
     
     def set_apative_stepsize(self):
+        # TODO: if multiple trajectories are run in parallel and this is implemented as another lattice dimension,
+        # the mean and max of dS should not be calculated across different trajectories
+        
         self.dt_ada = self.dt
         self.dS_max = max(self.dS_norm)
         self.dS_mean = np.mean(self.dS_norm)
