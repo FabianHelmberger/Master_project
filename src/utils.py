@@ -4,15 +4,17 @@ import inspect
 from typing import TYPE_CHECKING, Callable, Dict, Any, List
 
 import src.scal as scal
-from src.numba_target import myjit
+from src.numba_target import myjit, use_cuda
+from simulation.constants import SQRT2
 
+if use_cuda: 
+    from numba.cuda.random import xoroshiro128p_normal_float32
+    from cupy import multiply
 
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
-    from simulation.cl_simulation import ComplexLangevinSimulation
 
-from simulation.constants import SQRT2
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -38,8 +40,13 @@ def get_index(pos, dims):
     return index
 
 @myjit
-def noise_kernel(idx, eta):
-    eta[idx] = SQRT2 * scal.SCAL_TYPE_REAL(np.random.normal())
+def noise_kernel(idx, eta, noise_factor):
+    eta[idx] = SQRT2 * noise_factor * scal.SCAL_TYPE_REAL(np.random.normal())
+
+@myjit
+def cuda_noise_kernel(idx, eta, noise_factor, rng):
+    r = xoroshiro128p_normal_float32(rng, idx)
+    eta[idx] = SQRT2 * noise_factor * r
 
 @myjit
 def evolve_kernel(idx, phi0, phi1, dS, eta, dt_ada):
@@ -84,13 +91,13 @@ def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag
     dS_out[idx] = out
 
 @myjit
-def mexican_hat_kernel_real(idx, phi0, dS,dS_norm, mass_real, interaction):
+def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     phi_idx = phi0[idx]
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
     dS[idx] = out
-    dS_norm[idx] = abs(out)
+    # dS_norm[idx] = abs(dS[idx])
 
 
 
