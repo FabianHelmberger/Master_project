@@ -1,1 +1,5 @@
 __pycache__
+
+# jupyter notebooks
+.ipynb_checkpoints
+.DS_Store
