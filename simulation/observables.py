@@ -7,6 +7,11 @@ from .config import *
 from src.utils import KernelBridge
 import src.scal as scal
 
+from src.numba_target import use_cuda
+
+if use_cuda:
+    from numba import cuda
+
 class ObservableTracker:
     """
     Tracks an observable's Langevin time trajectory and/or rolling statistics.
@@ -19,11 +24,14 @@ class ObservableTracker:
         self.langevin_steps = 0
         self.result = np.empty(shape=self.shape, dtype=scal.SCAL_TYPE)
 
+        if use_cuda: self.result  = cuda.to_device(self.result)
+
     def update(self):
         """
         Update the tracker with a new observable value at the current Langevin step.
         """
-        result = self.result.copy()
+        if use_cuda: result = self.result.copy_to_host().copy()
+        else: result = self.result.copy()
         if self.langevin_history:
             self.history[self.langevin_steps] = result
         self.langevin_steps += 1
