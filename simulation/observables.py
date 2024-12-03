@@ -88,6 +88,7 @@ class Observables(LangevinDynamics):
         obs_kernel = tracker.obs_kernel
         kernel_args = bridge.get_current_params()[obs_kernel].values()
         my_parallel_loop(obs_kernel, *kernel_args)
+        if use_cuda: cuda.synchronize()
         tracker.update()
 
     def finish(self):
