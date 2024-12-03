@@ -7,7 +7,7 @@ import src.scal as scal
 from simulation.field import Field
 from src.numba_target import my_parallel_loop, use_cuda, threadsperblock
 from simulation.config import Config
-from src.utils import KernelBridge, update_langevin_time
+from src.utils import KernelBridge, update_langevin_time, chunk_max_kernel
 
 amax = np.max
 mean = np.mean
@@ -87,26 +87,22 @@ class LangevinDynamics(Field):
         if use_cuda: cuda.synchronize()
     
     def set_apative_stepsize(self):
-        # TODO: if multiple trajectories are run in parallel and this is implemented as another lattice dimension,
-        # the mean and max of dS should not be calculated across different trajectories
-        
-        self.dt_ada = self.dt
-        
-        self.dS_norm = arr_abs(self.dS)
-        self.dS_max = amax(self.dS_norm)
-        self.dS_mean = mean(self.dS_norm)
+        if self.ada_step:
+            self.dS_norm = arr_abs(self.dS)
 
-        if self.dS_max > self.DS_MAX_LOWER:
-            self.dt_ada = (
-                (self.dt_ada * self.mean_dS_max / self.dS_mean)
-                if self.mean_dS_max < self.dS_max
-                else self.dt_ada
-            )
+            # calculate the max drift of every traj
+            my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
+            if use_cuda: cuda.synchronize()
+
+            for idx, dS_max in enumerate(self.dS_max):
+                if dS_max > self.DS_MAX_LOWER and self.mean_dS_max < dS_max:
+                    self.ada[idx] = self.mean_dS_max / dS_max
 
     def step(self):
         self.cldyn_kernel_args = self.cldyn_kernel_bridge.get_current_params()
         self.update_noise(*self.cldyn_kernel_args[self.noise_kernel].values())
-        self.update_field(*self.cldyn_kernel_args[self.evolve_kernel].values())
         self.update_drift(*self.cldyn_kernel_args[self.drift_kernel].values())
-
+        if self.ada_step: self.set_apative_stepsize()
+        self.update_field(*self.cldyn_kernel_args[self.evolve_kernel].values())
+        
         self.swap()

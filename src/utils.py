@@ -56,6 +56,17 @@ def evolve_kernel(idx, phi0, phi1, dS, eta, ada, dt, adims):
     etaterm = eta[idx] * math.sqrt(ada_dt)
     update = etaterm - ada_dt * dS[idx]
     phi1[idx] = phi0[idx] + update
+    
+@myjit
+def chunk_max_kernel(idx, array, max_array, chunk_size):
+    start_idx = idx * chunk_size
+    stop_idx  = start_idx + chunk_size
+    max_val = -1.0e20  # Initialize to a very large negative number
+
+    for i in range(start_idx, stop_idx):  # Loop within the chunk
+        if array[i] > max_val:
+            max_val = array[i]
+        max_array[idx] = max_val  # Store the result in max_array
 
 @myjit
 def update_langevin_time(traj_idx, langevin_time, ada, dt):
