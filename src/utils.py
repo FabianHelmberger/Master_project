@@ -49,13 +49,17 @@ def cuda_noise_kernel(idx, eta, noise_factor, rng):
     eta[idx] = SQRT2 * noise_factor * r
 
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, dt_ada):
+def evolve_kernel(idx, phi0, phi1, dS, eta, ada, dt, adims):
     # TODO: move dt_sqrt
-    dt_sqrt = math.sqrt(dt_ada)
-    etaterm = eta[idx] * dt_sqrt
-    update = etaterm - dt_ada * dS[idx]
+    traj_idx = idx // adims[1]
+    ada_dt = ada[traj_idx] * dt
+    etaterm = eta[idx] * math.sqrt(ada_dt)
+    update = etaterm - ada_dt * dS[idx]
     phi1[idx] = phi0[idx] + update
 
+@myjit
+def update_langevin_time(traj_idx, langevin_time, ada, dt):
+    langevin_time[traj_idx] += ada[traj_idx]*dt
 
 @myjit
 def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):

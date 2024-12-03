@@ -7,7 +7,7 @@ import src.scal as scal
 from simulation.field import Field
 from src.numba_target import my_parallel_loop, use_cuda, threadsperblock
 from simulation.config import Config
-from src.utils import KernelBridge
+from src.utils import KernelBridge, update_langevin_time
 
 amax = np.max
 mean = np.mean
@@ -36,13 +36,15 @@ class LangevinDynamics(Field):
         self.dS = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.dS_norm = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
         self.eta = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
-        self.langevin_time: scal.SCAL_TYPE_REAL = 0.0
-        self.dt_ada = self.dt
-        self.dS_max: scal.SCAL_TYPE_REAL = 0.0
-        self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
-        self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
+        self.langevin_time = np.zeros(self.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.DS_MAX_UPPER = 1e12
         self.DS_MAX_LOWER = 1e-12
+
+        # for adaptive stepsize (in parallel trajs mode)
+        self.dS_max = np.zeros(self.trajs, dtype=scal.SCAL_TYPE_REAL)
+        self.ada = np.ones(self.trajs, scal.SCAL_TYPE_REAL)
+        self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
+        self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
 
         # buffer for kernel args
         self.cldyn_kernel_args = None
@@ -74,7 +76,15 @@ class LangevinDynamics(Field):
             *kernel_param
             )
         if use_cuda: cuda.synchronize()
-        self.langevin_time += self.dt_ada
+        
+        my_parallel_loop(
+            update_langevin_time, 
+            self.trajs,
+            self.langevin_time,
+            self.ada,
+            self.dt
+        )
+        if use_cuda: cuda.synchronize()
     
     def set_apative_stepsize(self):
         # TODO: if multiple trajectories are run in parallel and this is implemented as another lattice dimension,
