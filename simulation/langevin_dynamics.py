@@ -4,19 +4,21 @@ import numpy as np
 from numpy import abs as arr_abs
 
 import src.scal as scal
-from .field import Field
+from simulation.field import Field
 from src.numba_target import my_parallel_loop, use_cuda, threadsperblock
-from .config import Config
+from simulation.config import Config
+from src.utils import KernelBridge
 
 amax = np.max
 mean = np.mean
+
 if use_cuda: 
     from numba import cuda
     from numba.cuda.random import create_xoroshiro128p_states
 
-    import cupy as cp
-    from cupy import add, multiply, real, imag
-    from cupy import abs as arr_abs
+    import cupy as cp # type: ignore
+    from cupy import add, multiply, real, imag # type: ignore
+    from cupy import abs as arr_abs # type: ignore
 
     def amax(arr):
         return cp.amax(cp.asarray(arr)).get().item()
@@ -42,6 +44,9 @@ class LangevinDynamics(Field):
         self.DS_MAX_UPPER = 1e12
         self.DS_MAX_LOWER = 1e-12
 
+        # buffer for kernel args
+        self.cldyn_kernel_args = None
+        self.cldyn_kernel_bridge = KernelBridge(self, [self.noise_kernel, self.drift_kernel, self.evolve_kernel], const_param={})
 
         if use_cuda:
             n_blocks = math.ceil(self.n_cells / threadsperblock)
@@ -49,23 +54,23 @@ class LangevinDynamics(Field):
                 threadsperblock * n_blocks, seed=self.noise_seed
             )
 
-    def update_drift(self, drift_kernel, *kernel_param):
+    def update_drift(self, *kernel_param):
         my_parallel_loop(
-            drift_kernel,
+            self.drift_kernel,
             *kernel_param
             )
         if use_cuda: cuda.synchronize()
         
-    def update_noise(self, noise_kernel, *kernel_param):
+    def update_noise(self, *kernel_param):
         my_parallel_loop(
-            noise_kernel,
+            self.noise_kernel,
             *kernel_param
             )
         if use_cuda: cuda.synchronize()
         
-    def update_field(self, evolve_kernel, *kernel_param):
+    def update_field(self, *kernel_param):
         my_parallel_loop(
-            evolve_kernel,
+            self.evolve_kernel,
             *kernel_param
             )
         if use_cuda: cuda.synchronize()
@@ -87,3 +92,11 @@ class LangevinDynamics(Field):
                 if self.mean_dS_max < self.dS_max
                 else self.dt_ada
             )
+
+    def step(self):
+        self.cldyn_kernel_args = self.cldyn_kernel_bridge.get_current_params()
+        self.update_noise(*self.cldyn_kernel_args[self.noise_kernel].values())
+        self.update_field(*self.cldyn_kernel_args[self.evolve_kernel].values())
+        self.update_drift(*self.cldyn_kernel_args[self.drift_kernel].values())
+
+        self.swap()
