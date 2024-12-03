@@ -33,9 +33,9 @@ def shift(index, dir, amount, dims, adims):
     return int(res)  # needs explicit cast, otherwise 'res' promoted to a float otherwise. this is new behaviour.
 
 @myjit
-def get_index(pos, dims):
-    index = pos[0]
-    for d in range(1, len(dims)):
+def get_index(pos, dims, traj):
+    index = traj
+    for d in range(0, len(dims)):
         index = index * dims[d] + pos[d]
     return index
 
