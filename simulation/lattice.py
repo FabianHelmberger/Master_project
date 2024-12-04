@@ -10,16 +10,17 @@ class Lattice(Config, Constants):
         super().__init__(**config.__dict__)  # Use super() to handle both parent initializations
 
         self.dims = np.array(self.dims, dtype=scal.LATT_TYPE)
-        self.n_dims = len(self.dims)
-        self.n_cells = int(np.prod(self.dims))
+        self.sim_dims = np.append(self.trajs, self.dims) # artificial lattice including direction for different trajs
+        self.n_dims = len(self.sim_dims)
+        self.n_cells = int(np.prod(self.sim_dims))
 
-        cumprod_dims = np.cumprod(self.dims[::-1], dtype=scal.LATT_TYPE)[::-1]
+        cumprod_dims = np.cumprod(self.sim_dims[::-1], dtype=scal.LATT_TYPE)[::-1]
         self.adims = np.zeros(self.n_dims + 1, dtype=scal.LATT_TYPE)
         self.adims[:-1] = cumprod_dims
         self.adims[-1] = 1
 
     def shift(self, index, dir, amount):
-        return utils.shift(index, dir, amount, self.dims, self.adims)
+        return utils.shift(index, dir, amount, self.sim_dims[:1], self.adims[:1])
 
-    def get_index(self, pos):
-        return utils.get_index(pos, self.dims)
+    def get_index(self, pos, traj):
+        return utils.get_index(pos, self.dims[:1], traj)

@@ -4,15 +4,17 @@ import inspect
 from typing import TYPE_CHECKING, Callable, Dict, Any, List
 
 import src.scal as scal
-from src.numba_target import myjit
+from src.numba_target import myjit, use_cuda
+from simulation.constants import SQRT2
 
+if use_cuda: 
+    from numba.cuda.random import xoroshiro128p_normal_float32
+    from cupy import multiply
 
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
-    from simulation.cl_simulation import ComplexLangevinSimulation
 
-from simulation.constants import SQRT2
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -31,24 +33,44 @@ def shift(index, dir, amount, dims, adims):
     return int(res)  # needs explicit cast, otherwise 'res' promoted to a float otherwise. this is new behaviour.
 
 @myjit
-def get_index(pos, dims):
-    index = pos[0]
-    for d in range(1, len(dims)):
+def get_index(pos, dims, traj):
+    index = traj
+    for d in range(0, len(dims)):
         index = index * dims[d] + pos[d]
     return index
 
 @myjit
-def noise_kernel(idx, eta):
-    eta[idx] = SQRT2 * scal.SCAL_TYPE_REAL(np.random.normal())
+def noise_kernel(idx, eta, noise_factor):
+    eta[idx] = SQRT2 * noise_factor * scal.SCAL_TYPE_REAL(np.random.normal())
 
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, dt_ada):
-    # TODO: move dt_sqrt
-    dt_sqrt = math.sqrt(dt_ada)
-    etaterm = eta[idx] * dt_sqrt
-    update = etaterm - dt_ada * dS[idx]
-    phi1[idx] = phi0[idx] + update
+def cuda_noise_kernel(idx, eta, noise_factor, rng):
+    r = xoroshiro128p_normal_float32(rng, idx)
+    eta[idx] = SQRT2 * noise_factor * r
 
+@myjit
+def evolve_kernel(idx, phi0, phi1, dS, eta, ada, dt, adims):
+    # TODO: move dt_sqrt
+    traj_idx = idx // adims[1]
+    ada_dt = ada[traj_idx] * dt
+    etaterm = eta[idx] * math.sqrt(ada_dt)
+    update = etaterm - ada_dt * dS[idx]
+    phi1[idx] = phi0[idx] + update
+    
+@myjit
+def chunk_max_kernel(idx, array, max_array, chunk_size):
+    start_idx = idx * chunk_size
+    stop_idx  = start_idx + chunk_size
+    max_val = -1.0e20  # Initialize to a very large negative number
+
+    for i in range(start_idx, stop_idx):  # Loop within the chunk
+        if array[i] > max_val:
+            max_val = array[i]
+        max_array[idx] = max_val  # Store the result in max_array
+
+@myjit
+def update_langevin_time(traj_idx, langevin_time, ada, dt):
+    langevin_time[traj_idx] += ada[traj_idx]*dt
 
 @myjit
 def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
@@ -84,15 +106,49 @@ def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag
     dS_out[idx] = out
 
 @myjit
-def mexican_hat_kernel_real(idx, phi0, dS,dS_norm, mass_real, interaction):
+def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     phi_idx = phi0[idx]
     out = 0
     out += mass_real * phi_idx
     out += interaction/6 * phi_idx*phi_idx*phi_idx
     dS[idx] = out
-    dS_norm[idx] = abs(out)
+    dS_norm[idx] = abs(dS[idx])
 
+@myjit 
+def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
+    this_dS_max = dS_max[idx]
+    # TODO: use mask and activated parallel loop
+    if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
+        ada[idx] = mean_dS_max / this_dS_max
 
+@myjit
+def arr_abs_kernel(idx, in_array, out_array):
+    out_array[idx] = abs(in_array[idx])
+
+@myjit
+def mark_uncorr_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array):
+    delta = langevin_time[traj_idx] - meas_time[traj_idx]
+    if delta > 0.1 and langevin_time[traj_idx] > 5: 
+        marker_array[traj_idx] = True
+    else: marker_array[traj_idx] = False
+
+@myjit
+# def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
+def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
+    start_idx = traj_idx * adims[1]
+    stop_idx = start_idx + adims[1]
+
+    for i in range(start_idx, stop_idx):
+        out_array[i] = in_array[i]
+
+    # out_array[idx] = in_array[idx]
+    # traj_idx = idx // adims[1]
+    # if uncorr_traj[traj_idx]:
+    #     # print(f"filled traj {traj_idx} at idx {idx} with {in_array[idx]}")
+    #     out_array[idx] = in_array[idx]
+    # else:
+    #     # print(f"filled traj {traj_idx} at idx {idx} with nan")
+    #     out_array[idx] = np.nan
 
 class KernelBridge:
     """
@@ -106,7 +162,7 @@ class KernelBridge:
         const_param: Constant parameters that don't change during simulation.
     """
     def __init__(self, sim: 'LangevinDynamics', kernel_funcs: List[Callable[..., Any]], 
-                 result: np.ndarray = None, const_param: Dict[Callable, Dict] = None,):
+                 result: np.ndarray = None, meas_time: scal.SCAL_TYPE_REAL = 0.0, const_param: Dict[Callable, Dict] = None,):
         self.sim = sim
         self.kernel_funcs: Dict[Callable, list] = {}
         # self.const_param:  Dict[Callable, Dict] = {}
@@ -134,7 +190,7 @@ class KernelBridge:
                 if param == 'result': 
                     # result is always tied to self.result (observables) and is unique
                     param_dict[param] = self.result; continue 
-                
+
                 if param == 'idx':
                     # idx is always tied to self.n_cells (parallel for loop)
                     param_dict[param] = self.sim.n_cells; continue 
