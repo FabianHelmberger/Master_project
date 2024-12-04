@@ -1,7 +1,9 @@
 # simulation/langevin_dynamics.py
 import math
 import numpy as np
+import numba
 from numpy import abs as arr_abs
+
 
 import src.scal as scal
 from simulation.field import Field
@@ -9,17 +11,21 @@ from src.numba_target import my_parallel_loop, use_cuda, threadsperblock
 from simulation.config import Config
 from src.utils import KernelBridge, update_langevin_time, chunk_max_kernel, adaptive_step_kernel
 
-amax = np.max
-mean = np.mean
+from numpy import max as amax
+from numpy import mean
+from numpy import abs as arr_abs
 
 if use_cuda: 
-    from numba import cuda
     from numba.cuda.random import create_xoroshiro128p_states
 
-    import cupy as cp # type: ignore
-    from cupy import add, multiply, real, imag # type: ignore
-    from cupy import abs as arr_abs # type: ignore
+    from numba.cuda.cudadrv.devicearray import DeviceNDArray
+    from src.utils import arr_abs_kernel
+    from numba import cuda
+    def arr_abs(in_array: DeviceNDArray, out_array: DeviceNDArray) -> None:
+        my_parallel_loop(arr_abs_kernel, in_array.size, in_array, out_array)
+        cuda.synchronize()
 
+    import cupy as cp
     def amax(arr):
         return cp.amax(cp.asarray(arr)).get().item()
 
@@ -90,7 +96,6 @@ class LangevinDynamics(Field):
     
     def set_apative_stepsize(self):
         if self.ada_step:
-            self.dS_norm = arr_abs(self.dS)
 
             # calculate the max drift of every traj
             my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
