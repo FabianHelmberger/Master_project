@@ -7,7 +7,7 @@ import src.scal as scal
 from simulation.field import Field
 from src.numba_target import my_parallel_loop, use_cuda, threadsperblock
 from simulation.config import Config
-from src.utils import KernelBridge, update_langevin_time, chunk_max_kernel
+from src.utils import KernelBridge, update_langevin_time, chunk_max_kernel, adaptive_step_kernel
 
 amax = np.max
 mean = np.mean
@@ -41,14 +41,16 @@ class LangevinDynamics(Field):
         self.DS_MAX_LOWER = 1e-12
 
         # for adaptive stepsize (in parallel trajs mode)
+        self.adaptive_step_kernel = adaptive_step_kernel
         self.dS_max = np.zeros(self.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.ada = np.ones(self.trajs, scal.SCAL_TYPE_REAL)
         self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
         self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
 
+
         # buffer for kernel args
         self.cldyn_kernel_args = None
-        self.cldyn_kernel_bridge = KernelBridge(self, [self.noise_kernel, self.drift_kernel, self.evolve_kernel], const_param={})
+        self.cldyn_kernel_bridge = KernelBridge(self, [self.noise_kernel, self.drift_kernel, self.evolve_kernel, self.adaptive_step_kernel], const_param={})
 
         if use_cuda:
             n_blocks = math.ceil(self.n_cells / threadsperblock)
@@ -94,9 +96,9 @@ class LangevinDynamics(Field):
             my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
             if use_cuda: cuda.synchronize()
 
-            for idx, dS_max in enumerate(self.dS_max):
-                if dS_max > self.DS_MAX_LOWER and self.mean_dS_max < dS_max:
-                    self.ada[idx] = self.mean_dS_max / dS_max
+            args = self.cldyn_kernel_bridge.get_current_params()[self.adaptive_step_kernel]
+            my_parallel_loop(self.adaptive_step_kernel, *args.values())
+            if use_cuda: cuda.synchronize()
 
     def step(self):
         self.cldyn_kernel_args = self.cldyn_kernel_bridge.get_current_params()

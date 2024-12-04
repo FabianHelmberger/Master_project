@@ -114,6 +114,12 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     dS[idx] = out
     # dS_norm[idx] = abs(dS[idx])
 
+@myjit 
+def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
+    this_dS_max = dS_max[idx]
+    # TODO: use mask and activated parallel loop
+    if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
+        ada[idx] = mean_dS_max / this_dS_max
 
 
 class KernelBridge:
