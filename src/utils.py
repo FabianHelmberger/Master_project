@@ -125,6 +125,31 @@ def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
 def arr_abs_kernel(idx, in_array, out_array):
     out_array[idx] = abs(in_array[idx])
 
+@myjit
+def mark_uncorr_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array):
+    delta = langevin_time[traj_idx] - meas_time[traj_idx]
+    if delta > 0.1 and langevin_time[traj_idx] > 5: 
+        marker_array[traj_idx] = True
+    else: marker_array[traj_idx] = False
+
+@myjit
+# def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
+def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
+    start_idx = traj_idx * adims[1]
+    stop_idx = start_idx + adims[1]
+
+    for i in range(start_idx, stop_idx):
+        out_array[i] = in_array[i]
+
+    # out_array[idx] = in_array[idx]
+    # traj_idx = idx // adims[1]
+    # if uncorr_traj[traj_idx]:
+    #     # print(f"filled traj {traj_idx} at idx {idx} with {in_array[idx]}")
+    #     out_array[idx] = in_array[idx]
+    # else:
+    #     # print(f"filled traj {traj_idx} at idx {idx} with nan")
+    #     out_array[idx] = np.nan
+
 class KernelBridge:
     """
     Interface to the `my_parallel_loop` function in numba_target. 
@@ -137,7 +162,7 @@ class KernelBridge:
         const_param: Constant parameters that don't change during simulation.
     """
     def __init__(self, sim: 'LangevinDynamics', kernel_funcs: List[Callable[..., Any]], 
-                 result: np.ndarray = None, const_param: Dict[Callable, Dict] = None,):
+                 result: np.ndarray = None, meas_time: scal.SCAL_TYPE_REAL = 0.0, const_param: Dict[Callable, Dict] = None,):
         self.sim = sim
         self.kernel_funcs: Dict[Callable, list] = {}
         # self.const_param:  Dict[Callable, Dict] = {}
@@ -165,7 +190,7 @@ class KernelBridge:
                 if param == 'result': 
                     # result is always tied to self.result (observables) and is unique
                     param_dict[param] = self.result; continue 
-                
+
                 if param == 'idx':
                     # idx is always tied to self.n_cells (parallel for loop)
                     param_dict[param] = self.sim.n_cells; continue 
