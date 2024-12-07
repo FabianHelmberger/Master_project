@@ -52,6 +52,7 @@ class LangevinDynamics(Field):
         self.ada = np.ones(self.trajs, scal.SCAL_TYPE_REAL)
         self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
         self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
+        self.langevin_steps = 0
 
 
         # buffer for kernel args
@@ -93,6 +94,7 @@ class LangevinDynamics(Field):
             self.dt
         )
         if use_cuda: cuda.synchronize()
+        self.langevin_steps += 1
     
     def set_apative_stepsize(self):
         if self.ada_step:
