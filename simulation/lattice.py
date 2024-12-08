@@ -8,7 +8,7 @@ from .constants import Constants
 class Lattice(Config, Constants):
     def __init__(self, config: Config):
         super().__init__(**config.__dict__)  # Use super() to handle both parent initializations
-
+        self.config = config
         self.dims = np.array(self.dims, dtype=scal.LATT_TYPE)
         self.sim_dims = np.append(self.trajs, self.dims) # artificial lattice including direction for different trajs
         self.n_dims = len(self.sim_dims)
