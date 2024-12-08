@@ -13,7 +13,7 @@ def langevin_time(sim: 'ComplexLangevinSimulation', result):
     result = sim.dt_ada
 
 @myjit
-def n_moment_kernel(idx, uncorr_traj, phi0, result, order, langevin_time, adims, meas_time):
+def n_moment_kernel(idx, equilibrated_trajs, phi0, result, order, langevin_time, adims, meas_time):
     phi_idx = phi0[idx]
     res = 1
     for _ in range(order):

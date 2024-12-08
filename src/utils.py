@@ -8,8 +8,8 @@ from src.numba_target import myjit, use_cuda
 from simulation.constants import SQRT2
 
 if use_cuda: 
-    from numba.cuda.random import xoroshiro128p_normal_float32
-    from cupy import multiply
+    from numba.cuda.random import xoroshiro128p_normal_float32 # type: ignore
+    from cupy import multiply # type: ignore
 
 if TYPE_CHECKING:
     # Import only for type checking
@@ -110,7 +110,7 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     phi_idx = phi0[idx]
     out = 0
     out += mass_real * phi_idx
-    out += interaction/6 * phi_idx*phi_idx*phi_idx
+    out += interaction * phi_idx*phi_idx*phi_idx
     dS[idx] = out
     dS_norm[idx] = abs(dS[idx])
 
@@ -126,30 +126,50 @@ def arr_abs_kernel(idx, in_array, out_array):
     out_array[idx] = abs(in_array[idx])
 
 @myjit
-def mark_uncorr_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array):
+def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr):
+    """Mark a given trajectory as ready to be observes. marker_array[traj_idx] is set true if: 
+    the observable is equilibratedelated from its last observation and the observables is thermalized. 
+
+    Args:
+        traj_idx (int): Index of the current trajectory
+        meas_time (array-like): array containing langevin times of last measurement (of this obs)
+        langevin_time (array-like): array of current langevin times (all trajectories)
+        marker_array (array-like): resulting array that indicates readiness to be measured
+        thermal_time (float): thermalization time of this obs
+        auto_corr (float): auto-correlation time of this obs
+    """
     delta = langevin_time[traj_idx] - meas_time[traj_idx]
-    if delta > 0.1 and langevin_time[traj_idx] > 5: 
+    if delta >= auto_corr and langevin_time[traj_idx] >= thermal_time: 
         marker_array[traj_idx] = True
-    else: marker_array[traj_idx] = False
+
+    else: 
+        marker_array[traj_idx] = False
 
 @myjit
-# def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
-def fill_history_kernel(traj_idx, uncorr_traj, in_array, out_array, adims):
+def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims):
     start_idx = traj_idx * adims[1]
     stop_idx = start_idx + adims[1]
 
     for i in range(start_idx, stop_idx):
         out_array[i] = in_array[i]
 
-    # out_array[idx] = in_array[idx]
-    # traj_idx = idx // adims[1]
-    # if uncorr_traj[traj_idx]:
-    #     # print(f"filled traj {traj_idx} at idx {idx} with {in_array[idx]}")
-    #     out_array[idx] = in_array[idx]
-    # else:
-    #     # print(f"filled traj {traj_idx} at idx {idx} with nan")
-    #     out_array[idx] = np.nan
+@myjit
+def update_rolling_stats_scal_kernel(traj_idx, act_matrix, result, rolling_mean, rolling_sqr_mean, counter):
+    rolling_mean[0] += result[traj_idx]
+    rolling_sqr_mean[0] += math.pow(abs(result[traj_idx]), 2)
+    counter[0] += 1
 
+@myjit
+def get_rolling_stats_scal_kernel(traj_idx, rolling_mean, rolling_sqr_mean, counter, mean, std):
+    var = rolling_sqr_mean[traj_idx] / counter[traj_idx] - math.pow(abs(rolling_mean[traj_idx]/counter[traj_idx]), 2)
+    std[traj_idx] = math.sqrt(var)
+    mean[traj_idx] = rolling_mean[traj_idx] / counter[traj_idx]
+    
+
+# @myjit
+# def fill_result_kernel(traj_idx, equilibrated_traj, in_array, out_array):
+
+    
 class KernelBridge:
     """
     Interface to the `my_parallel_loop` function in numba_target. 
@@ -161,11 +181,12 @@ class KernelBridge:
         current_params: Dictionary of current kernel parameters for each function.
         const_param: Constant parameters that don't change during simulation.
     """
-    def __init__(self, sim: 'LangevinDynamics', kernel_funcs: List[Callable[..., Any]], 
-                 result: np.ndarray = None, meas_time: scal.SCAL_TYPE_REAL = 0.0, const_param: Dict[Callable, Dict] = None,):
-        self.sim = sim
+    def __init__(self, instance, kernel_funcs: List[Callable[..., Any]], 
+                 result: np.ndarray = None, const_param: Dict[Callable, Dict] = None):
+        for key, val in const_param.items(): self.__setattr__(key, val)
+        
+        self.instance = instance
         self.kernel_funcs: Dict[Callable, list] = {}
-        # self.const_param:  Dict[Callable, Dict] = {}
         self.const_param = const_param
         self.result = result
 
@@ -190,13 +211,15 @@ class KernelBridge:
                 if param == 'result': 
                     # result is always tied to self.result (observables) and is unique
                     param_dict[param] = self.result; continue 
-
+                
                 if param == 'idx':
                     # idx is always tied to self.n_cells (parallel for loop)
-                    param_dict[param] = self.sim.n_cells; continue 
+                    param_dict[param] = self.instance.n_cells; continue 
                 
+                
+
                 # check if param is instance of sim (eg. field)
-                elif hasattr(self.sim, param): param_dict[param] = getattr(self.sim, param) 
+                elif hasattr(self.instance, param): param_dict[param] = getattr(self.instance, param) 
 
                 if self.const_param is not None:
                     if param in self.const_param.keys(): 
@@ -230,20 +253,22 @@ class RollingStats:
         Update the rolling statistics with the next sample.
         Dynamically determines shape on the first update.
         """
+        # if np.isnan(next_sample_array).all():
+        #     return 
         if self.sample_counter == 0:
             self.shape = next_sample_array.shape
             self.rolling_mean = next_sample_array.copy()
-            self.rolling_sqr_mean = np.power(next_sample_array, 2)
+            self.rolling_sqr_mean = np.power(abs(next_sample_array), 2)
         else:
             if next_sample_array.shape != self.shape:
                 raise ValueError(
                     f"Shape of new sample ({next_sample_array.shape}) does not match ({self.shape})!"
                 )
             self.rolling_mean += next_sample_array
-            self.rolling_sqr_mean += np.power(next_sample_array, 2)
+            self.rolling_sqr_mean += np.power(abs(next_sample_array), 2)
 
         self.sample_counter += 1
-        self.store_data(next_sample_array)
+        # self.store_data(next_sample_array)
 
     def store_data(self, next_sample_array: np.ndarray) -> None:
         """
@@ -276,7 +301,7 @@ class RollingStats:
 
         rolling_mean = self.rolling_mean / self.sample_counter
         rolling_variance = (
-            self.rolling_sqr_mean / self.sample_counter - np.power(rolling_mean, 2)
+            self.rolling_sqr_mean / self.sample_counter - np.power(abs(rolling_mean), 2)
         )
         rolling_std = np.sqrt(rolling_variance)
         return self._to_numpy(rolling_std)
@@ -290,7 +315,7 @@ class RollingStats:
 
         rolling_mean = self.rolling_mean / self.sample_counter
         rolling_variance = (
-            self.rolling_sqr_mean / self.sample_counter - np.power(rolling_mean, 2)
+            self.rolling_sqr_mean / self.sample_counter - np.power(abs(rolling_mean), 2)
         )
         rolling_err_mean = np.sqrt(rolling_variance) / np.sqrt(self.sample_counter)
         return self._to_numpy(rolling_err_mean)
