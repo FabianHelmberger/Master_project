@@ -1,7 +1,7 @@
 from sympy import symbols, exp, sqrt, diff
 from sympy.functions.special.bessel import besselk
 
-class Analytic:
+class Analysis:
     def __init__(self):
         self.funcs = {}
 
