@@ -1,6 +1,8 @@
 from sympy import symbols, exp, sqrt, diff
 from sympy.functions.special.bessel import besselk
+import numpy as np
 
+zero = symbols('0')
 class Analysis:
     def __init__(self):
         self.funcs = {}
@@ -31,8 +33,8 @@ class Analysis:
             deriv_func = self.get_func(deriv_name)
             moment_func = (-2)**order * deriv_func / func
             self.set_func(moment_func_name, moment_func)
-        else: 
-            self.set_func(moment_func_name, 0*mass)
+        else:
+            self.set_func(moment_func_name, zero*mass)
     
     def eval(self, func_name, **kwargs):
         func = self.get_func(func_name)
