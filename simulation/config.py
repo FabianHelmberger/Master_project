@@ -3,6 +3,7 @@ import math
 import src.scal as scal
 from src.utils import noise_kernel, mexican_hat_kernel_real, evolve_kernel
 from src.numba_target import use_cuda
+from simulation.action_modification import quadratic_modified_density_drift_kernel
 
 if use_cuda:
     from src.utils import cuda_noise_kernel as noise_kernel
@@ -23,5 +24,7 @@ class Config:
         self.drift_kernel: callable = kwargs.get('drift_kernel', mexican_hat_kernel_real)
         self.max_langevin_time: scal.SCAL_TYPE_REAL = kwargs.get('max_langevin_time', 10)
         self.show_bars: bool =  kwargs.get('show_bars', True)
+        self.phi_singular=kwargs.get('phi_singular', 10)
+        self.pullback=kwargs.get('pullback', 1.5)
         
         super().__init__()  # Ensure compatibility with multiple inheritance
