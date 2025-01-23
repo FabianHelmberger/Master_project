@@ -41,33 +41,33 @@ class Observables(LangevinDynamics):
         
         self.result[obs_name] = self.trackers[obs_name].result
 
-    def compute_all(self):
-        """
-        Compute an observable using the provided kernel and track its results.
-        """
-        for name in obs_name in self.trackers.keys():
-            try:
-                tracker = self.trackers[obs_name]
-                bridge = self.kernel_bridges[obs_name]
-            except:
-                raise ValueError(f"'{obs_name}' is not registered.")
+    # def compute_all(self):
+    #     """
+    #     Compute an observable using the provided kernel and track its results.
+    #     """
+    #     for name in obs_name in self.trackers.keys():
+    #         try:
+    #             tracker = self.trackers[obs_name]
+    #             bridge = self.kernel_bridges[obs_name]
+    #         except:
+    #             raise ValueError(f"'{obs_name}' is not registered.")
 
-        tracker.mark_equilibrated_trajs()
+    #     tracker.mark_equilibrated_trajs()
 
-        obs_kernel = tracker.obs_kernel
-        print("\n")
-        print(obs_kernel, tracker.trajs, tracker.equilibrated_trajs, tracker.phi0,
-                             tracker.result, 2, tracker.langevin_time, tracker.adims, tracker.meas_time)
+    #     obs_kernel = tracker.obs_kernel
+    #     print("\n")
+    #     print(obs_kernel, tracker.trajs, tracker.equilibrated_trajs, tracker.phi0,
+    #                          tracker.result, 2, tracker.langevin_time, tracker.adims, tracker.meas_time)
         
-        # my_act_parallel_loop(obs_kernel, self.trajs, self.trackers[obs_name].equilibrated_trajs, self.phi0,
-        #                      self.result[obs_name], 2, self.langevin_time, self.adims, self.meas_time[obs_name])
+    #     # my_act_parallel_loop(obs_kernel, self.trajs, self.trackers[obs_name].equilibrated_trajs, self.phi0,
+    #     #                      self.result[obs_name], 2, self.langevin_time, self.adims, self.meas_time[obs_name])
         
-        # kernel_args = bridge.get_current_params()[obs_kernel].values()
-        # my_act_parallel_loop(obs_kernel, *kernel_args)
-        if use_cuda: cuda.synchronize()
+    #     # kernel_args = bridge.get_current_params()[obs_kernel].values()
+    #     # my_act_parallel_loop(obs_kernel, *kernel_args)
+    #     if use_cuda: cuda.synchronize()
 
-        # tracker.update(self.equilibrated_traj, self.adims)
-        tracker.update()
+    #     # tracker.update(self.equilibrated_traj, self.adims)
+    #     tracker.update()
 
     def finish(self):
         for tr in self.trackers.values():
@@ -80,7 +80,7 @@ class Observables(LangevinDynamics):
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, const_param={}, 
-                 init_history_size = int(5e4), thermal_time=5, auto_corr=0.1):
+                 init_history_size = int(1e6), thermal_time=5, auto_corr=0.1):
         
         self.obs_name = obs_name
         self.shape = shape
