@@ -111,10 +111,69 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     out = 0
     out += mass_real * phi_idx
     out += interaction * phi_idx*phi_idx*phi_idx
+    # print('MEXICAN')
     dS[idx] = out
     dS_norm[idx] = abs(dS[idx])
 
-@myjit 
+
+# @myjit
+# def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
+#     phi_idx = phi0[idx]
+
+#     action = mass_real*phi_idx**2/2 + interaction*phi_idx**4/4
+#     action_0 = mass_real*phi_singular**2/2 + interaction*phi_singular**4/4
+#     unmod_drift =  mass_real*phi_idx + interaction*phi_idx**3
+
+#     # case of action -> -inf
+#     threshold_log = 10
+#     if -np.real(action) > threshold_log + np.log(np.abs((2*pullback*phi_singular) / (unmod_drift+0.0001))):
+#         out = unmod_drift*(1-np.exp(action-action_0))
+#     else:
+#         num = unmod_drift*np.exp(-action)-2*pullback*phi_idx
+#         den = pullback*(phi_idx**2-phi_singular**2) - np.exp(-action_0)+ np.exp(-action)
+#         out = num/den
+
+#     dS[idx] = out
+#     dS_norm[idx] = abs(dS[idx])
+
+@myjit
+def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
+    phi_idx = phi0[idx]
+
+    action_z = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
+    action_z0 = mass_real/2*phi_singular**2+interaction/4*phi_singular**4
+    phi_idx = phi0[idx]
+
+    if np.real(action_z) < 200: 
+        if np.real(action_z0) < 0:
+            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*np.exp(action_z))*np.exp(action_z0)
+            den = np.exp(action_z+action_z0)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z)+np.exp(action_z0)
+            # print("A")
+            out = num/den
+            dS[idx] = out
+            dS_norm[idx] = abs(dS[idx])
+            return out
+        
+        if np.real(action_z0) > 0:
+            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*np.exp(action_z))
+            den = np.exp(action_z)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z-action_z0)+1
+            # print("B")
+            out =  num/den
+            dS[idx] = out
+            dS_norm[idx] = abs(dS[idx])
+            return out
+
+    elif np.real(action_z) > np.log(np.abs((mass_real+interaction*phi_idx**2)/(2*pullback)))+30:
+        # print("C")
+        out =  -2*pullback*phi_idx / (pullback*(phi_idx**2-phi_singular**2)+np.exp(-action_z)-np.exp(-action_z0))
+        dS[idx] = out
+        dS_norm[idx] = abs(dS[idx])
+        return out
+    
+    print("AUTSCH")
+
+
+@myjit
 def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
     this_dS_max = dS_max[idx]
     # TODO: use mask and activated parallel loop
