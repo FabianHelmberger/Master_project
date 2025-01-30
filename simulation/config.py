@@ -26,5 +26,7 @@ class Config:
         self.show_bars: bool =  kwargs.get('show_bars', True)
         self.phi_singular=kwargs.get('phi_singular', 10)
         self.pullback=kwargs.get('pullback', 1.5)
+        self.mass_modification=kwargs.get('mass_modification', 1)
+
         
         super().__init__()  # Ensure compatibility with multiple inheritance
