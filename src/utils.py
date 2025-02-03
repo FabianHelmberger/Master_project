@@ -230,7 +230,7 @@ def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims)
         out_array[i] = in_array[i]
 
 @myjit
-def update_rolling_stats_scal_kernel(traj_idx, act_matrix, result, rolling_mean, rolling_sqr_mean, counter):
+def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean, counter):
     rolling_mean[0] += result[traj_idx]
     rolling_sqr_mean[0] += math.pow(abs(result[traj_idx]), 2)
     counter[0] += 1

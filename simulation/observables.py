@@ -134,7 +134,6 @@ class ObservableTracker:
         # self.result[:] = np.NaN
         self.result[:] = 0.0
 
-
     def get_full_history(self):
         """Return the full history of observables (if enabled)."""
 
@@ -146,7 +145,7 @@ class ObservableTracker:
 
         my_parallel_loop(mark_equilibrated_trajs_kernel, self.trajs, self.meas_time, self.langevin_time, 
                          self.equilibrated_trajs, self.thermal_time, self.auto_corr)
-        
     def compute(self):
+        # print(self.kernel_bridge.get_current_params()[self.obs_kernel].keys())
         my_act_parallel_loop(self.obs_kernel, self.n_cells, self.equilibrated_trajs, self.phi0, self.result, self.order, self.langevin_time, self.adims, self.meas_time)
         self.update()

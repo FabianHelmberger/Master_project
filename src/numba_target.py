@@ -166,7 +166,8 @@ def my_act_parallel_loop(kernel_function, iter_max, act_matrix, *args, stream=No
     if use_python:
         # loop over the function directly:
         for xi in range(iter_max):
-            if act_matrix[xi]: kernel_function(xi, act_matrix, *args)
+            # if act_matrix[xi]: kernel_function(xi, act_matrix, *args)
+            if act_matrix[xi]: kernel_function(xi, *args)
 
     elif use_cuda:
         # if not hasattr(kernel_function, 'compiled_cuda_kernel'):
@@ -204,7 +205,7 @@ def my_act_parallel_loop(kernel_function, iter_max, act_matrix, *args, stream=No
             @numba.njit(parallel=True, nogil=True, fastmath=True)
             def numba_prange_func(iter_max, act_matrix, *args):
                 for idx in prange(iter_max):
-                    if act_matrix[idx]: kernel_function(idx, act_matrix, *args)
+                    if act_matrix[idx]: kernel_function(idx, *args)
             
             # Store in the dictionary
             compiled_act_kernels[kernel_function] = numba_prange_func
