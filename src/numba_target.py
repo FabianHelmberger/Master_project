@@ -151,7 +151,8 @@ def my_parallel_loop(kernel_function, iter_max, *args, stream=None):
         # Execute the compiled function
         compiled_function(iter_max, *args)
 
-def my_act_parallel_loop(kernel_function, iter_max, act_matrix, *args, stream=None):
+
+def my_act_parallel_loop(kernel_function, act_matrix, iter_max, *args, stream=None):
     """Perform parallel loop over a kernel function either on CPU
     (using Numba's prange) or on GPU (using a compiled cuda kernel).
 

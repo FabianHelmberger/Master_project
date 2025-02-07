@@ -128,7 +128,7 @@ class ObservableTracker:
         if self.langevin_history:
             self.history[self.langevin_steps] = result
             if use_cuda: cuda.synchronize()
-        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.trajs, self.equilibrated_trajs, result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
+        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
         # self.stats.update(result)
         # print(result)
         # self.result[:] = np.NaN
@@ -146,6 +146,6 @@ class ObservableTracker:
         my_parallel_loop(mark_equilibrated_trajs_kernel, self.trajs, self.meas_time, self.langevin_time, 
                          self.equilibrated_trajs, self.thermal_time, self.auto_corr)
     def compute(self):
-        # print(self.kernel_bridge.get_current_params()[self.obs_kernel].keys())
-        my_act_parallel_loop(self.obs_kernel, self.n_cells, self.equilibrated_trajs, self.phi0, self.result, self.order, self.langevin_time, self.adims, self.meas_time)
+        args = self.kernel_bridge.get_current_params()[self.obs_kernel]
+        my_act_parallel_loop(self.obs_kernel, self.equilibrated_trajs, *args.values())
         self.update()
