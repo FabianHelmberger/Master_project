@@ -1,3 +1,44 @@
+def calculate_stats_complex(rolling_mean, rolling_sqr_mean, counter):
+    """
+    Calculate mean and SEM for complex numbers.
+    
+    Parameters:
+    rolling_mean (np.array): Single-element array containing the rolling sum of complex values.
+    rolling_sqr_mean (np.array): Single-element array containing the rolling sum of squared magnitudes of complex values.
+    counter (np.array): Single-element array containing the number of values.
+    
+    Returns:
+    tuple: (mean, sem_real, sem_imag), where:
+        - mean is the complex mean,
+        - sem_real is the SEM for the real part,
+        - sem_imag is the SEM for the imaginary part.
+    """
+    if counter[0] == 0:
+        raise ValueError("Counter cannot be zero to avoid division by zero.")
+    
+    # Extract real and imaginary parts
+    rolling_mean_real = rolling_mean[0].real
+    rolling_mean_imag = rolling_mean[0].imag
+    
+    # Mean calculation
+    mean_real = rolling_mean_real / counter[0]
+    mean_imag = rolling_mean_imag / counter[0]
+    
+    # Variance for real part
+    rolling_sqr_mean_real = rolling_sqr_mean[0]
+    variance = (rolling_sqr_mean_real / counter[0]) - mean_real**2 - mean_imag**2
+    variance = max(variance, 0)
+        
+    # Standard error of the mean (SEM)
+    sem = np.sqrt(variance / counter[0])
+    
+    # Return complex mean and SEM for real and imaginary parts
+    mean = mean_real + 1j * mean_imag
+    return mean, sem
+
+
+
+
 import numpy as np
 
 # Set environment variables
@@ -5,7 +46,7 @@ import os
 
 os.environ["SCAL_TYPE"] = "complex"
 os.environ["PRECISION"] = "single"
-os.environ["MY_NUMBA_TARGET"] = "numba"
+os.environ["MY_NUMBA_TARGET"] = "cuda"
  
 # Add cle_fun to PYTHON_PATH
 import sys
@@ -14,18 +55,18 @@ sys.path.append("../../clonscal")
 # create parameters
 start_angle = 0
 stop_angle = 2 * np.pi
-angles_cl = np.linspace(start_angle, stop_angle, 32)
+angles_cl = np.linspace(start_angle, stop_angle, 16)
 
-pullback_phase = np.linspace(start_angle, stop_angle, 1)
+pullback_phase = np.linspace(start_angle, stop_angle, )
 
 parameters = {
-    "steps": [int(1e5)],
-    "trajs": [int(1e5)],
-    "dt": [1e-4],
+    "steps": [int(1e3)],
+    "trajs": [int(1e4)],
+    "dt": [5e-3],
     "sigma_abs": [1],
     "sigma_phase": angles_cl,
     "lambda_abs": [1],
-    "pullback_phase": pullback_phase,
+    "pullback_phase": [0],
     "pullback_abs": [5],
     "mass_modification": [2],
 }
@@ -41,6 +82,10 @@ from simulation.cl_simulation import ComplexLangevinSimulation
 from src.obs_kernels import n_moment_kernel, dse_n_moment_kernel
 from src.utils import gaussian_modified_density_drift_kernel
 from tqdm import tqdm
+
+
+from simulation.gpu_handler import GPU_handler
+from src.numba_target import use_cuda
 
 def run_sim(params):
     param_key = "_".join(map(str, params.values()))
@@ -58,21 +103,26 @@ def run_sim(params):
                     mass_modification=params["mass_modification"], 
                     pullback = pullback
                     )
+
+    sim_dse = ComplexLangevinSimulation(config)
     
-    sim = ComplexLangevinSimulation(config)
-    sim.register_observable('dse_1_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 1},  langevin_history=False, thermal_time=1, auto_corr=1)
-    sim.register_observable('dse_3_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 3},  langevin_history=False, thermal_time=1, auto_corr=1)
-    sim.register_observable('dse_5_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 5},  langevin_history=False, thermal_time=1, auto_corr=1)
+    if use_cuda: 
+        gpu_handler = GPU_handler(sim_dse)
+        gpu_handler.to_device()
+
+    sim_dse.register_observable('dse_1_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 1},  langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('dse_3_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 3},  langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('dse_5_moment', obs_kernel=dse_n_moment_kernel, const_param={"order" : 5},  langevin_history=False, thermal_time=1, auto_corr=1)
 
     for _ in tqdm(range(params["steps"])):
-        sim.step()
-        for name, tr in sim.trackers.items():
+        sim_dse.step()
+        for name, tr in sim_dse.trackers.items():
             tr.mark_equilibrated_trajs()
             tr.compute()
-    sim.finish()
+    sim_dse.finish()
 
     results = {'params': params}
-    for name, tr in sim.trackers.items():
+    for name, tr in sim_dse.trackers.items():
         mean, sem = calculate_stats_complex(tr.rolling_mean, tr.rolling_sqr_mean, tr.counter)
         results[name] = {}
         results[name]["mean_real"] = mean.real
@@ -82,10 +132,10 @@ def run_sim(params):
     return results, param_key
 
 
-for param in param_combinations[:2]:
+for param in param_combinations:
     results, param_key = run_sim(param)
 
     import json
-    file_path = os.path.join('$HOME/gitrepos/clonscal/parameter_study', f"{param_key}.json")
+    file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "parameter_study", "sim_data", f"{param_key}.json")
     with open(file_path, "w") as f:
         json.dump(results, f, indent=4)
