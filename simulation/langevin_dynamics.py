@@ -25,7 +25,7 @@ if use_cuda:
         my_parallel_loop(arr_abs_kernel, in_array.size, in_array, out_array)
         cuda.synchronize()
 
-    import cupy as cp
+    import cupy as cp # type: ignore
     def amax(arr):
         return cp.amax(cp.asarray(arr)).get().item()
 
@@ -37,8 +37,9 @@ class LangevinDynamics(Field):
     """
     A class that takes care of the dynamics of the stochastic process.
     """
-    def __init__(self, config: Config):
+    def __init__(self, config):
         super().__init__(config)
+
         self.dS = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.dS_norm = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
         self.eta = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
@@ -53,7 +54,6 @@ class LangevinDynamics(Field):
         self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
         self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
         self.langevin_steps = 0
-
 
         # buffer for kernel args
         self.cldyn_kernel_args = None
@@ -109,6 +109,7 @@ class LangevinDynamics(Field):
 
     def step(self):
         self.cldyn_kernel_args = self.cldyn_kernel_bridge.get_current_params()
+        # print(self.cldyn_kernel_args[self.drift_kernel])
         self.update_noise(*self.cldyn_kernel_args[self.noise_kernel].values())
         self.update_drift(*self.cldyn_kernel_args[self.drift_kernel].values())
         if self.ada_step: self.set_apative_stepsize()
