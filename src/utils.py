@@ -140,14 +140,14 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
 def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, mass_modification, pullback):
     phi_idx = phi0[idx]
     action = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
-    mod = -mass_modification*phi_idx**2
+    mod = -mass_modification*phi_idx**2/2
     action_mod = action + mod
     drift = mass_real*phi_idx+interaction*phi_idx**3
 
     if np.real(action_mod) < 0:
-        out = drift-pullback*(drift-2*mass_modification*phi_idx)*np.exp(action_mod) / (1+pullback*np.exp(action_mod))
+        out = drift-pullback*(drift-mass_modification*phi_idx)*np.exp(action_mod) / (1+pullback*np.exp(action_mod))
     else: 
-        out = drift-pullback*(drift-2*mass_modification*phi_idx) / (np.exp(-action_mod)+pullback)
+        out = drift-pullback*(drift-mass_modification*phi_idx) / (np.exp(-action_mod)+pullback)
 
     dS[idx] = out
     dS_norm[idx] = abs(dS[idx])
