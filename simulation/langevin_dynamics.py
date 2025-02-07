@@ -109,7 +109,6 @@ class LangevinDynamics(Field):
 
     def step(self):
         self.cldyn_kernel_args = self.cldyn_kernel_bridge.get_current_params()
-        # print(self.cldyn_kernel_args[self.drift_kernel])
         self.update_noise(*self.cldyn_kernel_args[self.noise_kernel].values())
         self.update_drift(*self.cldyn_kernel_args[self.drift_kernel].values())
         if self.ada_step: self.set_apative_stepsize()

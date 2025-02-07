@@ -1,13 +1,13 @@
 import numpy as np
 
-from .cl_simulation import ComplexLangevinSimulation
+# from .cl_simulation import ComplexLangevinSimulation
 from src.numba_target import use_cuda
 
 if use_cuda: 
     from numba import cuda # type: ignore 
 
 class GPU_handler:
-    def __init__(self, sim: ComplexLangevinSimulation, exception = [None]):
+    def __init__(self, sim, exception = [None]):
         self.sim = sim
         self.exception = exception
         self.define_tensor_data()

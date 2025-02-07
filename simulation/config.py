@@ -3,7 +3,6 @@ import math
 import src.scal as scal
 from src.utils import noise_kernel, mexican_hat_kernel_real, evolve_kernel
 from src.numba_target import use_cuda
-from simulation.action_modification import quadratic_modified_density_drift_kernel
 
 if use_cuda:
     from src.utils import cuda_noise_kernel as noise_kernel

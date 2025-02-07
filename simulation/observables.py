@@ -12,6 +12,7 @@ from src.numba_target import use_cuda, my_act_parallel_loop
 
 if use_cuda:
     from numba import cuda # type: ignore
+    from simulation.gpu_handler import GPU_handler
 
 
 class Observables(LangevinDynamics):
@@ -24,6 +25,7 @@ class Observables(LangevinDynamics):
         self.result: Dict = {}
         self.kernel_bridges: Dict[str, KernelBridge] = {}  # Stores trackers for different observables
         self.meas_time = {} # np.full(shape=self.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
+
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
                             langevin_history=False, thermal_time=5, auto_corr=0.1):
@@ -107,6 +109,10 @@ class ObservableTracker:
         self.rolling_sqr_mean = np.array([0], dtype=scal.SCAL_TYPE_REAL)
         self.counter = np.array([0], dtype=scal.LATT_TYPE)
 
+        if use_cuda: 
+            gpu_hanlder = GPU_handler(self)
+            gpu_hanlder.to_device()
+
     def __getattr__(self, name):
         return getattr(self._sim_instance, name)
     
@@ -122,13 +128,14 @@ class ObservableTracker:
         """
         Update the tracker with a new observable value at the current Langevin step.
         """
-        if use_cuda: result = self.result.copy_to_host().copy()
-        else: result = self.result.copy()
+        # if use_cuda: result = self.result.copy_to_host().copy()
+        # else: result = self.result.copy()
 
-        if self.langevin_history:
-            self.history[self.langevin_steps] = result
-            if use_cuda: cuda.synchronize()
-        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
+        # if self.langevin_history:
+        #     self.history[self.langevin_steps] = result
+        #     if use_cuda: cuda.synchronize()
+
+        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
         # self.stats.update(result)
         # print(result)
         # self.result[:] = np.NaN

@@ -187,7 +187,7 @@ def my_act_parallel_loop(kernel_function, act_matrix, iter_max, *args, stream=No
             code = """def {}_cuda_kernel(iter_max, act_matrix, {}):
                           xi = cuda.grid(1)
                           if xi < iter_max and act_matrix[xi]:
-                              _kernel_function_{}(xi, act_matrix, {})""".format(original_name, args_string, _unique_counter, args_string)
+                              _kernel_function_{}(xi, {})""".format(original_name, args_string, _unique_counter, args_string)
             locals_copy = locals()
             globals()['_kernel_function_{}'.format(_unique_counter)] = kernel_function
             exec(code, globals(), locals_copy)

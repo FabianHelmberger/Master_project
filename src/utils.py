@@ -136,6 +136,7 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
 #     dS[idx] = out
 #     dS_norm[idx] = abs(dS[idx])
 
+import cmath
 @myjit
 def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, mass_modification, pullback):
     phi_idx = phi0[idx]
@@ -143,15 +144,17 @@ def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, in
     mod = -mass_modification*phi_idx**2/2
     action_mod = action + mod
     drift = mass_real*phi_idx+interaction*phi_idx**3
+    out = 0
 
-    if np.real(action_mod) < 0:
-        out = drift-pullback*(drift-mass_modification*phi_idx)*np.exp(action_mod) / (1+pullback*np.exp(action_mod))
+    if action_mod.real < 0:
+        out = drift-pullback*(drift-mass_modification*phi_idx)*cmath.exp(action_mod) / (1+pullback*cmath.exp(action_mod))
     else: 
-        out = drift-pullback*(drift-mass_modification*phi_idx) / (np.exp(-action_mod)+pullback)
-
+        out = drift-pullback*(drift-mass_modification*phi_idx) / (cmath.exp(-action_mod)+pullback)
     dS[idx] = out
     dS_norm[idx] = abs(dS[idx])
+
     return out
+
 
 @myjit
 def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
@@ -161,33 +164,33 @@ def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, i
     action_z0 = mass_real/2*phi_singular**2+interaction/4*phi_singular**4
     phi_idx = phi0[idx]
 
-    if np.real(action_z) < 200: 
+    if action_z.real < 200: 
         if np.real(action_z0) < 0:
-            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*np.exp(action_z))*np.exp(action_z0)
-            den = np.exp(action_z+action_z0)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z)+np.exp(action_z0)
+            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*cmath.exp(action_z))*cmath.exp(action_z0)
+            den = cmath.exp(action_z+action_z0)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z)+np.exp(action_z0)
             # print("A")
             out = num/den
             dS[idx] = out
             dS_norm[idx] = abs(dS[idx])
             return out
         
-        if np.real(action_z0) > 0:
-            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*np.exp(action_z))
-            den = np.exp(action_z)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z-action_z0)+1
+        if action_z0.real > 0:
+            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*cmath.exp(action_z))
+            den = cmath.exp(action_z)*pullback*(phi_idx**2-phi_singular**2)-cmath.exp(action_z-action_z0)+1
             # print("B")
             out =  num/den
             dS[idx] = out
             dS_norm[idx] = abs(dS[idx])
             return out
 
-    elif np.real(action_z) > np.log(np.abs((mass_real+interaction*phi_idx**2)/(2*pullback)))+30:
+    elif action_z.real > np.log(np.abs((mass_real+interaction*phi_idx**2)/(2*pullback)))+30:
         # print("C")
-        out =  -2*pullback*phi_idx / (pullback*(phi_idx**2-phi_singular**2)+np.exp(-action_z)-np.exp(-action_z0))
+        out =  -2*pullback*phi_idx / (pullback*(phi_idx**2-phi_singular**2)+cmath.exp(-action_z)-cmath.exp(-action_z0))
         dS[idx] = out
         dS_norm[idx] = abs(dS[idx])
         return out
     
-    print("AUTSCH")
+    # print("AUTSCH")
 
 
 @myjit
