@@ -238,6 +238,7 @@ def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr
     rolling_sqr_mean[0] += math.pow(abs(result[traj_idx]), 2)
     counter[0] += 1
 
+
 @myjit
 def get_rolling_stats_scal_kernel(traj_idx, rolling_mean, rolling_sqr_mean, counter, mean, std):
     var = rolling_sqr_mean[traj_idx] / counter[traj_idx] - math.pow(abs(rolling_mean[traj_idx]/counter[traj_idx]), 2)
@@ -267,7 +268,6 @@ class KernelBridge:
         self.instance = instance
         self.kernel_funcs: Dict[Callable, list] = {}
         self.const_param = const_param
-        self.result = result
 
         # Validate and process kernel functions
         for kf in kernel_funcs:
@@ -287,9 +287,9 @@ class KernelBridge:
             param_dict = {}
 
             for param in params:
-                if param == 'result': 
-                    # result is always tied to self.result (observables) and is unique
-                    param_dict[param] = self.result; continue 
+                # if param == 'result': 
+                #     # result is always tied to self.result (observables) and is unique
+                #     param_dict[param] = self.result; continue 
                 
                 if param == 'idx':
                     # idx is always tied to self.n_cells (parallel for loop)

@@ -22,7 +22,7 @@ class Observables(LangevinDynamics):
     def __init__(self, config):
         super().__init__(config)
         self.trackers: Dict[str, ObservableTracker] = {}  # Stores trackers for different observables
-        self.result: Dict = {}
+        # self.result: Dict = {}
         self.kernel_bridges: Dict[str, KernelBridge] = {}  # Stores trackers for different observables
         self.meas_time = {} # np.full(shape=self.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
 
@@ -41,7 +41,7 @@ class Observables(LangevinDynamics):
                                                     const_param=const_param, langevin_history=langevin_history,
                                                     thermal_time=thermal_time, auto_corr=auto_corr)
         
-        self.result[obs_name] = self.trackers[obs_name].result
+        # self.result[obs_name] = self.trackers[obs_name].result
 
     # def compute_all(self):
     #     """
@@ -99,7 +99,6 @@ class ObservableTracker:
         self.equilibrated_trajs = np.zeros(sim_instance.trajs, dtype=bool)
         self.meas_time = np.full(shape=sim_instance.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
         self.result = np.zeros(shape=shape, dtype=scal.SCAL_TYPE)
-        if use_cuda: self.result  = cuda.to_device(self.result)
 
         if langevin_history: self.history = np.zeros(shape=(init_history_size, *self.shape), dtype=scal.SCAL_TYPE)
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
@@ -136,10 +135,11 @@ class ObservableTracker:
         #     if use_cuda: cuda.synchronize()
 
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
+        if use_cuda: cuda.synchronize()
         # self.stats.update(result)
         # print(result)
         # self.result[:] = np.NaN
-        self.result[:] = 0.0
+        # self.result[:] = 0.0
 
     def get_full_history(self):
         """Return the full history of observables (if enabled)."""
@@ -155,4 +155,5 @@ class ObservableTracker:
     def compute(self):
         args = self.kernel_bridge.get_current_params()[self.obs_kernel]
         my_act_parallel_loop(self.obs_kernel, self.equilibrated_trajs, *args.values())
+        if use_cuda: cuda.synchronize()
         self.update()
