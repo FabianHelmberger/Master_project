@@ -73,6 +73,11 @@ class Observables(LangevinDynamics):
 
     def finish(self):
         for tr in self.trackers.values():
+            # merge trajectory data 
+            tr.rolling_mean = np.sum(tr.rolling_mean, axis = 0)
+            tr.rolling_sqr_mean = np.sum(tr.rolling_sqr_mean, axis = 0)
+            tr.counter = np.sum(tr.counter, axis = 0)
+
             if tr.langevin_history:
                 tr.history = tr.history[:self.langevin_steps]
                 # tr.history = tr.history[~np.isnan(tr.history )]
@@ -104,9 +109,13 @@ class ObservableTracker:
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
         
         self.stats = RollingStats()
-        self.rolling_mean = np.array([0], dtype=scal.SCAL_TYPE)
-        self.rolling_sqr_mean = np.array([0], dtype=scal.SCAL_TYPE_REAL)
-        self.counter = np.array([0], dtype=scal.LATT_TYPE)
+        # self.rolling_mean = np.array([0], dtype=scal.SCAL_TYPE)
+        # self.rolling_sqr_mean = np.array([0], dtype=scal.SCAL_TYPE_REAL)
+        # self.counter = np.array([0], dtype=scal.LATT_TYPE)
+
+        self.rolling_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
+        self.rolling_sqr_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
+        self.counter = np.zeros(sim_instance.trajs, dtype=scal.LATT_TYPE)
 
         if use_cuda: 
             gpu_hanlder = GPU_handler(self)
@@ -121,7 +130,7 @@ class ObservableTracker:
 #         # TODO: make history size dynamic
 #         # if langevin_history: self.history = np.full((init_history_size, *self.shape), np.nan, dtype=scal.SCAL_TYPE)
 #         # self.result = np.full(shape=self.shape, fill_value=np.nan, dtype=scal.SCAL_TYPE)
-        
+
 
     def update(self):
         """

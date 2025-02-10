@@ -234,10 +234,10 @@ def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims)
 
 @myjit
 def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean, counter):
-    rolling_mean[0] += result[traj_idx]
-    rolling_sqr_mean[0] += math.pow(abs(result[traj_idx]), 2)
-    counter[0] += 1
-
+    rolling_mean[traj_idx] += result[traj_idx]
+    rolling_sqr_mean[traj_idx] += math.pow(abs(result[traj_idx]), 2)
+    counter[traj_idx] += 1
+    
 
 @myjit
 def get_rolling_stats_scal_kernel(traj_idx, rolling_mean, rolling_sqr_mean, counter, mean, std):
