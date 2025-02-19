@@ -44,6 +44,11 @@ def noise_kernel(idx, eta, noise_factor):
     eta[idx] = SQRT2 * noise_factor * scal.SCAL_TYPE_REAL(np.random.normal())
 
 @myjit
+def noise_kernel_rotated(idx, eta, noise_factor, mass_modification):
+    eta[idx] = SQRT2 * noise_factor * scal.SCAL_TYPE_REAL(np.random.normal()) * np.exp(-1j*np.angle(mass_modification)/2)
+
+
+@myjit
 def cuda_noise_kernel(idx, eta, noise_factor, rng):
     r = xoroshiro128p_normal_float32(rng, idx)
     eta[idx] = SQRT2 * noise_factor * r
@@ -116,6 +121,34 @@ def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
     dS_norm[idx] = abs(dS[idx])
 
 
+@myjit
+def update_histogram_complex(traj_idx, data, hist, bins, min_real, max_real, min_imag, max_imag):
+    real_val = data[traj_idx].real
+    imag_val = data[traj_idx].imag
+
+    if min_real < real_val < max_real and min_imag < imag_val < max_imag:
+        bin_x = int((real_val - min_real) / (max_real - min_real) * bins)
+        bin_y = int((imag_val - min_imag) / (max_imag - min_imag) * bins)
+        
+        bin_x = min(bin_x, bins - 1)  # Ensure within range
+        bin_y = min(bin_y, bins - 1)
+
+        # Atomic add to avoid race conditions
+        hist[bin_x, bin_y] += 1
+        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
+
+@myjit
+def update_histogram_real(traj_idx, data, hist, bins, min_real, max_real):
+    real_val = data[traj_idx]
+
+    if min_real < real_val < max_real:
+        bin_x = int((real_val - min_real) / (max_real - min_real) * bins)
+        bin_x = min(bin_x, bins - 1)  # Ensure within range
+
+        # Atomic add to avoid race conditions
+        hist[bin_x] += 1
+        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
+
 # @myjit
 # def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
 #     phi_idx = phi0[idx]
@@ -154,6 +187,24 @@ def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, in
     dS_norm[idx] = abs(dS[idx])
 
     return out
+
+@myjit
+def gaussian_modified_density_drift_kernel_rotated(idx, phi0, dS, dS_norm, mass_real, interaction, mass_modification, pullback):
+    phi_idx = phi0[idx]
+    action = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
+    mod = -mass_modification*phi_idx**2/2
+    action_mod = action + mod
+    drift = mass_real*phi_idx+interaction*phi_idx**3
+    out = 0
+
+    if action_mod.real < 0:
+        out = drift-pullback*(drift-mass_modification*phi_idx)*cmath.exp(action_mod) / (1+pullback*cmath.exp(action_mod))
+    else: 
+        out = drift-pullback*(drift-mass_modification*phi_idx) / (cmath.exp(-action_mod)+pullback)
+    dS[idx] = out * np.exp(-1j*np.angle(mass_modification))
+    dS_norm[idx] = abs(dS[idx])
+
+    return out*np.exp(-1j*np.angle(mass_modification))
 
 
 @myjit
