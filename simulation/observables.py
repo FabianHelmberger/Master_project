@@ -28,7 +28,7 @@ class Observables(LangevinDynamics):
 
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
-                            langevin_history=False, thermal_time=5, auto_corr=0.1):
+                            langevin_history=False, thermal_time=5, auto_corr=0.1, dtype=scal.SCAL_TYPE):
         """
         Register a new observable with the option to track Langevin time.
         """
@@ -39,7 +39,7 @@ class Observables(LangevinDynamics):
 
         self.trackers[obs_name] = ObservableTracker(sim_instance=self, obs_name=obs_name, shape=shape, obs_kernel=obs_kernel,
                                                     const_param=const_param, langevin_history=langevin_history,
-                                                    thermal_time=thermal_time, auto_corr=auto_corr)
+                                                    thermal_time=thermal_time, auto_corr=auto_corr, dtype=dtype)
         
         # self.result[obs_name] = self.trackers[obs_name].result
 
@@ -87,7 +87,7 @@ class Observables(LangevinDynamics):
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, const_param={}, 
-                 init_history_size = int(1e6), thermal_time=5, auto_corr=0.1):
+                 init_history_size = int(1e6), thermal_time=5, auto_corr=0.1,dtype=scal.SCAL_TYPE):
         
         self.obs_name = obs_name
         self.shape = shape
@@ -103,7 +103,7 @@ class ObservableTracker:
 
         self.equilibrated_trajs = np.zeros(sim_instance.trajs, dtype=bool)
         self.meas_time = np.full(shape=sim_instance.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
-        self.result = np.zeros(shape=shape, dtype=scal.SCAL_TYPE)
+        self.result = np.zeros(shape=shape, dtype=dtype)
 
         if langevin_history: self.history = np.zeros(shape=(init_history_size, *self.shape), dtype=scal.SCAL_TYPE)
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
@@ -139,12 +139,13 @@ class ObservableTracker:
         # if use_cuda: result = self.result.copy_to_host().copy()
         # else: result = self.result.copy()
 
-        # if self.langevin_history:
-        #     self.history[self.langevin_steps] = result
-        #     if use_cuda: cuda.synchronize()
 
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
         if use_cuda: cuda.synchronize()
+
+        if self.langevin_history:
+            self.history[self.langevin_steps] = self.result
+            if use_cuda: cuda.synchronize()
         # self.stats.update(result)
         # print(result)
         # self.result[:] = np.NaN
