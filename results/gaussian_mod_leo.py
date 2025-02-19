@@ -1,0 +1,198 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Set environment variables
+import os
+
+
+os.environ["SCAL_TYPE"] = "complex"
+os.environ["PRECISION"] = "single"
+os.environ["MY_NUMBA_TARGET"] = "cuda"
+ 
+ 
+# Add cle_fun to PYTHON_PATH
+import sys
+sys.path.append("../../clonscal")
+
+##########################################################
+##########################################################
+
+def calculate_stats_complex(rolling_mean, rolling_sqr_mean, counter):
+    """
+    Calculate mean and SEM for complex numbers.
+    
+    Parameters:
+    rolling_mean (np.array): Single-element array containing the rolling sum of complex values.
+    rolling_sqr_mean (np.array): Single-element array containing the rolling sum of squared magnitudes of complex values.
+    counter (np.array): Single-element array containing the number of values.
+    
+    Returns:
+    tuple: (mean, sem_real, sem_imag), where:
+        - mean is the complex mean,
+        - sem_real is the SEM for the real part,
+        - sem_imag is the SEM for the imaginary part.
+    """
+    if counter == 0:
+        raise ValueError("Counter cannot be zero to avoid division by zero.")
+
+    # Extract real and imaginary parts
+    rolling_mean_real = rolling_mean.real
+    rolling_mean_imag = rolling_mean.imag
+
+    # Mean calculation
+    mean_real = rolling_mean_real / counter
+    mean_imag = rolling_mean_imag / counter
+
+    # Variance for real part
+    rolling_sqr_mean_real = rolling_sqr_mean
+    variance = (rolling_sqr_mean_real / counter) - mean_real**2 - mean_imag**2
+    variance = max(variance, 0)
+
+    # Standard error of the mean (SEM)
+    sem = np.sqrt(variance / counter)
+
+    # Return complex mean and SEM for real and imaginary parts
+    mean = mean_real + 1j * mean_imag
+    return mean, sem
+
+##########################################################
+##########################################################
+
+import numpy as np
+from simulation.config import Config
+from simulation.cl_simulation import ComplexLangevinSimulation
+from src.obs_kernels import (
+    n_moment_kernel, 
+    dse_n_moment_kernel,
+    abs_drift
+)
+from tqdm import tqdm
+from simulation.gpu_handler import GPU_handler
+from src.numba_target import use_cuda
+import src.scal as scal
+from src.utils import (
+    gaussian_modified_density_drift_kernel, 
+    update_histogram_complex, 
+    update_histogram_real,
+    mexican_hat_kernel_real, 
+    noise_kernel_rotated
+)
+
+from src.numba_target import my_act_parallel_loop
+from numba import cuda
+
+
+def run_sim(params):
+
+    param_key = "_".join(map(str, params.values()))
+    sigma = params["sigma_abs"] * np.exp(1j*params["sigma_phase"])
+    interaction = params["lambda_abs"]
+
+    config = Config(dt = params["dt"], 
+                    trajs = params["trajs"], 
+                    dims = [1], 
+                    mass_real = sigma, 
+                    interaction = interaction, 
+                    ada_step = True, 
+                    drift_kernel=gaussian_modified_density_drift_kernel,
+                    mass_modification=params["mass_modification"], 
+                    pullback=params["pullback"]
+                    )
+    
+    sim_dse = ComplexLangevinSimulation(config)
+
+    bins_p = params["bins_p"]  # Number of p bins
+    bins_u = params["bins_u"]  # Number of u bins
+    hist_p = np.zeros((bins_p, bins_p), dtype=scal.SCAL_TYPE_REAL)
+    hist_u = np.zeros(bins_u, dtype=scal.SCAL_TYPE_REAL)
+    
+    if use_cuda:
+        hist_u = cuda.to_device(hist_u)
+        hist_p = cuda.to_device(hist_p)
+        gpu_handler = GPU_handler(sim_dse)
+        gpu_handler.to_device()
+
+    # reigster observables
+    sim_dse.register_observable('1_moment', obs_kernel=n_moment_kernel, const_param={"order" : 1},  langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('2_moment', obs_kernel=n_moment_kernel, const_param={"order" : 2},  langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('3_moment', obs_kernel=n_moment_kernel, const_param={"order" : 3},  langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('4_moment', obs_kernel=n_moment_kernel, const_param={"order" : 4},  langevin_history=False, thermal_time=1, auto_corr=1)
+    
+    sim_dse.register_observable('dse_1_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 1}, langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('dse_2_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 2}, langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('dse_3_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 3}, langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('dse_4_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 4}, langevin_history=False, thermal_time=1, auto_corr=1)
+    sim_dse.register_observable('abs_drift', obs_kernel=abs_drift, langevin_history=False, thermal_time=1, auto_corr=1, dtype=scal.SCAL_TYPE_REAL)
+
+    # run the sim
+    for _ in tqdm(range(params["steps"])):
+        sim_dse.step()
+        for name, tr in sim_dse.trackers.items():
+            tr.mark_equilibrated_trajs()
+            tr.compute()
+
+        # update histograms
+        p_tracker = sim_dse.trackers["1_moment"]
+        u_tracker = sim_dse.trackers["abs_drift"]
+        my_act_parallel_loop(update_histogram_complex, p_tracker.equilibrated_trajs, params["trajs"], p_tracker.result, hist_p, params["bins_p"], params["p_min_real"], params["p_max_real"], params["p_min_imag"], params["p_max_imag"])
+        my_act_parallel_loop(update_histogram_real, u_tracker.equilibrated_trajs, params["trajs"], u_tracker.result, hist_u, params["bins_u"], params["u_min"], params["u_max"])
+        if use_cuda: cuda.synchronize()
+    
+    sim_dse.finish()
+    if use_cuda:
+        hist_u = hist_u.copy_to_host()
+        hist_p = hist_p.copy_to_host()
+
+    results = {'params': params}
+
+    for name, tr in sim_dse.trackers.items():
+        mean, sem = calculate_stats_complex(tr.rolling_mean, tr.rolling_sqr_mean, tr.counter)
+        results[name] = {}
+        results[name]["mean_real"] = mean.real
+        results[name]["mean_imag"] = mean.imag
+        results[name]["sem"] = sem
+
+    # results["drift_hist"] = hist_u
+    # results["p_hist"] = hist_p
+
+    return results, param_key, hist_p, hist_u
+
+# create parameters
+sigma_abs = np.linspace(1,4,64, endpoint=False)
+sigma_phase = np.linspace(0, 2*np.pi, 32, endpoint=False)
+
+sigma = -1+4j
+parameters = {
+    "steps": int(1e6),
+    "trajs": int(5e6),
+    "dt": 1e-5,
+    "sigma_abs": np.abs(sigma),
+    "sigma_phase": np.angle(sigma),
+    "lambda_abs": 2,
+    "mass_modification": 2.5,
+    "pullback": 200,
+    "bins_u": 10000,
+    "bins_p": 1000,
+    "p_min_real": -10,
+    "p_max_real": 10,
+    "p_min_imag": -10,
+    "p_max_imag": 10,
+    "u_min": 1e-3,
+    "u_max": 1e3,
+}
+
+# Run the simulation
+results, param_key, hist_p, hist_u = run_sim(parameters)
+
+# Save results
+import json
+file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+
+with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+    json.dump(results, f, indent=4)
+
+with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+    np.save(f, hist_p)
+
+with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+    np.save(f, hist_u)
