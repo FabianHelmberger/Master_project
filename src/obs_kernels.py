@@ -23,6 +23,14 @@ def n_moment_kernel(idx, phi0, result, order, langevin_time, adims, meas_time):
     meas_time[traj_idx] = langevin_time[traj_idx]
 
 @myjit
+def abs_drift(idx, result, dS_norm, langevin_time, meas_time):
+    result[idx] = dS_norm[idx]
+    meas_time[idx] = langevin_time[idx]
+
+
+
+
+@myjit
 def skew_action(idx, phi0, result, mass_real, interaction, langevin_time, adims, meas_time):
     """
     dyson-schwinger eq. predict, that the exp. value wrt. the unmodified theory of this skew action is zero
