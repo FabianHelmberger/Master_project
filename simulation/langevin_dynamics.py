@@ -42,7 +42,7 @@ class LangevinDynamics(Field):
 
         self.dS = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.dS_norm = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
-        self.eta = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE_REAL)
+        self.eta = np.zeros(self.n_cells, dtype=scal.SCAL_TYPE)
         self.langevin_time = np.zeros(self.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.DS_MAX_UPPER = 1e12
         self.DS_MAX_LOWER = 1e-12
