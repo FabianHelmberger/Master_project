@@ -7,25 +7,28 @@ import os
 
 os.environ["SCAL_TYPE"] = "complex"
 os.environ["PRECISION"] = "single"
-os.environ["MY_NUMBA_TARGET"] = "cuda"
+os.environ["MY_NUMBA_TARGET"] = "numba"
  
  
 # Add cle_fun to PYTHON_PATH
 import sys
-sys.path.append("../../clonscal")
+sys.path.append("../clonscal")
 
 ##########################################################
 ##########################################################
 
-def calculate_stats_complex(rolling_mean, rolling_sqr_mean, counter):
+import numpy as np
+
+def calculate_stats_complex(rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, counter):
     """
-    Calculate mean and SEM for complex numbers.
-    
+    Calculate mean and SEM for complex numbers with separate variance tracking.
+
     Parameters:
     rolling_mean (np.array): Single-element array containing the rolling sum of complex values.
-    rolling_sqr_mean (np.array): Single-element array containing the rolling sum of squared magnitudes of complex values.
+    rolling_sqr_mean_real (np.array): Single-element array containing the rolling sum of squared real parts.
+    rolling_sqr_mean_imag (np.array): Single-element array containing the rolling sum of squared imaginary parts.
     counter (np.array): Single-element array containing the number of values.
-    
+
     Returns:
     tuple: (mean, sem_real, sem_imag), where:
         - mean is the complex mean,
@@ -39,21 +42,27 @@ def calculate_stats_complex(rolling_mean, rolling_sqr_mean, counter):
     rolling_mean_real = rolling_mean.real
     rolling_mean_imag = rolling_mean.imag
 
-    # Mean calculation
+    # Compute means
     mean_real = rolling_mean_real / counter
     mean_imag = rolling_mean_imag / counter
 
-    # Variance for real part
-    rolling_sqr_mean_real = rolling_sqr_mean
-    variance = (rolling_sqr_mean_real / counter) - mean_real**2 - mean_imag**2
-    variance = max(variance, 0)
+    # Compute variances separately for real and imaginary parts
+    variance_real = (rolling_sqr_mean_real / counter) - mean_real**2
+    variance_imag = (rolling_sqr_mean_imag / counter) - mean_imag**2
 
-    # Standard error of the mean (SEM)
-    sem = np.sqrt(variance / counter)
+    # Ensure variances are non-negative
+    variance_real = max(variance_real, 0)
+    variance_imag = max(variance_imag, 0)
 
-    # Return complex mean and SEM for real and imaginary parts
+    # Compute standard errors separately
+    sem_real = np.sqrt(variance_real / counter)
+    sem_imag = np.sqrt(variance_imag / counter)
+
+    # Return complex mean and separate SEMs
     mean = mean_real + 1j * mean_imag
-    return mean, sem
+    return mean, sem_real, sem_imag
+
+
 
 ##########################################################
 ##########################################################
@@ -122,7 +131,7 @@ def run_sim(params):
     sim_dse.register_observable('dse_2_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 2}, langevin_history=False, thermal_time=1, auto_corr=1)
     sim_dse.register_observable('dse_3_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 3}, langevin_history=False, thermal_time=1, auto_corr=1)
     sim_dse.register_observable('dse_4_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 4}, langevin_history=False, thermal_time=1, auto_corr=1)
-    sim_dse.register_observable('abs_drift', obs_kernel=abs_drift, langevin_history=False, thermal_time=1, auto_corr=1, dtype=scal.SCAL_TYPE_REAL)
+    sim_dse.register_observable('abs_drift', obs_kernel=abs_drift, langevin_history=False, thermal_time=1, auto_corr=1)
 
     # run the sim
     for _ in tqdm(range(params["steps"])):
@@ -146,53 +155,355 @@ def run_sim(params):
     results = {'params': params}
 
     for name, tr in sim_dse.trackers.items():
-        mean, sem = calculate_stats_complex(tr.rolling_mean, tr.rolling_sqr_mean, tr.counter)
+        mean, sem_real, sem_imag = calculate_stats_complex(tr.rolling_mean, tr.rolling_sqr_mean_real, tr.rolling_sqr_mean_imag, tr.counter)
         results[name] = {}
         results[name]["mean_real"] = mean.real
         results[name]["mean_imag"] = mean.imag
-        results[name]["sem"] = sem
+        results[name]["sem_real"] = sem_real
+        results[name]["sem_imag"] = sem_imag
 
     # results["drift_hist"] = hist_u
     # results["p_hist"] = hist_p
 
     return results, param_key, hist_p, hist_u
 
-# create parameters
-sigma_abs = np.linspace(1,4,64, endpoint=False)
-sigma_phase = np.linspace(0, 2*np.pi, 32, endpoint=False)
-
 sigma = -1+4j
 parameters = {
-    "steps": int(1e6),
-    "trajs": int(5e6),
-    "dt": 1e-5,
-    "sigma_abs": np.abs(sigma),
-    "sigma_phase": np.angle(sigma),
-    "lambda_abs": 2,
-    "mass_modification": 2.5,
-    "pullback": 200,
-    "bins_u": 10000,
-    "bins_p": 1000,
-    "p_min_real": -10,
-    "p_max_real": 10,
-    "p_min_imag": -10,
-    "p_max_imag": 10,
-    "u_min": 1e-3,
-    "u_max": 1e3,
+    "steps": [int(5e5)],
+    "trajs": [int(5e7)],
+    "dt": [5e-5],
+    "sigma_abs": [np.abs(sigma)],
+    "sigma_phase": [np.angle(sigma)],
+    "lambda_abs": [2],
+    "pullback": [200, 100, 50],
+    "mass_modification": [2.5, 5, 10],
+    "bins_u": [10000],
+    "bins_p": [1000],
+    "p_min_real": [-5],
+    "p_max_real": [5],
+    "p_min_imag": [-1],
+    "p_max_imag": [1],
+    "u_min": [1e-3],
+    "u_max": [1e3],
 }
 
-# Run the simulation
-results, param_key, hist_p, hist_u = run_sim(parameters)
+# Generate all parameter combinations
+import itertools
+param_combinations = [dict(zip(parameters.keys(), values)) for values in itertools.product(*parameters.values())]
 
+# Get index from Slurm
+slurm_index = int(os.getenv("SLURM_ARRAY_TASK_ID", "0"))  # Default to 0 if not running in Slurm
+
+if slurm_index >= len(param_combinations):
+    print(f"Invalid SLURM_ARRAY_TASK_ID={slurm_index}, max is {len(param_combinations)-1}")
+    sys.exit(1)
+
+# Select parameters for this job
+para = param_combinations[slurm_index]
+
+results, param_key, hist_p, hist_u = run_sim(para)
 # Save results
 import json
 file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
-
 with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
     json.dump(results, f, indent=4)
-
 with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
     np.save(f, hist_p)
-
 with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
     np.save(f, hist_u)
+
+
+
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 2.5,
+#     "pullback": 200,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 2.5,
+#     "pullback": 100,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 2.5,
+#     "pullback": 50,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 5,
+#     "pullback": 200,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 5,
+#     "pullback": 100,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 5,
+#     "pullback": 50,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -1,
+#     "p_max_imag": 1,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 10,
+#     "pullback": 200,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -2,
+#     "p_max_imag": 2,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 10,
+#     "pullback": 100,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -2,
+#     "p_max_imag": 2,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
+# ################################################################################
+# ################################################################################
+# sigma = -1+4j
+# parameters = {
+#     "steps": int(1e6),
+#     "trajs": int(1e4),
+#     "dt": 5e-5,
+#     "sigma_abs": np.abs(sigma),
+#     "sigma_phase": np.angle(sigma),
+#     "lambda_abs": 2,
+#     "mass_modification": 10,
+#     "pullback": 50,
+#     "bins_u": 10000,
+#     "bins_p": 1000,
+#     "p_min_real": -5,
+#     "p_max_real": 5,
+#     "p_min_imag": -2,
+#     "p_max_imag": 2,
+#     "u_min": 1e-3,
+#     "u_max": 1e3,
+# }
+# # Run the simulation
+# results, param_key, hist_p, hist_u = run_sim(parameters)
+# # Save results
+# import json
+# file_path = os.path.join(os.getenv("HOME"), "gitrepos", "clonscal", "results", "gaussian_sim_data")
+# with open(os.path.join(file_path, f"{param_key}.json"), "w") as f:
+#     json.dump(results, f, indent=4)
+# with open(os.path.join(file_path, f"{param_key}_hist_p.npy"), "wb") as f:
+#     np.save(f, hist_p)
+# with open(os.path.join(file_path, f"{param_key}_hist_u.npy"), "wb") as f:
+#     np.save(f, hist_u)
