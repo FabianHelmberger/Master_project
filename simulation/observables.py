@@ -75,7 +75,8 @@ class Observables(LangevinDynamics):
         for tr in self.trackers.values():
             # merge trajectory data 
             tr.rolling_mean = np.sum(tr.rolling_mean, axis = 0)
-            tr.rolling_sqr_mean = np.sum(tr.rolling_sqr_mean, axis = 0)
+            tr.rolling_sqr_mean_real= np.sum(tr.rolling_sqr_mean_real, axis = 0)
+            tr.rolling_sqr_mean_imag = np.sum(tr.rolling_sqr_mean_imag, axis = 0)
             tr.counter = np.sum(tr.counter, axis = 0)
 
             if tr.langevin_history:
@@ -141,7 +142,7 @@ class ObservableTracker:
         # else: result = self.result.copy()
 
 
-        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean, self.counter)
+        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if use_cuda: cuda.synchronize()
 
         if self.langevin_history:
