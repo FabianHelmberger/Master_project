@@ -126,7 +126,7 @@ def update_histogram_complex(traj_idx, data, hist, bins, min_real, max_real, min
     real_val = data[traj_idx].real
     imag_val = data[traj_idx].imag
 
-    if min_real < real_val < max_real and min_imag < imag_val < max_imag:
+    if min_real.real < real_val.real < max_real.real and min_imag.real < imag_val.real < max_imag.real:
         bin_x = int((real_val - min_real) / (max_real - min_real) * bins)
         bin_y = int((imag_val - min_imag) / (max_imag - min_imag) * bins)
         
@@ -141,8 +141,8 @@ def update_histogram_complex(traj_idx, data, hist, bins, min_real, max_real, min
 def update_histogram_real(traj_idx, data, hist, bins, min_real, max_real):
     real_val = data[traj_idx]
 
-    if min_real < real_val < max_real:
-        bin_x = int((real_val - min_real) / (max_real - min_real) * bins)
+    if min_real.real < real_val.real < max_real.real:
+        bin_x = int((real_val.real - min_real.real) / (max_real.real - min_real.real) * bins)
         bin_x = min(bin_x, bins - 1)  # Ensure within range
 
         # Atomic add to avoid race conditions
@@ -292,7 +292,6 @@ def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr
     rolling_sqr_mean_imag[traj_idx] += math.pow(result[traj_idx].imag, 2)
     
     counter[traj_idx] += 1
-    
 
 @myjit
 def get_rolling_stats_scal_kernel(traj_idx, rolling_mean, rolling_sqr_mean, counter, mean, std):
