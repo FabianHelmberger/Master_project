@@ -284,9 +284,13 @@ def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims)
         out_array[i] = in_array[i]
 
 @myjit
-def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean, counter):
+def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, counter):
     rolling_mean[traj_idx] += result[traj_idx]
-    rolling_sqr_mean[traj_idx] += math.pow(abs(result[traj_idx]), 2)
+    
+    # Update squared means separately for real and imaginary parts
+    rolling_sqr_mean_real[traj_idx] += math.pow(result[traj_idx].real, 2)
+    rolling_sqr_mean_imag[traj_idx] += math.pow(result[traj_idx].imag, 2)
+    
     counter[traj_idx] += 1
     
 
