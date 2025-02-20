@@ -114,7 +114,8 @@ class ObservableTracker:
         # self.counter = np.array([0], dtype=scal.LATT_TYPE)
 
         self.rolling_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
-        self.rolling_sqr_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
+        self.rolling_sqr_mean_real = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
+        self.rolling_sqr_mean_imag = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.counter = np.zeros(sim_instance.trajs, dtype=scal.LATT_TYPE)
 
         if use_cuda: 
