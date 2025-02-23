@@ -3,3 +3,10 @@ __pycache__
 # jupyter notebooks
 .ipynb_checkpoints
 .DS_Store
+*.npy
+*.npz
+**.json
+**.png
+# **.ipynb
+**.gif
+**.csv
