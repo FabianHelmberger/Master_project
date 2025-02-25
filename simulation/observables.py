@@ -4,7 +4,7 @@ import copy
 from typing import Dict, Callable, Tuple
 from .langevin_dynamics import *
 from .config import *
-from src.utils import KernelBridge, mark_equilibrated_trajs_kernel, fill_history_kernel, RollingStats, update_rolling_stats_scal_kernel
+from src.utils import KernelBridge, mark_equilibrated_trajs_kernel, fill_history_kernel, RollingStats, update_rolling_stats_scal_kernel, update_history
 import src.scal as scal
 
 from src.numba_target import use_cuda, my_act_parallel_loop
@@ -80,15 +80,15 @@ class Observables(LangevinDynamics):
             tr.counter = np.sum(tr.counter, axis = 0)
 
             if tr.langevin_history:
-                tr.history = tr.history[:self.langevin_steps]
-                # tr.history = tr.history[~np.isnan(tr.history )]
-                tr.history = tr.history[tr.history!=0]
+                mask = tr.history_result!=0
+                tr.history_result = tr.history_result[mask]
+                tr.history_meas_times = tr.history_meas_times[mask]
 
 
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, const_param={}, 
-                 init_history_size = int(1e6), thermal_time=5, auto_corr=0.1,dtype=scal.SCAL_TYPE):
+                 init_history_size = int(1e5), thermal_time=5, auto_corr=0.1,dtype=scal.SCAL_TYPE):
         
         self.obs_name = obs_name
         self.shape = shape
@@ -106,7 +106,11 @@ class ObservableTracker:
         self.meas_time = np.full(shape=sim_instance.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
         self.result = np.zeros(shape=shape, dtype=dtype)
 
-        if langevin_history: self.history = np.zeros(shape=(init_history_size, *self.shape), dtype=scal.SCAL_TYPE)
+        if langevin_history: 
+            # self.history = np.zeros(shape=(sim_instance.trajs, init_history_size, *self.shape), dtype=scal.SCAL_TYPE)
+            self.history_result = np.zeros(shape=(sim_instance.trajs, init_history_size, 1), dtype=dtype) # for every traj and langevin steps store value and meas time
+            self.history_meas_times = np.zeros(shape=(sim_instance.trajs, init_history_size, 1), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
+
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
         
         self.stats = RollingStats()
@@ -146,8 +150,14 @@ class ObservableTracker:
         if use_cuda: cuda.synchronize()
 
         if self.langevin_history:
-            self.history[self.langevin_steps] = self.result
+            my_act_parallel_loop(update_history, self.equilibrated_trajs,
+                                self.trajs, self.langevin_steps, self.meas_time, self.history_result,
+                                self.history_meas_times, self.result)
+
+            # self.history[self.langevin_steps] = self.result
+            # self.langevin_time_history[self.langevin_steps] = self.meas_time
             if use_cuda: cuda.synchronize()
+            
         # self.stats.update(result)
         # print(result)
         # self.result[:] = np.NaN
@@ -158,14 +168,14 @@ class ObservableTracker:
 
         if not self.langevin_history:
             raise ValueError("Langevin tracking is disabled for this observable.")
-        return self.history
+        return self.history_result
     
     def mark_equilibrated_trajs(self):
 
         my_parallel_loop(mark_equilibrated_trajs_kernel, self.trajs, self.meas_time, self.langevin_time, 
                          self.equilibrated_trajs, self.thermal_time, self.auto_corr)
     def compute(self):
+        self.update()
         args = self.kernel_bridge.get_current_params()[self.obs_kernel]
         my_act_parallel_loop(self.obs_kernel, self.equilibrated_trajs, *args.values())
         if use_cuda: cuda.synchronize()
-        self.update()
