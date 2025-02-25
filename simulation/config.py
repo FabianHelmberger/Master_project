@@ -13,8 +13,7 @@ class Config:
         self.dims = kwargs.get('dims', [10, 10])
         self.trajs = kwargs.get('trajs', 1)
         self.dt: scal.SCAL_TYPE_REAL = kwargs.get('dt', 1e-5)
-        self.mass_real: scal.SCAL_TYPE_REAL = kwargs.get('mass_real', 1.0)
-        self.mass_imag: scal.SCAL_TYPE_REAL = kwargs.get('mass_real', 0.0)
+        self.sigma: scal.SCAL_TYPE_REAL = kwargs.get('sigma', 1.0)
         self.interaction: scal.SCAL_TYPE_REAL = kwargs.get('interaction', 0.4)
         self.noise_seed = 0
         self.ada_step: bool =  kwargs.get('ada_step', True)
@@ -26,6 +25,7 @@ class Config:
         self.phi_singular=kwargs.get('phi_singular', 10)
         self.pullback=kwargs.get('pullback', 1.5)
         self.mass_modification=kwargs.get('mass_modification', 1)
+        self.mean_dS_max=kwargs.get("mean_dS_max", 5)
 
         
         super().__init__()  # Ensure compatibility with multiple inheritance
