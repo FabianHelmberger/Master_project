@@ -51,7 +51,7 @@ class LangevinDynamics(Field):
         self.adaptive_step_kernel = adaptive_step_kernel
         self.dS_max = np.zeros(self.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.ada = np.ones(self.trajs, scal.SCAL_TYPE_REAL)
-        self.mean_dS_max: scal.SCAL_TYPE_REAL = 5
+        # self.mean_dS_max: scal.SCAL_TYPE_REAL = 10
         self.dS_mean: scal.SCAL_TYPE_REAL = 0.0
         self.langevin_steps = 0
 
@@ -100,7 +100,8 @@ class LangevinDynamics(Field):
         if self.ada_step:
 
             # calculate the max drift of every traj
-            my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
+            # my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
+            self.dS_max = self.dS_norm
             if use_cuda: cuda.synchronize()
 
             args = self.cldyn_kernel_bridge.get_current_params()[self.adaptive_step_kernel]
