@@ -14,7 +14,9 @@ if use_cuda:
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
-
+if not use_cuda: 
+    import time
+    np.random.seed(int(time.time()))
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -78,43 +80,49 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
     langevin_time[traj_idx] += ada[traj_idx]*dt
 
 @myjit
-def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
-    """
-    Computes and returns the action drift term on the euclidean branch at lattice site `idx`.
-    This has to be completely imaginary (by convention):
-    The field stays real, update uses 1j*ds
+def update_history(traj_idx, langevin_steps, meas_time, history_result, history_meas_times, result):
+    history_result[traj_idx, langevin_steps] = result[traj_idx]
+    history_meas_times[traj_idx, langevin_steps] = meas_time[traj_idx]
 
-    :param idx:         lattice site index
-    :param field:       scalar field array
-    :param dims:        lattice dimensions
-    :param adims:       cumulative product of lattice dimensions
-    :param dS_out:      drift term arrayvpn.tuwien.ac.at
-    :param mass_real:   bare mass_real
-    :param mass_imag:   bare mass_imag
-    """
-    n_dims = len(dims)
-    out = 0
 
-    # temporal
-    idx_plus  = shift(idx, 0, +1, dims, adims)
-    idx_minus = shift(idx, 0, -1, dims, adims)
-    phi_idx = field[idx]
-    out += field[idx_minus] + field[idx_plus]-2*phi_idx
+# @myjit
+# def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
+#     """
+#     Computes and returns the action drift term on the euclidean branch at lattice site `idx`.
+#     This has to be completely imaginary (by convention):
+#     The field stays real, update uses 1j*ds
 
-    # spacial
-    for i in range(1, n_dims):
-        idx_plus  = shift(idx, i, +1, dims, adims)
-        idx_minus = shift(idx, i, -1, dims, adims) 
-        out += field[idx_minus]+ field[idx_plus]-2*phi_idx
+#     :param idx:         lattice site index
+#     :param field:       scalar field array
+#     :param dims:        lattice dimensions
+#     :param adims:       cumulative product of lattice dimensions
+#     :param dS_out:      drift term arrayvpn.tuwien.ac.at
+#     :param mass_real:   bare mass_real
+#     :param mass_imag:   bare mass_imag
+#     """
+#     n_dims = len(dims)
+#     out = 0
 
-    out += mass_real**2 * phi_idx
-    dS_out[idx] = out
+#     # temporal
+#     idx_plus  = shift(idx, 0, +1, dims, adims)
+#     idx_minus = shift(idx, 0, -1, dims, adims)
+#     phi_idx = field[idx]
+#     out += field[idx_minus] + field[idx_plus]-2*phi_idx
+
+#     # spacial
+#     for i in range(1, n_dims):
+#         idx_plus  = shift(idx, i, +1, dims, adims)
+#         idx_minus = shift(idx, i, -1, dims, adims) 
+#         out += field[idx_minus]+ field[idx_plus]-2*phi_idx
+
+#     out += mass_real**2 * phi_idx
+#     dS_out[idx] = out
 
 @myjit
-def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, mass_real, interaction):
+def mexican_hat_kernel_real(idx, phi0, dS, dS_norm, sigma, interaction):
     phi_idx = phi0[idx]
     out = 0
-    out += mass_real * phi_idx
+    out += sigma * phi_idx
     out += interaction * phi_idx*phi_idx*phi_idx
     # print('MEXICAN')
     dS[idx] = out
@@ -171,12 +179,12 @@ def update_histogram_real(traj_idx, data, hist, bins, min_real, max_real):
 
 import cmath
 @myjit
-def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, mass_modification, pullback):
+def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, sigma, interaction, mass_modification, pullback):
     phi_idx = phi0[idx]
-    action = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
+    action = sigma/2*phi_idx**2+interaction/4*phi_idx**4
     mod = -mass_modification*phi_idx**2/2
     action_mod = action + mod
-    drift = mass_real*phi_idx+interaction*phi_idx**3
+    drift = sigma*phi_idx+interaction*phi_idx**3
     out = 0
 
     if action_mod.real < 0:
@@ -189,12 +197,12 @@ def gaussian_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, in
     return out
 
 @myjit
-def gaussian_modified_density_drift_kernel_rotated(idx, phi0, dS, dS_norm, mass_real, interaction, mass_modification, pullback):
+def gaussian_modified_density_drift_kernel_rotated(idx, phi0, dS, dS_norm, sigma, interaction, mass_modification, pullback):
     phi_idx = phi0[idx]
-    action = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
+    action = sigma/2*phi_idx**2+interaction/4*phi_idx**4
     mod = -mass_modification*phi_idx**2/2
     action_mod = action + mod
-    drift = mass_real*phi_idx+interaction*phi_idx**3
+    drift = sigma*phi_idx+interaction*phi_idx**3
     out = 0
 
     if action_mod.real < 0:
@@ -208,16 +216,16 @@ def gaussian_modified_density_drift_kernel_rotated(idx, phi0, dS, dS_norm, mass_
 
 
 @myjit
-def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
+def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, sigma, interaction, phi_singular, pullback):
     phi_idx = phi0[idx]
 
-    action_z = mass_real/2*phi_idx**2+interaction/4*phi_idx**4
-    action_z0 = mass_real/2*phi_singular**2+interaction/4*phi_singular**4
+    action_z = sigma/2*phi_idx**2+interaction/4*phi_idx**4
+    action_z0 = sigma/2*phi_singular**2+interaction/4*phi_singular**4
     phi_idx = phi0[idx]
 
     if action_z.real < 200: 
         if np.real(action_z0) < 0:
-            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*cmath.exp(action_z))*cmath.exp(action_z0)
+            num = phi_idx*(interaction*phi_idx**2+sigma-2*pullback*cmath.exp(action_z))*cmath.exp(action_z0)
             den = cmath.exp(action_z+action_z0)*pullback*(phi_idx**2-phi_singular**2)-np.exp(action_z)+np.exp(action_z0)
             # print("A")
             out = num/den
@@ -226,7 +234,7 @@ def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, i
             return out
         
         if action_z0.real > 0:
-            num = phi_idx*(interaction*phi_idx**2+mass_real-2*pullback*cmath.exp(action_z))
+            num = phi_idx*(interaction*phi_idx**2+sigma-2*pullback*cmath.exp(action_z))
             den = cmath.exp(action_z)*pullback*(phi_idx**2-phi_singular**2)-cmath.exp(action_z-action_z0)+1
             # print("B")
             out =  num/den
@@ -234,7 +242,7 @@ def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, i
             dS_norm[idx] = abs(dS[idx])
             return out
 
-    elif action_z.real > np.log(np.abs((mass_real+interaction*phi_idx**2)/(2*pullback)))+30:
+    elif action_z.real > np.log(np.abs((sigma+interaction*phi_idx**2)/(2*pullback)))+30:
         # print("C")
         out =  -2*pullback*phi_idx / (pullback*(phi_idx**2-phi_singular**2)+cmath.exp(-action_z)-cmath.exp(-action_z0))
         dS[idx] = out
@@ -272,7 +280,7 @@ def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_ar
     if delta >= auto_corr and langevin_time[traj_idx] >= thermal_time: 
         marker_array[traj_idx] = True
 
-    else: 
+    else:
         marker_array[traj_idx] = False
 
 @myjit
