@@ -4,7 +4,16 @@ import copy
 from typing import Dict, Callable, Tuple
 from .langevin_dynamics import *
 from .config import *
-from src.utils import KernelBridge, mark_equilibrated_trajs_kernel, fill_history_kernel, RollingStats, update_rolling_stats_scal_kernel, update_history
+from src.utils import (
+                    KernelBridge, 
+                    update_histogram_real,
+                    mark_equilibrated_trajs_kernel,
+                    fill_history_kernel,
+                    RollingStats,
+                    update_rolling_stats_scal_kernel,
+                    update_history_kernel
+                    )
+
 import src.scal as scal
 
 from src.numba_target import use_cuda, my_act_parallel_loop
@@ -24,7 +33,7 @@ class Observables(LangevinDynamics):
         self.trackers: Dict[str, ObservableTracker] = {}  # Stores trackers for different observables
         # self.result: Dict = {}
         self.kernel_bridges: Dict[str, KernelBridge] = {}  # Stores trackers for different observables
-        self.meas_time = {} # np.full(shape=self.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
+        # self.meas_time = {} # np.full(shape=self.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
 
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
@@ -79,10 +88,14 @@ class Observables(LangevinDynamics):
             tr.rolling_sqr_mean_imag = np.sum(tr.rolling_sqr_mean_imag, axis = 0)
             tr.counter = np.sum(tr.counter, axis = 0)
 
-            # if tr.langevin_history:
-            #     mask = tr.history_result!=0
-            #     tr.history_result = tr.history_result[mask]
-            #     tr.history_meas_times = tr.history_meas_times[mask]
+            if tr.langevin_history:
+                # mask = tr.history_result!=0
+                # tr.history_result = tr.history_result[mask]
+                # tr.history_meas_times = tr.history_meas_times[mask]
+
+                mask = tr.history_counter > 0
+                tr.history_result = tr.history_result[mask] /tr.history_counter[mask]
+                tr.history_meas_times = tr.history_meas_times[mask] /tr.history_counter[mask]
 
 
 class ObservableTracker:
@@ -95,7 +108,7 @@ class ObservableTracker:
         self.obs_kernel = obs_kernel
         self.langevin_history = langevin_history
         self.const_param = const_param
-        self.init_history_size = int(sim_instance.steps+1)
+        self.init_history_size = int(sim_instance.steps)
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         for key, val in const_param.items(): self.__setattr__(key, val)
@@ -112,6 +125,7 @@ class ObservableTracker:
             # self.history_meas_times = np.zeros(shape=(sim_instance.trajs, init_history_size, 1), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
             
             self.history_result = np.zeros(shape=self.init_history_size, dtype=dtype) # for every traj and langevin steps store value and meas time
+            self.history_counter = np.zeros(shape=self.init_history_size, dtype=scal.LATT_TYPE) # count the number of trajectories that participated to a 
             self.history_meas_times = np.zeros(shape=self.init_history_size, dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
 
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
@@ -149,18 +163,26 @@ class ObservableTracker:
         # else: result = self.result.copy()
 
 
-        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
+        my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, 
+                             self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if use_cuda: cuda.synchronize()
 
-        if self.langevin_history:
+        if self.langevin_history: 
+            my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt, self.steps)
 
-            self.history_result[self.langevin_steps] = np.mean(self.result)
-            self.history_meas_times[self.langevin_steps] = np.mean(self.meas_time)
+            # self.history_result[self.langevin_steps] = np.mean(self.result)
+
+            # for res, meas_time in zip(self.result, self.meas_time):
+            #     bin_x = int((real_val.real - min_real.real) / (max_real.real - min_real.real) * bins)
+            # self.history_meas_times[self.langevin_steps] = np.mean(self.meas_time)
 
             # my_act_parallel_loop(update_history, self.equilibrated_trajs,
             #                     self.trajs, self.langevin_steps, self.meas_time, self.history_result,
             #                     self.history_meas_times, self.result)
-
+            
+            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.result, 
+            #                      self.history_result, self.steps, 0, self.dt*self.steps)
             # self.history[self.langevin_steps] = self.result
             # self.history_meas_times[self.langevin_steps] = self.meas_time
 	

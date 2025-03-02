@@ -14,9 +14,9 @@ if use_cuda:
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
-if not use_cuda: 
-    import time
-    np.random.seed(int(time.time()))
+# if not use_cuda: 
+#     import time
+#     np.random.seed(int(time.time()))
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -84,11 +84,31 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 #     history_result[traj_idx, langevin_steps] = result[traj_idx]
 #     history_meas_times[traj_idx, langevin_steps] = meas_time[traj_idx]
 
-@myjit
-def update_history(traj_idx, langevin_steps, meas_time, history_result, history_meas_times, result):
-    history_result[traj_idx, langevin_steps] = result[traj_idx]
-    history_meas_times[traj_idx, langevin_steps] = meas_time[traj_idx]
+# @myjit
+# def update_history(traj_idx, langevin_steps, meas_time, history_result, history_meas_times, result):
+#     history_result[traj_idx, langevin_steps] = result[traj_idx]
+#     history_meas_times[traj_idx, langevin_steps] = meas_time[traj_idx]
 
+# for traj_idx, (marked, meas, res) in enumerate(zip(tr.equilibrated_trajs, sim.trackers["2_moment"].meas_time, sim.trackers["2_moment"].result)):
+#     if marked:
+#         if min_real < meas < max_real:
+#             # print(f"traj {traj_idx}: marked")
+
+@myjit
+def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt, steps):
+    # meas = meas_time[traj_idx]
+    min_real = 0
+    max_real = dt*steps
+
+    if min_real < meas_time[traj_idx].real < max_real:
+        bin_mt = int((meas_time[traj_idx] - min_real) / (max_real - min_real) * steps)
+        bin_mt = min(bin_mt, steps - 1)  # Ensure within range
+
+        history_counter[bin_mt] += 1
+        history_result[bin_mt] += result[traj_idx]
+        history_meas_times[bin_mt] += meas_time[traj_idx]
+
+        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
 
 # @myjit
 # def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
@@ -282,6 +302,7 @@ def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_ar
         auto_corr (float): auto-correlation time of this obs
     """
     delta = langevin_time[traj_idx] - meas_time[traj_idx]
+    # print(f"traj {traj_idx}: delta {delta}")
     if delta >= auto_corr and langevin_time[traj_idx] >= thermal_time: 
         marker_array[traj_idx] = True
 
