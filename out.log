@@ -1,0 +1,257 @@
+Using single precision
+Using C^1
+Using Numba
+############################################################
+
+############################################################
+idx 0
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 200
+mass_modification -> 1
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_200_1_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 1
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 200
+mass_modification -> 2.5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_200_2.5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 2
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 200
+mass_modification -> 5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_200_5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 3
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 200
+mass_modification -> 10
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_200_10_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 4
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 100
+mass_modification -> 1
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_100_1_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 5
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 100
+mass_modification -> 2.5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_100_2.5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 6
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 100
+mass_modification -> 5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_100_5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 7
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 100
+mass_modification -> 10
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_100_10_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 8
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 50
+mass_modification -> 1
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_50_1_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 9
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 50
+mass_modification -> 2.5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_50_2.5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 10
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 50
+mass_modification -> 5
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_50_5_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 11
+steps -> 500000
+trajs -> 50000
+dt -> 5e-05
+sigma_abs -> 4.123105625617661
+sigma_phase -> 1.8157749899217608
+lambda_abs -> 2
+pullback -> 50
+mass_modification -> 10
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/gaussian_sim_data_local/500000_50000_5e-05_4.123105625617661_1.8157749899217608_2_50_10_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+

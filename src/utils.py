@@ -79,6 +79,11 @@ def chunk_max_kernel(idx, array, max_array, chunk_size):
 def update_langevin_time(traj_idx, langevin_time, ada, dt):
     langevin_time[traj_idx] += ada[traj_idx]*dt
 
+# @myjit
+# def update_history(traj_idx, langevin_steps, meas_time, history_result, history_meas_times, result):
+#     history_result[traj_idx, langevin_steps] = result[traj_idx]
+#     history_meas_times[traj_idx, langevin_steps] = meas_time[traj_idx]
+
 @myjit
 def update_history(traj_idx, langevin_steps, meas_time, history_result, history_meas_times, result):
     history_result[traj_idx, langevin_steps] = result[traj_idx]

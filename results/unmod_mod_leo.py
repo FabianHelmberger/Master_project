@@ -19,49 +19,6 @@ sys.path.append("../../clonscal")
 
 import numpy as np
 
-def calculate_stats_complex(rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, counter):
-    """
-    Calculate mean and SEM for complex numbers with separate variance tracking.
-
-    Parameters:
-    rolling_mean (np.array): Single-element array containing the rolling sum of complex values.
-    rolling_sqr_mean_real (np.array): Single-element array containing the rolling sum of squared real parts.
-    rolling_sqr_mean_imag (np.array): Single-element array containing the rolling sum of squared imaginary parts.
-    counter (np.array): Single-element array containing the number of values.
-
-    Returns:
-    tuple: (mean, sem_real, sem_imag), where:
-        - mean is the complex mean,
-        - sem_real is the SEM for the real part,
-        - sem_imag is the SEM for the imaginary part.
-    """
-    if counter == 0:
-        raise ValueError("Counter cannot be zero to avoid division by zero.")
-
-    # Extract real and imaginary parts
-    rolling_mean_real = rolling_mean.real
-    rolling_mean_imag = rolling_mean.imag
-
-    # Compute means
-    mean_real = rolling_mean_real / counter
-    mean_imag = rolling_mean_imag / counter
-
-    # Compute variances separately for real and imaginary parts
-    variance_real = (rolling_sqr_mean_real / counter) - mean_real**2
-    variance_imag = (rolling_sqr_mean_imag / counter) - mean_imag**2
-
-    # Ensure variances are non-negative
-    variance_real = max(variance_real, 0)
-    variance_imag = max(variance_imag, 0)
-
-    # Compute standard errors separately
-    sem_real = np.sqrt(variance_real / counter)
-    sem_imag = np.sqrt(variance_imag / counter)
-
-    # Return complex mean and separate SEMs
-    mean = mean_real + 1j * mean_imag
-    return mean, sem_real, sem_imag
-
 
 
 ##########################################################
@@ -83,7 +40,8 @@ from src.utils import (
     update_histogram_complex, 
     update_histogram_real,
     mexican_hat_kernel_real, 
-    noise_kernel_rotated
+    noise_kernel_rotated,
+    calculate_stats_complex
 )
 
 from src.numba_target import my_act_parallel_loop
@@ -99,12 +57,10 @@ def run_sim(params):
     config = Config(dt = params["dt"], 
                     trajs = params["trajs"], 
                     dims = [1], 
-                    mass_real = sigma, 
+                    sigma = sigma, 
                     interaction = interaction, 
                     ada_step = True, 
                     drift_kernel=mexican_hat_kernel_real,
-                    # mass_modification=params["mass_modification"], 
-                    # pullback=params["pullback"]
                     )
     
     sim_dse = ComplexLangevinSimulation(config)
@@ -161,8 +117,6 @@ def run_sim(params):
         results[name]["sem_real"] = sem_real
         results[name]["sem_imag"] = sem_imag
 
-    # results["drift_hist"] = hist_u
-    # results["p_hist"] = hist_p
 
     return results, param_key, hist_p, hist_u
 

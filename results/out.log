@@ -1,0 +1,4869 @@
+Using single precision
+Using C^1
+Using Numba
+############################################################
+
+############################################################
+idx 0
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 1
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 2
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 3
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 4
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 5
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 6
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 7
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 8
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 9
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 10
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 11
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 12
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 13
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 14
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 15
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.0
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.0_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 16
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 17
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 18
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 19
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 20
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 21
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 22
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 23
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 24
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 25
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 26
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 27
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 28
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 29
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 30
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 31
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.2666666666666666
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.2666666666666666_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 32
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 33
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 34
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 35
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 36
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 37
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 38
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 39
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 40
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 41
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 42
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 43
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 44
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 45
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 46
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 47
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.5333333333333332
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.5333333333333332_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 48
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 49
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 50
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 51
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 52
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 53
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 54
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 55
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 56
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 57
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 58
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 59
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 60
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 61
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 62
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 63
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 1.8
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_1.8_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 64
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 65
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 66
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 67
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 68
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 69
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 70
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 71
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 72
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 73
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 74
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 75
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 76
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 77
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 78
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 79
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.0666666666666664
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.0666666666666664_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 80
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 81
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 82
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 83
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 84
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 85
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 86
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 87
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 88
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 89
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 90
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 91
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 92
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 93
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 94
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 95
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.333333333333333
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.333333333333333_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 96
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 97
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 98
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 99
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 100
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 101
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 102
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 103
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 104
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 105
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 106
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 107
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 108
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 109
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 110
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 111
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.6
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.6_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 112
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 113
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 114
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 115
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 116
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 117
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 118
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 119
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 120
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 121
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 122
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 123
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 124
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 125
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 126
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 127
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 2.8666666666666667
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_2.8666666666666667_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 128
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 129
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 130
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 131
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 132
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 133
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 134
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 135
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 136
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 137
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 138
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 139
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 140
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 141
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 142
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 143
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.1333333333333333
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.1333333333333333_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 144
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 145
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 146
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 147
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 148
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 149
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 150
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 151
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 152
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 153
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 154
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 155
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 156
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 157
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 158
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 159
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.4
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.4_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 160
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 161
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 162
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 163
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 164
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 165
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 166
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 167
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 168
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 169
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 170
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 171
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 172
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 173
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 174
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 175
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.6666666666666665
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.6666666666666665_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 176
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 177
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 178
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 179
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 180
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 181
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 182
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 183
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 184
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 185
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 186
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 187
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 188
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 189
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 190
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 191
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 3.933333333333333
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_3.933333333333333_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 192
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 193
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 194
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 195
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 196
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 197
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 198
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 199
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 200
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 201
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 202
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 203
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 204
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 205
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 206
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 207
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.2
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.2_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 208
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 209
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 210
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 211
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 212
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 213
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 214
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 215
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 216
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 217
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 218
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 219
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 220
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 221
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 222
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 223
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.466666666666667
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.466666666666667_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 224
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 225
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 226
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 227
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 228
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 229
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 230
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 231
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 232
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 233
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 234
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 235
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 236
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 237
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 238
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 239
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 4.733333333333333
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_4.733333333333333_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 240
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 0.0
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_0.0_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 241
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 0.41887902047863906
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_0.41887902047863906_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 242
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 0.8377580409572781
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_0.8377580409572781_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 243
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 1.2566370614359172
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_1.2566370614359172_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 244
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 1.6755160819145563
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_1.6755160819145563_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 245
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 2.0943951023931953
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_2.0943951023931953_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 246
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 2.5132741228718345
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_2.5132741228718345_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 247
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 2.9321531433504733
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_2.9321531433504733_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 248
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 3.3510321638291125
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_3.3510321638291125_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 249
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 3.7699111843077517
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_3.7699111843077517_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 250
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 4.1887902047863905
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_4.1887902047863905_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 251
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 4.607669225265029
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_4.607669225265029_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 252
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 5.026548245743669
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_5.026548245743669_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 253
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 5.445427266222308
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_5.445427266222308_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 254
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 5.864306286700947
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_5.864306286700947_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+
+############################################################
+idx 255
+steps -> 500000
+trajs -> 10000
+dt -> 0.0001
+sigma_abs -> 5.0
+sigma_phase -> 6.283185307179586
+lambda_abs -> 2
+bins_u -> 1000000
+bins_p -> 1000
+p_min_real -> -5
+p_max_real -> 5
+p_min_imag -> -5
+p_max_imag -> 5
+u_min -> 0.001
+u_max -> 1000
+saved data to /Users/fabianhelmberger/gitrepos/clonscal/results/unmod_sim_data/500000_10000_0.0001_5.0_6.283185307179586_2_1000000_1000_-5_5_-5_5_0.001_1000
+############################################################
+

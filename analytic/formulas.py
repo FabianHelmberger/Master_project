@@ -33,6 +33,16 @@ def n_moment_expval_unmod(order, sigma, lamb):
     results = real_part + 1j * imag_part
     return results / partition_sum
 
+@np.vectorize
+def n_moment_expval_unmod(order, sigma, lamb):
+    real_part = quad(lambda x: np.real(density_unmod(x, sigma, lamb)), -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(density_unmod(x, sigma, lamb)), -np.inf, np.inf)[0]
+    partition_sum= real_part + 1j * imag_part
+
+    real_part = quad(lambda x: np.real(n_power(x, order)*density_unmod(x, sigma, lamb)), -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(n_power(x, order)*density_unmod(x, sigma, lamb)), -np.inf, np.inf)[0]
+    results = real_part + 1j * imag_part
+    return results / partition_sum
 
 @np.vectorize
 def dse_n_moment_expval_gaussianmod(order, sigma, lamb, pullback, mass_mod):
@@ -42,6 +52,18 @@ def dse_n_moment_expval_gaussianmod(order, sigma, lamb, pullback, mass_mod):
 
     real_part = quad(lambda x: np.real(dse_n_power(x, order, sigma, lamb)*density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
     imag_part = quad(lambda x: np.imag(dse_n_power(x, order, sigma, lamb)*density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
+    results = real_part + 1j * imag_part
+
+    return results / partition_sum
+
+@np.vectorize
+def n_moment_expval_R(order, sigma, lamb, pullback, mass_mod):
+    real_part = quad(lambda x: np.real(density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
+    partition_sum= real_part + 1j * imag_part
+
+    real_part = quad(lambda x: np.real(n_power(x, order)*density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(n_power(x, order)*density_gaussianmod(x, sigma, lamb, pullback, mass_mod)), -np.inf, np.inf)[0]
     results = real_part + 1j * imag_part
 
     return results / partition_sum
@@ -57,3 +79,15 @@ def n_moment_expval_gaussianmod(order, sigma, lamb, pullback, mass_mod):
     results = real_part + 1j * imag_part
 
     return results / partition_sum
+
+import scipy
+# define analytic resul for n_moment_dse wrt R
+@np.vectorize
+def n_moment_dse_R_analytic(order, r, a, sigma, lamb):
+    if order > 1:
+        out = order*scipy.special.factorial2(order-2)/np.power(a, (order-1)//2)
+    else: 
+        out = 1
+    out -= sigma*scipy.special.factorial2(order)/ np.power(a, (order+1)//2) 
+    out -= lamb*scipy.special.factorial2(order+2)/np.power(a, (order+3)//2)
+    return out
