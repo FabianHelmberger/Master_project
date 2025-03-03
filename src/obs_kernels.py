@@ -15,10 +15,10 @@ def langevin_time(sim: 'ComplexLangevinSimulation', result):
 @myjit
 def n_moment_kernel(idx, phi0, result, order, langevin_time, adims, meas_time):
     phi_idx = phi0[idx]
-    res = 1
-    for _ in range(order):
-        res *= phi_idx
-    result[idx] = res
+    # res = 1
+    # for _ in range(order):
+    #     res *= phi_idx
+    result[idx] = phi_idx**order
     traj_idx = idx // adims[1]
     meas_time[traj_idx] = langevin_time[traj_idx]
 

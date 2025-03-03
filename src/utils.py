@@ -14,9 +14,10 @@ if use_cuda:
 if TYPE_CHECKING:
     # Import only for type checking
     from simulation.langevin_dynamics import LangevinDynamics
-# if not use_cuda: 
-#     import time
-#     np.random.seed(int(time.time()))
+if not use_cuda: 
+    import time
+    np.random.seed(int(time.time()))
+    # np.random.seed(0)
 
 @myjit
 def shift(index, dir, amount, dims, adims):
@@ -94,6 +95,7 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 #         if min_real < meas < max_real:
 #             # print(f"traj {traj_idx}: marked")
 
+import numba
 @myjit
 def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt, steps):
     # meas = meas_time[traj_idx]
@@ -102,11 +104,14 @@ def update_history_kernel(traj_idx, history_counter, history_result, history_mea
 
     if min_real < meas_time[traj_idx].real < max_real:
         bin_mt = int((meas_time[traj_idx] - min_real) / (max_real - min_real) * steps)
-        bin_mt = min(bin_mt, steps - 1)  # Ensure within range
-
+        # bin_mt = min(bin_mt, steps - 1)  # Ensure within range
         history_counter[bin_mt] += 1
         history_result[bin_mt] += result[traj_idx]
         history_meas_times[bin_mt] += meas_time[traj_idx]
+
+        # numba.atomic.add(history_counter, bin_mt, 1)
+        # numba.atomic.add(history_result, bin_mt, result[traj_idx])
+        # numba.atomic.add(history_meas_times, bin_mt, meas_time[traj_idx])
 
         # cuda.atomic.add(hist, (bin_x, bin_y), 1)
 
@@ -281,6 +286,8 @@ def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, sigma, inter
 def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
     this_dS_max = dS_max[idx]
     # TODO: use mask and activated parallel loop
+    # ada[idx] = mean_dS_max / this_dS_max
+
     if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
         ada[idx] = mean_dS_max / this_dS_max
 

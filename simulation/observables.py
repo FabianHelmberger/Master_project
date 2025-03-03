@@ -92,11 +92,13 @@ class Observables(LangevinDynamics):
                 # mask = tr.history_result!=0
                 # tr.history_result = tr.history_result[mask]
                 # tr.history_meas_times = tr.history_meas_times[mask]
-
                 mask = tr.history_counter > 0
-                tr.history_result = tr.history_result[mask] /tr.history_counter[mask]
-                tr.history_meas_times = tr.history_meas_times[mask] /tr.history_counter[mask]
-
+                tr.history_counter = tr.history_counter[mask]
+                tr.history_result = tr.history_result[mask]/tr.history_counter
+                tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter
+                
+                # tr.history_result[~mask] = np.nan  # Mark invalid bins
+                # tr.history_meas_times[~mask] = np.nan
 
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
@@ -167,7 +169,7 @@ class ObservableTracker:
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if use_cuda: cuda.synchronize()
 
-        if self.langevin_history: 
+        if self.langevin_history:
             my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
                                  self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt, self.steps)
 
@@ -186,7 +188,7 @@ class ObservableTracker:
             # self.history[self.langevin_steps] = self.result
             # self.history_meas_times[self.langevin_steps] = self.meas_time
 	
-            if use_cuda: cuda.synchronize()
+            # if use_cuda: cuda.synchronize()
             
         # self.stats.update(result)
         # print(result)
