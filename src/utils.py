@@ -97,13 +97,12 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 
 import numba
 @myjit
-def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt, steps):
+def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt, maximal_lt):
     # meas = meas_time[traj_idx]
-    min_real = 0
-    max_real = dt*steps
 
-    if min_real < meas_time[traj_idx].real < max_real:
-        bin_mt = int((meas_time[traj_idx] - min_real) / (max_real - min_real) * steps)
+
+    if 0 < meas_time[traj_idx].real < maximal_lt:
+        bin_mt = int((meas_time[traj_idx])/dt)
         # bin_mt = min(bin_mt, steps - 1)  # Ensure within range
         history_counter[bin_mt] += 1
         history_result[bin_mt] += result[traj_idx]
@@ -114,7 +113,7 @@ def update_history_kernel(traj_idx, history_counter, history_result, history_mea
         # numba.atomic.add(history_meas_times, bin_mt, meas_time[traj_idx])
 
         # cuda.atomic.add(hist, (bin_x, bin_y), 1)
-
+ 
 # @myjit
 # def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
 #     """
@@ -290,13 +289,29 @@ def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
 
     if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
         ada[idx] = mean_dS_max / this_dS_max
+@myjit
+def swap_kernel(traj_idx, phi0, phi1):
+
+    phi0_buffer = phi0[traj_idx]
+    phi1_buffer = phi1[traj_idx]
+    phi0[traj_idx] = phi1_buffer
+    phi1[traj_idx] = phi0_buffer
+
+@myjit
+def kill_kernel(traj_idx, alive, dS_max):
+    this_dS_max = dS_max[traj_idx]
+    if this_dS_max > 1e3:
+        alive[traj_idx] = False
+
+# def kill_kernel(traj_idx, alive):
+
 
 @myjit
 def arr_abs_kernel(idx, in_array, out_array):
     out_array[idx] = abs(in_array[idx])
 
 @myjit
-def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr):
+def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr, maximal_lt):
     """Mark a given trajectory as ready to be observes. marker_array[traj_idx] is set true if: 
     the observable is equilibratedelated from its last observation and the observables is thermalized. 
 
@@ -308,13 +323,15 @@ def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_ar
         thermal_time (float): thermalization time of this obs
         auto_corr (float): auto-correlation time of this obs
     """
-    delta = langevin_time[traj_idx] - meas_time[traj_idx]
-    # print(f"traj {traj_idx}: delta {delta}")
-    if delta >= auto_corr and langevin_time[traj_idx] >= thermal_time: 
-        marker_array[traj_idx] = True
+    langevin_time_this = langevin_time[traj_idx]
+    delta = langevin_time_this - meas_time[traj_idx]
+    eqil  = True
 
-    else:
-        marker_array[traj_idx] = False
+    if langevin_time_this < thermal_time or delta < auto_corr or langevin_time_this > maximal_lt:
+        eqil = False
+
+    marker_array[traj_idx] = eqil
+    
 
 @myjit
 def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims):

@@ -4,8 +4,8 @@ import numpy as np
 import src.scal as scal
 from .lattice import Lattice
 from .config import Config
-from src.numba_target import my_parallel_loop
-from src.utils import evolve_kernel
+from src.numba_target import my_act_parallel_loop
+from src.utils import evolve_kernel, swap_kernel
 
 class Field(Lattice):
     def __init__(self, config):
@@ -20,5 +20,3 @@ class Field(Lattice):
         # self.phi0 = rand[0,:]
         # self.phi1 = rand[2,:]
 
-    def swap(self):
-        self.phi0, self.phi1 = self.phi1, self.phi0
