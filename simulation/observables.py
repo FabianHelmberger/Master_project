@@ -37,7 +37,7 @@ class Observables(LangevinDynamics):
 
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
-                            langevin_history=False, thermal_time=5, auto_corr=0.1, dtype=scal.SCAL_TYPE):
+                            langevin_history=False, thermal_time=5, auto_corr=0.1,maximal_lt=100, dtype=scal.SCAL_TYPE):
         """
         Register a new observable with the option to track Langevin time.
         """
@@ -48,7 +48,7 @@ class Observables(LangevinDynamics):
 
         self.trackers[obs_name] = ObservableTracker(sim_instance=self, obs_name=obs_name, shape=shape, obs_kernel=obs_kernel,
                                                     const_param=const_param, langevin_history=langevin_history,
-                                                    thermal_time=thermal_time, auto_corr=auto_corr, dtype=dtype)
+                                                    thermal_time=thermal_time, auto_corr=auto_corr, maximal_lt=maximal_lt, dtype=dtype)
         
         # self.result[obs_name] = self.trackers[obs_name].result
 
@@ -96,14 +96,16 @@ class Observables(LangevinDynamics):
                 tr.history_counter = tr.history_counter[mask]
                 tr.history_result = tr.history_result[mask]/tr.history_counter
                 tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter
-                
+                # tr.history_result[~mask] = np.nan
+                # tr.history_meas_times[~mask] = np.nan
+                # tr.history_counter[~mask] = np.nan
                 # tr.history_result[~mask] = np.nan  # Mark invalid bins
                 # tr.history_meas_times[~mask] = np.nan
 
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, const_param={}
-                 , thermal_time=5, auto_corr=0.1,dtype=scal.SCAL_TYPE):
+                 , thermal_time=5, auto_corr=0.1,maximal_lt=50, dtype=scal.SCAL_TYPE):
         
         self.obs_name = obs_name
         self.shape = shape
@@ -113,6 +115,7 @@ class ObservableTracker:
         self.init_history_size = int(sim_instance.steps)
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
+        self.maximal_lt = maximal_lt
         for key, val in const_param.items(): self.__setattr__(key, val)
         
         self.__dict__['_sim_instance'] = sim_instance
@@ -171,7 +174,7 @@ class ObservableTracker:
 
         if self.langevin_history:
             my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt, self.steps)
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt, self.maximal_lt)
 
             # self.history_result[self.langevin_steps] = np.mean(self.result)
 
@@ -205,7 +208,9 @@ class ObservableTracker:
     def mark_equilibrated_trajs(self):
 
         my_parallel_loop(mark_equilibrated_trajs_kernel, self.trajs, self.meas_time, self.langevin_time, 
-                         self.equilibrated_trajs, self.thermal_time, self.auto_corr)
+                         self.equilibrated_trajs, self.thermal_time, self.auto_corr, self.maximal_lt)
+        self.equilibrated_trajs &= self.alive
+
     def compute(self):
         args = self.kernel_bridge.get_current_params()[self.obs_kernel]
         my_act_parallel_loop(self.obs_kernel, self.equilibrated_trajs, *args.values())
