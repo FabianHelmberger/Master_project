@@ -9,7 +9,7 @@ if use_cuda:
 
 class Config:
     def __init__(self, **kwargs):
-        self.steps: scal.LATT_TYPE = kwargs.get('steps', 1e3)
+        self.steps: scal.LATT_TYPE = kwargs.get('steps', int(1e3))
         self.dims = kwargs.get('dims', [10, 10])
         self.trajs = kwargs.get('trajs', 1)
         self.dt: scal.SCAL_TYPE_REAL = kwargs.get('dt', 1e-5)
