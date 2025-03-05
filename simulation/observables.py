@@ -176,10 +176,10 @@ class ObservableTracker:
         if self.langevin_history:
             
             # history_update_positions = np.empty(self.trajs)
-            # my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-            #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
-            my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-                        self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
+            my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
+            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+            #             self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
 
             # self.history_result[self.langevin_steps] = np.mean(self.result)
 
