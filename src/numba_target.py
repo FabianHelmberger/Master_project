@@ -216,3 +216,30 @@ def my_act_parallel_loop(kernel_function, act_matrix, iter_max, *args, stream=No
         
         # Execute the compiled function
         compiled_function(iter_max, act_matrix, *args)
+
+
+def my_act_loop(kernel_function, act_matrix, iter_max, *args, stream=None):
+    """Perform parallel loop over a kernel function either on CPU
+    (using Numba's prange) or on GPU (using a compiled cuda kernel).
+
+    :param kernel_function: kernel function with arguments (i, *args)
+    :param iter_max: maximum index for iteration
+    :param act_matrix: actovation matrix
+    :param args: optional arguments
+    """
+    global _unique_counter
+
+
+    if use_python:
+        for xi in range(iter_max):
+            if act_matrix[xi]: kernel_function(xi, *args)
+    else: # use_numba
+        if kernel_function not in compiled_act_kernels:
+            @numba.njit(parallel=False, nogil=True, fastmath=True)
+            def numba_prange_func(iter_max, act_matrix, *args):
+                for idx in prange(iter_max):
+                    if act_matrix[idx]: kernel_function(idx, *args)
+            
+            compiled_act_kernels[kernel_function] = numba_prange_func
+        compiled_function = compiled_act_kernels[kernel_function]
+        compiled_function(iter_max, act_matrix, *args)

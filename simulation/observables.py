@@ -16,7 +16,7 @@ from src.utils import (
 
 import src.scal as scal
 
-from src.numba_target import use_cuda, my_act_parallel_loop
+from src.numba_target import use_cuda, my_act_parallel_loop, my_act_loop
 
 
 if use_cuda:
@@ -91,17 +91,19 @@ class Observables(LangevinDynamics):
             if tr.langevin_history:
                 # mask = tr.history_result!=0
                 # tr.history_result = tr.history_result[mask]
-                # tr.history_meas_times = tr.history_meas_times[mask]
                 mask = tr.history_counter > 0
-                tr.history_counter = tr.history_counter[mask]
-                tr.history_result = tr.history_result[mask]/tr.history_counter
-                tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter
+                tr.history_result = tr.history_result[mask]/tr.history_counter[mask]
+                tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter[mask]
+
                 # tr.history_result[~mask] = np.nan
                 # tr.history_meas_times[~mask] = np.nan
                 # tr.history_counter[~mask] = np.nan
+                print(tr.history_meas_times.min())
+                print(tr.history_counter.min())
+                print()
                 # tr.history_result[~mask] = np.nan  # Mark invalid bins
                 # tr.history_meas_times[~mask] = np.nan
-
+import threading
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, const_param={}
@@ -112,16 +114,16 @@ class ObservableTracker:
         self.obs_kernel = obs_kernel
         self.langevin_history = langevin_history
         self.const_param = const_param
-        self.init_history_size = int(sim_instance.steps)
+        self.init_history_size = sim_instance.steps
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         self.maximal_lt = maximal_lt
+        self.dtype = dtype
         for key, val in const_param.items(): self.__setattr__(key, val)
-        
         self.__dict__['_sim_instance'] = sim_instance
 
         self.equilibrated_trajs = np.zeros(sim_instance.trajs, dtype=bool)
-        self.meas_time = np.full(shape=sim_instance.trajs, fill_value=-1, dtype=scal.SCAL_TYPE_REAL)
+        self.meas_time = np.zeros(shape=sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.result = np.zeros(shape=shape, dtype=dtype)
 
         if langevin_history: 
@@ -130,7 +132,7 @@ class ObservableTracker:
             # self.history_meas_times = np.zeros(shape=(sim_instance.trajs, init_history_size, 1), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
             
             self.history_result = np.zeros(shape=self.init_history_size, dtype=dtype) # for every traj and langevin steps store value and meas time
-            self.history_counter = np.zeros(shape=self.init_history_size, dtype=scal.LATT_TYPE) # count the number of trajectories that participated to a 
+            self.history_counter = np.zeros(shape=self.init_history_size, dtype=np.int32) # count the number of trajectories that participated to a 
             self.history_meas_times = np.zeros(shape=self.init_history_size, dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
 
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
@@ -159,7 +161,6 @@ class ObservableTracker:
 #         # if langevin_history: self.history = np.full((init_history_size, *self.shape), np.nan, dtype=scal.SCAL_TYPE)
 #         # self.result = np.full(shape=self.shape, fill_value=np.nan, dtype=scal.SCAL_TYPE)
 
-
     def update(self):
         """
         Update the tracker with a new observable value at the current Langevin step.
@@ -173,8 +174,12 @@ class ObservableTracker:
         if use_cuda: cuda.synchronize()
 
         if self.langevin_history:
-            my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt, self.maximal_lt)
+            
+            # history_update_positions = np.empty(self.trajs)
+            my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
+            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+            #             self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
 
             # self.history_result[self.langevin_steps] = np.mean(self.result)
 

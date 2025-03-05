@@ -95,25 +95,13 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 #         if min_real < meas < max_real:
 #             # print(f"traj {traj_idx}: marked")
 
-import numba
 @myjit
-def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt, maximal_lt):
-    # meas = meas_time[traj_idx]
+def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt):
+    bin_mt = int((meas_time[traj_idx]) // dt)
+    history_counter[bin_mt] += 1
+    history_result[bin_mt] += result[traj_idx]
+    history_meas_times[bin_mt] += meas_time[traj_idx]
 
-
-    if 0 < meas_time[traj_idx].real < maximal_lt:
-        bin_mt = int((meas_time[traj_idx])/dt)
-        # bin_mt = min(bin_mt, steps - 1)  # Ensure within range
-        history_counter[bin_mt] += 1
-        history_result[bin_mt] += result[traj_idx]
-        history_meas_times[bin_mt] += meas_time[traj_idx]
-
-        # numba.atomic.add(history_counter, bin_mt, 1)
-        # numba.atomic.add(history_result, bin_mt, result[traj_idx])
-        # numba.atomic.add(history_meas_times, bin_mt, meas_time[traj_idx])
-
-        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
- 
 # @myjit
 # def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
 #     """
