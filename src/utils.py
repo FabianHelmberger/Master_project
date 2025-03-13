@@ -96,8 +96,8 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 #             # print(f"traj {traj_idx}: marked")
 
 @myjit
-def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, dt):
-    bin_mt = int((meas_time[traj_idx]) // dt)
+def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, history_grid_size):
+    bin_mt = int((meas_time[traj_idx]) / history_grid_size)
     history_counter[bin_mt] += 1
     history_result[bin_mt] += result[traj_idx]
     history_meas_times[bin_mt] += meas_time[traj_idx]
@@ -288,9 +288,13 @@ def swap_kernel(traj_idx, phi0, phi1):
 @myjit
 def kill_kernel(traj_idx, alive, dS_max):
     this_dS_max = dS_max[traj_idx]
-    if this_dS_max > 1e3:
+    if this_dS_max > 1e5:
         alive[traj_idx] = False
-
+# @myjit
+# def kill_kernel(traj_idx, alive, ada, dt):
+#     this_ada = ada[traj_idx]
+#     if this_ada < dt*1e-2:
+#         alive[traj_idx] = False
 # def kill_kernel(traj_idx, alive):
 
 
