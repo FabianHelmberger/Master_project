@@ -26,6 +26,7 @@ class Config:
         self.pullback=kwargs.get('pullback', 1.5)
         self.mass_modification=kwargs.get('mass_modification', 1)
         self.mean_dS_max=kwargs.get("mean_dS_max", 5)
+        self.history_grid_size = kwargs.get("history_grid_size", 1e-2)
 
         
         super().__init__()  # Ensure compatibility with multiple inheritance

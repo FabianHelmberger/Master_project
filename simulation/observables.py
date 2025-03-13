@@ -91,16 +91,13 @@ class Observables(LangevinDynamics):
             if tr.langevin_history:
                 # mask = tr.history_result!=0
                 # tr.history_result = tr.history_result[mask]
-                mask = tr.history_counter > 0
+                mask = tr.history_counter > 1
                 tr.history_result = tr.history_result[mask]/tr.history_counter[mask]
                 tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter[mask]
 
                 # tr.history_result[~mask] = np.nan
                 # tr.history_meas_times[~mask] = np.nan
                 # tr.history_counter[~mask] = np.nan
-                print(tr.history_meas_times.min())
-                print(tr.history_counter.min())
-                print()
                 # tr.history_result[~mask] = np.nan  # Mark invalid bins
                 # tr.history_meas_times[~mask] = np.nan
 import threading
@@ -177,7 +174,7 @@ class ObservableTracker:
             
             # history_update_positions = np.empty(self.trajs)
             my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
             #             self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
 
