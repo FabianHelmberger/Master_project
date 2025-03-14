@@ -210,11 +210,12 @@ class ObservableTracker:
     def mark_equilibrated_trajs(self):
 
         my_parallel_loop(mark_equilibrated_trajs_kernel, self.trajs, self.meas_time, self.langevin_time, 
-                         self.equilibrated_trajs, self.thermal_time, self.auto_corr, self.maximal_lt)
-        self.equilibrated_trajs &= self.alive
+                         self.equilibrated_trajs, self.thermal_time, self.auto_corr, self.maximal_lt, self.alive)
+        # self.equilibrated_trajs &= self.alive
 
     def compute(self):
         args = self.kernel_bridge.get_current_params()[self.obs_kernel]
         my_act_parallel_loop(self.obs_kernel, self.equilibrated_trajs, *args.values())
         if use_cuda: cuda.synchronize()
+
         self.update()

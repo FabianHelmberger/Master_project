@@ -303,7 +303,7 @@ def arr_abs_kernel(idx, in_array, out_array):
     out_array[idx] = abs(in_array[idx])
 
 @myjit
-def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr, maximal_lt):
+def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr, maximal_lt, alive):
     """Mark a given trajectory as ready to be observes. marker_array[traj_idx] is set true if: 
     the observable is equilibratedelated from its last observation and the observables is thermalized. 
 
@@ -317,12 +317,14 @@ def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_ar
     """
     langevin_time_this = langevin_time[traj_idx]
     delta = langevin_time_this - meas_time[traj_idx]
-    eqil  = True
+    equil  = True
 
-    if langevin_time_this < thermal_time or delta < auto_corr or langevin_time_this > maximal_lt:
-        eqil = False
+    if not alive[traj_idx]: 
+        equil = False
+    elif langevin_time_this < thermal_time or delta < auto_corr or langevin_time_this > maximal_lt:
+        equil = False
 
-    marker_array[traj_idx] = eqil
+    marker_array[traj_idx] = equil
     
 
 @myjit
