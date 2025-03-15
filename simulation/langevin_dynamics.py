@@ -72,7 +72,7 @@ class LangevinDynamics(Field):
             self.alive,
             *kernel_param
             )
-        if use_cuda: cuda.synchronize()
+        # if use_cuda: cuda.synchronize() # just testing
         
     def update_noise(self, *kernel_param):
         my_act_parallel_loop(
@@ -80,7 +80,7 @@ class LangevinDynamics(Field):
             self.alive,
             *kernel_param
             )
-        if use_cuda: cuda.synchronize()
+        # if use_cuda: cuda.synchronize() # just testing
         
     def update_field(self, *kernel_param):
         my_act_parallel_loop(
@@ -88,18 +88,18 @@ class LangevinDynamics(Field):
             self.alive,
             *kernel_param
             )
-        if use_cuda: cuda.synchronize()
+        # if use_cuda: cuda.synchronize() # just testing
         
-        my_act_parallel_loop(
-            update_langevin_time, 
-            self.alive,
-            self.trajs,
-            self.langevin_time,
-            self.ada,
-            self.dt
-        )
+        # my_act_parallel_loop(
+        #     update_langevin_time, 
+        #     self.alive,
+        #     self.trajs,
+        #     self.langevin_time,
+        #     self.ada,
+        #     self.dt
+        # )
 
-        if use_cuda: cuda.synchronize()
+        if use_cuda: cuda.synchronize() # just testing
         self.langevin_steps += 1
     
     def set_apative_stepsize(self):
@@ -108,11 +108,11 @@ class LangevinDynamics(Field):
             # calculate the max drift of every traj
             # my_parallel_loop(chunk_max_kernel, self.trajs, self.dS_norm, self.dS_max, self.adims[1])
             
-            if use_cuda: cuda.synchronize()
+            if use_cuda: cuda.synchronize() # just testing
 
             args = self.cldyn_kernel_bridge.get_current_params()[self.adaptive_step_kernel]
             my_act_parallel_loop(self.adaptive_step_kernel, self.alive, *args.values())
-            if use_cuda: cuda.synchronize()
+            # if use_cuda: cuda.synchronize() # just testing
 
     def kill_trajs(self):
         my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.dS_max)
@@ -129,4 +129,5 @@ class LangevinDynamics(Field):
         if self.ada_step: self.set_apative_stepsize()
         self.update_field(*self.cldyn_kernel_args[self.evolve_kernel].values())
         
+        if use_cuda: cuda.synchronize()
         self.swap()
