@@ -131,6 +131,10 @@ class ObservableTracker:
             self.history_counter = np.zeros(shape=self.init_history_size, dtype=np.int32) # count the number of trajectories that participated to a 
             self.history_meas_times = np.zeros(shape=self.init_history_size, dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
 
+            self.history_result_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=dtype) # for every traj and langevin steps store value and meas time
+            self.history_counter_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=np.int32) # count the number of trajectories that participated to a 
+            self.history_meas_times_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
+
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
         
         self.stats = RollingStats()
@@ -159,11 +163,26 @@ class ObservableTracker:
 
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, 
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
-
         if self.langevin_history:
+            # for traj_idx in range(self.trajs):
+            #     if self.equilibrated_trajs[traj_idx]:
+            #         bin_mt = int(self.meas_time[traj_idx] / self.history_grid_size)
 
-            my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
+            #         self.history_counter[bin_mt] += 1
+            #         self.history_result[bin_mt] += self.result[traj_idx]
+            #         self.history_meas_times[bin_mt] += self.meas_time[traj_idx]
+
+            #         print(f"writing in bin {bin_mt} at time {self.langevin_time} value: {self.meas_time[traj_idx]} result: {self.history_meas_times[bin_mt]}")
+
+            # my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+            #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
+            for traj_idx in range(self.trajs):
+                if self.equilibrated_trajs[traj_idx]:
+                    bin_mt = int(self.meas_time[traj_idx] / self.history_grid_size)
+                    self.history_counter_[bin_mt, traj_idx] += 1
+                    self.history_result_[bin_mt, traj_idx] += self.result[traj_idx]
+                    self.history_meas_times_[bin_mt, traj_idx] += self.meas_time[traj_idx]
+            
             # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
             #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
