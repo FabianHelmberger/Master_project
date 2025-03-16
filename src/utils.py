@@ -10,6 +10,7 @@ from simulation.constants import SQRT2
 if use_cuda: 
     from numba.cuda.random import xoroshiro128p_normal_float32 # type: ignore
     from cupy import multiply # type: ignore
+    from numba import cuda
 
 if TYPE_CHECKING:
     # Import only for type checking
@@ -57,13 +58,14 @@ def cuda_noise_kernel(idx, eta, noise_factor, rng):
     eta[idx] = SQRT2 * noise_factor * r
 
 @myjit
-def evolve_kernel(idx, phi0, phi1, dS, eta, ada, dt, adims):
+def evolve_kernel(idx, phi0, phi1, dS, eta, ada, dt, adims, langevin_time):
     # TODO: move dt_sqrt
     traj_idx = idx // adims[1]
     ada_dt = ada[traj_idx] * dt
     etaterm = eta[idx] * math.sqrt(ada_dt)
     update = etaterm - ada_dt * dS[idx]
     phi1[idx] = phi0[idx] + update
+    langevin_time[traj_idx] += ada[traj_idx]*dt
     
 @myjit
 def chunk_max_kernel(idx, array, max_array, chunk_size):
@@ -95,12 +97,18 @@ def update_langevin_time(traj_idx, langevin_time, ada, dt):
 #         if min_real < meas < max_real:
 #             # print(f"traj {traj_idx}: marked")
 
+
 @myjit
 def update_history_kernel(traj_idx, history_counter, history_result, history_meas_times, meas_time, result, history_grid_size):
     bin_mt = int((meas_time[traj_idx]) / history_grid_size)
+
     history_counter[bin_mt] += 1
     history_result[bin_mt] += result[traj_idx]
     history_meas_times[bin_mt] += meas_time[traj_idx]
+
+# @myjit
+# def update_history_kernel(traj_idx,history_counter, history_result, history_meas_times, meas_time, result, history_grid_size):
+
 
 # @myjit
 # def euclidean_drift_kernel(idx, field, dims, adims, dS_out, mass_real, mass_imag):
@@ -303,7 +311,7 @@ def arr_abs_kernel(idx, in_array, out_array):
     out_array[idx] = abs(in_array[idx])
 
 @myjit
-def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr, maximal_lt):
+def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_array, thermal_time, auto_corr, maximal_lt, alive):
     """Mark a given trajectory as ready to be observes. marker_array[traj_idx] is set true if: 
     the observable is equilibratedelated from its last observation and the observables is thermalized. 
 
@@ -317,12 +325,14 @@ def mark_equilibrated_trajs_kernel(traj_idx, meas_time, langevin_time, marker_ar
     """
     langevin_time_this = langevin_time[traj_idx]
     delta = langevin_time_this - meas_time[traj_idx]
-    eqil  = True
+    equil  = True
 
-    if langevin_time_this < thermal_time or delta < auto_corr or langevin_time_this > maximal_lt:
-        eqil = False
+    if not alive[traj_idx]: 
+        equil = False
+    elif langevin_time_this < thermal_time or delta < auto_corr or langevin_time_this > maximal_lt:
+        equil = False
 
-    marker_array[traj_idx] = eqil
+    marker_array[traj_idx] = equil
     
 
 @myjit
