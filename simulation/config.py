@@ -9,7 +9,6 @@ if use_cuda:
 
 class Config:
     def __init__(self, **kwargs):
-        self.steps: scal.IDX_TYPE = kwargs.get('steps', int(1e3))
         self.dims = kwargs.get('dims', [1])
         self.trajs = kwargs.get('trajs', 1)
         self.dt: scal.SCAL_TYPE_REAL = kwargs.get('dt', 1e-5)
@@ -26,7 +25,8 @@ class Config:
         self.pullback=kwargs.get('pullback', 1.5)
         self.mass_modification=kwargs.get('mass_modification', 1)
         self.mean_dS_max=kwargs.get("mean_dS_max", 5)
-        self.history_grid_size = kwargs.get("history_grid_size", 1e-2)
+        self.history_grid_size = kwargs.get("dt", 1e-5)
+        self.steps: scal.IDX_TYPE = kwargs.get('steps', int(1e3))
 
         
         super().__init__()  # Ensure compatibility with multiple inheritance
