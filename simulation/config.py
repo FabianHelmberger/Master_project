@@ -24,7 +24,7 @@ class Config:
         self.phi_singular=kwargs.get('phi_singular', 10)
         self.pullback=kwargs.get('pullback', 1.5)
         self.mass_modification=kwargs.get('mass_modification', 1)
-        self.mean_dS_max=kwargs.get("mean_dS_max", 5)
+        self.mean_dS_max=kwargs.get("mean_dS_max", 50)
         self.history_grid_size = kwargs.get("dt", 1e-5)
         self.steps: scal.IDX_TYPE = kwargs.get('steps', int(1e3))
 
