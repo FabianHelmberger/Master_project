@@ -304,9 +304,9 @@ def swap_kernel(traj_idx, phi0, phi1):
     phi1[traj_idx] = phi0_buffer
 
 @myjit
-def kill_kernel(traj_idx, alive, dS_max):
-    this_dS_max = dS_max[traj_idx]
-    if this_dS_max > 1e5:
+def kill_kernel(traj_idx, alive, ada):
+    this_ada = ada[traj_idx]
+    if this_ada <1e-2:
         alive[traj_idx] = False
 # @myjit
 # def kill_kernel(traj_idx, alive, ada, dt):
