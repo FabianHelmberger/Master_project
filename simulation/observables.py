@@ -49,7 +49,7 @@ class Observables(LangevinDynamics):
         self.trackers[obs_name] = ObservableTracker(sim_instance=self, obs_name=obs_name, shape=shape, obs_kernel=obs_kernel,
                                                     const_param=const_param, langevin_history=langevin_history,
                                                     thermal_time=thermal_time, auto_corr=auto_corr, maximal_lt=maximal_lt, dtype=dtype)
-        assert not use_cuda or not langevin_history, print("Langevin history currently only in Python/Numba Mode!")
+        # assert not use_cuda or not langevin_history, print("Langevin history currently only in Python/Numba Mode!")
 
         # self.result[obs_name] = self.trackers[obs_name].result
 
@@ -89,14 +89,19 @@ class Observables(LangevinDynamics):
             tr.counter = np.sum(tr.counter, axis = 0)
 
             if tr.langevin_history:
-            #     tr.history_counter = tr.history_counter.copy_to_host()
-            #     tr.history_result = tr.history_result.copy_to_host()
-            #     tr.history_meas_times = tr.history_meas_times.copy_to_host()
-            #     # mask = tr.history_result!=0
-            #     # tr.history_result = tr.history_result[mask]
+
+                # tr.history_counter = tr.history_counter.copy_to_host()
+                # tr.history_result = tr.history_result.copy_to_host()
+                # tr.history_meas_times = tr.history_meas_times.copy_to_host()
+                # mask = tr.history_result!=0
+                # tr.history_result = tr.history_result[mask]
                 mask = tr.history_counter > 0
                 tr.history_result = tr.history_result[mask]/tr.history_counter[mask]
                 tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter[mask]
+
+                # mask = tr.history_counter_ > 0
+                # tr.history_result_ = tr.history_result_[mask]/tr.history_counter_[mask]
+                # tr.history_meas_times_ = tr.history_meas_times_[mask]/tr.history_counter_[mask]
 
                 # tr.history_result[~mask] = np.nan
                 # tr.history_meas_times[~mask] = np.nan
@@ -167,11 +172,11 @@ class ObservableTracker:
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if self.langevin_history:
 
-            # my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-            #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
+            my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
-            my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
-                                 self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
+            # my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
+            #                      self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
             
             # EXPERIMENTAL: Manually append all traj data 
             # for traj_idx in range(self.trajs):
