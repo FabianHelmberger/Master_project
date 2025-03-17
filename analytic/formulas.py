@@ -180,3 +180,20 @@ def n_moment_R(order, r, a):
     imag_part = quad(lambda x: np.imag(R(x, r, a)*n_moment(x, order)), -np.inf, np.inf)[0]
     out = real_part + 1j*imag_part
     return out / z_R(r, a)
+
+
+@np.vectorize
+def n_moment_rho_tilde(order, r, a, sigma, lamb):
+    real_part = quad(lambda x: np.real(rho_tilde(x, r, a, sigma, lamb)*n_moment(x, order)), 
+                     -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(rho_tilde(x, r, a, sigma, lamb)*n_moment(x, order)), 
+                     -np.inf, np.inf)[0]
+    out = real_part + 1j*imag_part
+    return out / z_rho_tilde(r, a, sigma, lamb)
+
+@np.vectorize
+def n_moment_R(order, r, a):
+    real_part = quad(lambda x: np.real(R(x, r, a)*n_moment(x, order)), -np.inf, np.inf)[0]
+    imag_part = quad(lambda x: np.imag(R(x, r, a)*n_moment(x, order)), -np.inf, np.inf)[0]
+    out = real_part + 1j*imag_part
+    return out / z_R(r, a, 0, 0)
