@@ -11,7 +11,8 @@ from src.utils import (
                     fill_history_kernel,
                     RollingStats,
                     update_rolling_stats_scal_kernel,
-                    update_history_kernel
+                    update_history_kernel,
+                    update_history_full_kernel
                     )
 
 import src.scal as scal
@@ -140,6 +141,7 @@ class ObservableTracker:
         self.stats = RollingStats()
 
         self.rolling_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
+        self.rolling_sqr_mean_abs = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
         self.rolling_sqr_mean_real = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.rolling_sqr_mean_imag = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.counter = np.zeros(sim_instance.trajs, dtype=scal.IDX_TYPE)
@@ -164,45 +166,21 @@ class ObservableTracker:
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, 
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if self.langevin_history:
-            # for traj_idx in range(self.trajs):
-            #     if self.equilibrated_trajs[traj_idx]:
-            #         bin_mt = int(self.meas_time[traj_idx] / self.history_grid_size)
-
-            #         self.history_counter[bin_mt] += 1
-            #         self.history_result[bin_mt] += self.result[traj_idx]
-            #         self.history_meas_times[bin_mt] += self.meas_time[traj_idx]
-
-            #         print(f"writing in bin {bin_mt} at time {self.langevin_time} value: {self.meas_time[traj_idx]} result: {self.history_meas_times[bin_mt]}")
 
             # my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
             #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
-            for traj_idx in range(self.trajs):
-                if self.equilibrated_trajs[traj_idx]:
-                    bin_mt = int(self.meas_time[traj_idx] / self.history_grid_size)
-                    self.history_counter_[bin_mt, traj_idx] += 1
-                    self.history_result_[bin_mt, traj_idx] += self.result[traj_idx]
-                    self.history_meas_times_[bin_mt, traj_idx] += self.meas_time[traj_idx]
             
-            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-            #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
+            my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
+                                 self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
             
-            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-            #             self.history_result, self.history_meas_times, self.meas_time, self.result, self.dt)
-
-            # self.history_result[self.langevin_steps] = np.mean(self.result)
-
-            # for res, meas_time in zip(self.result, self.meas_time):
-            #     bin_x = int((real_val.real - min_real.real) / (max_real.real - min_real.real) * bins)
-            # self.history_meas_times[self.langevin_steps] = np.mean(self.meas_time)
-
-            # my_act_parallel_loop(update_history, self.equilibrated_trajs,
-            #                     self.trajs, self.langevin_steps, self.meas_time, self.history_result,
-            #                     self.history_meas_times, self.result)
+            # EXPERIMENTAL: Manually append all traj data 
+            # for traj_idx in range(self.trajs):
+            #     if self.equilibrated_trajs[traj_idx]:
+            #         bin_mt = int(self.meas_time[traj_idx] / self.history_grid_size)
+            #         self.history_counter_[bin_mt, traj_idx] += 1
+            #         self.history_result_[bin_mt, traj_idx] += self.result[traj_idx]
+            #         self.history_meas_times_[bin_mt, traj_idx] += self.meas_time[traj_idx]
             
-            # my_act_parallel_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.result, 
-            #                      self.history_result, self.steps, 0, self.dt*self.steps)
-            # self.history[self.langevin_steps] = self.result
-            # self.history_meas_times[self.langevin_steps] = self.meas_time
 	
             
 
