@@ -106,6 +106,16 @@ def update_history_kernel(traj_idx, history_counter, history_result, history_mea
     history_result[bin_mt] += result[traj_idx]
     history_meas_times[bin_mt] += meas_time[traj_idx]
 
+
+@myjit
+def update_history_full_kernel(traj_idx, history_counter_, history_result_, history_meas_times_, meas_time, result, history_grid_size):
+    bin_mt = int((meas_time[traj_idx]) / history_grid_size)
+
+    history_counter_[bin_mt, traj_idx] += 1
+    history_result_[bin_mt, traj_idx] += result[traj_idx]
+    history_meas_times_[bin_mt, traj_idx] += meas_time[traj_idx]
+
+
 # @myjit
 # def update_history_kernel(traj_idx,history_counter, history_result, history_meas_times, meas_time, result, history_grid_size):
 
@@ -284,7 +294,7 @@ def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
     # ada[idx] = mean_dS_max / this_dS_max
 
     if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
-        ada[idx] = mean_dS_max / this_dS_max
+        ada[idx] = mean_dS_max / this_dS_max    
 @myjit
 def swap_kernel(traj_idx, phi0, phi1):
 
