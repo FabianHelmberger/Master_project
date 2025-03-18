@@ -98,6 +98,10 @@ class Observables(LangevinDynamics):
                 tr.history_result = tr.history_result[mask]/tr.history_counter[mask]
                 tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter[mask]
 
+                # mask = tr.history_counter_ > 0
+                # tr.history_result_ = tr.history_result_[mask]/tr.history_counter_[mask]
+                # tr.history_meas_times_ = tr.history_meas_times_[mask]/tr.history_counter_[mask]
+
                 # tr.history_result[~mask] = np.nan
                 # tr.history_meas_times[~mask] = np.nan
                 # tr.history_counter[~mask] = np.nan
@@ -167,11 +171,11 @@ class ObservableTracker:
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
         if self.langevin_history:
 
-            # my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
-            #                      self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
+            my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
+                                 self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
-            my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
-                                 self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
+            # my_act_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
+            #                      self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
             
             # EXPERIMENTAL: Manually append all traj data 
             # for traj_idx in range(self.trajs):
