@@ -37,7 +37,7 @@ class Observables(LangevinDynamics):
 
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
-                            langevin_history=False, thermal_time=5, auto_corr=0.1,maximal_lt=100, dtype=scal.SCAL_TYPE):
+                            langevin_history=False, langevin_history_full=False, thermal_time=5, auto_corr=0.1,maximal_lt=100, dtype=scal.SCAL_TYPE):
         """
         Register a new observable with the option to track Langevin time.
         """
@@ -47,7 +47,7 @@ class Observables(LangevinDynamics):
         if shape is None: shape = (self.n_cells,)
 
         self.trackers[obs_name] = ObservableTracker(sim_instance=self, obs_name=obs_name, shape=shape, obs_kernel=obs_kernel,
-                                                    const_param=const_param, langevin_history=langevin_history,
+                                                    const_param=const_param, langevin_history=langevin_history, langevin_history_full = langevin_history_full,
                                                     thermal_time=thermal_time, auto_corr=auto_corr, maximal_lt=maximal_lt, dtype=dtype)
         # assert not use_cuda or not langevin_history, print("Langevin history currently only in Python/Numba Mode!")
 
@@ -89,15 +89,22 @@ class Observables(LangevinDynamics):
             tr.counter = np.sum(tr.counter, axis = 0)
 
             if tr.langevin_history:
+                # bin and average over trajs
+                mask = tr.history_counter>0
+                tr.history_result  = np.where(mask, tr.history_result / tr.history_counter, np.nan)
+                tr.history_meas_times = np.where(mask, tr.history_meas_times / tr.history_counter, np.nan)
 
-                # tr.history_counter = tr.history_counter.copy_to_host()
-                # tr.history_result = tr.history_result.copy_to_host()
-                # tr.history_meas_times = tr.history_meas_times.copy_to_host()
-                # mask = tr.history_result!=0
-                # tr.history_result = tr.history_result[mask]
-                mask = tr.history_counter > 0
-                tr.history_result = tr.history_result[mask]/tr.history_counter[mask]
-                tr.history_meas_times = tr.history_meas_times[mask]/tr.history_counter[mask]
+            if tr.langevin_history_full:
+                # bin the data 
+                
+                mask = tr.history_counter_full>0
+                tr.history_result_full  = np.where(mask, tr.history_result_full / tr.history_counter_full, np.nan)
+                tr.history_meas_times_full = np.where(mask, tr.history_meas_times_full / tr.history_counter_full, np.nan)
+
+                # mask = sim.trackers["2_moment"].history_counter_full>0
+                # dat = np.where(mask, sim.trackers["2_moment"].history_result_full / sim.trackers["2_moment"].history_counter_full, np.nan )
+                # lt = np.where(mask, sim.trackers["2_moment"].history_meas_times_full / sim.trackers["2_moment"].history_counter_full, np.nan )
+
 
                 # mask = tr.history_counter_ > 0
                 # tr.history_result_ = tr.history_result_[mask]/tr.history_counter_[mask]
@@ -111,15 +118,16 @@ class Observables(LangevinDynamics):
 
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
-                 obs_kernel: Callable, langevin_history=False, const_param={}
-                 , thermal_time=5, auto_corr=0.1,maximal_lt=50, dtype=scal.SCAL_TYPE):
+                 obs_kernel: Callable, langevin_history=False, langevin_history_full=False,
+                 const_param={}, thermal_time=5, auto_corr=0.1,maximal_lt=50, dtype=scal.SCAL_TYPE):
         
         self.obs_name = obs_name
         self.shape = shape
         self.obs_kernel = obs_kernel
         self.langevin_history = langevin_history
+        self.langevin_history_full = langevin_history_full
         self.const_param = const_param
-        self.init_history_size = sim_instance.steps
+        self.init_history_size = 10*int(maximal_lt / sim_instance.history_grid_size)
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         self.maximal_lt = maximal_lt
@@ -132,14 +140,15 @@ class ObservableTracker:
         self.result = np.zeros(shape=shape, dtype=dtype)
 
         if langevin_history: 
-            
+
             self.history_result = np.zeros(shape=self.init_history_size, dtype=dtype) # for every traj and langevin steps store value and meas time
             self.history_counter = np.zeros(shape=self.init_history_size, dtype=np.int32) # count the number of trajectories that participated to a 
             self.history_meas_times = np.zeros(shape=self.init_history_size, dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
-
-            self.history_result_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=dtype) # for every traj and langevin steps store value and meas time
-            self.history_counter_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=np.int32) # count the number of trajectories that participated to a 
-            self.history_meas_times_ = np.zeros(shape=(self.init_history_size, self.trajs), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
+        
+        if langevin_history_full:
+            self.history_result_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=dtype) # for every traj and langevin steps store value and meas time
+            self.history_counter_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=np.int32) # count the number of trajectories that participated to a 
+            self.history_meas_times_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
 
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
         
@@ -170,13 +179,15 @@ class ObservableTracker:
 
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, 
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
+
         if self.langevin_history:
 
             my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
                                  self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
-            # my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_, 
-            #                      self.history_result_, self.history_meas_times_, self.meas_time, self.result, self.history_grid_size)
+        if self.langevin_history_full:
+            my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_full, 
+                                 self.history_result_full, self.history_meas_times_full, self.meas_time, self.result, self.history_grid_size)
             
             # EXPERIMENTAL: Manually append all traj data 
             # for traj_idx in range(self.trajs):
