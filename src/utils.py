@@ -17,8 +17,8 @@ if TYPE_CHECKING:
     from simulation.langevin_dynamics import LangevinDynamics
 if not use_cuda: 
     import time
-    np.random.seed(int(time.time()))
-    # np.random.seed(0)
+    # np.random.seed(int(time.time()))
+    np.random.seed(0)
 
 @myjit
 def shift(index, dir, amount, dims, adims):
