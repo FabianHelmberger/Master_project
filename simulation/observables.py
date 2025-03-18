@@ -105,7 +105,6 @@ class Observables(LangevinDynamics):
                 # dat = np.where(mask, sim.trackers["2_moment"].history_result_full / sim.trackers["2_moment"].history_counter_full, np.nan )
                 # lt = np.where(mask, sim.trackers["2_moment"].history_meas_times_full / sim.trackers["2_moment"].history_counter_full, np.nan )
 
-
                 # mask = tr.history_counter_ > 0
                 # tr.history_result_ = tr.history_result_[mask]/tr.history_counter_[mask]
                 # tr.history_meas_times_ = tr.history_meas_times_[mask]/tr.history_counter_[mask]
@@ -127,7 +126,7 @@ class ObservableTracker:
         self.langevin_history = langevin_history
         self.langevin_history_full = langevin_history_full
         self.const_param = const_param
-        self.init_history_size = 10*int(maximal_lt / sim_instance.history_grid_size)
+        self.init_history_size = 2*int(maximal_lt / sim_instance.history_grid_size)
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         self.maximal_lt = maximal_lt
@@ -146,9 +145,9 @@ class ObservableTracker:
             self.history_meas_times = np.zeros(shape=self.init_history_size, dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
         
         if langevin_history_full:
-            self.history_result_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=dtype) # for every traj and langevin steps store value and meas time
-            self.history_counter_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=np.int32) # count the number of trajectories that participated to a 
-            self.history_meas_times_full = np.empty(shape=(self.init_history_size, self.trajs), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
+            self.history_result_full = np.zeros(shape=(self.init_history_size, self.trajs), dtype=dtype) # for every traj and langevin steps store value and meas time
+            self.history_counter_full = np.zeros(shape=(self.init_history_size, self.trajs), dtype=np.int32) # count the number of trajectories that participated to a 
+            self.history_meas_times_full = np.zeros(shape=(self.init_history_size, self.trajs), dtype=scal.SCAL_TYPE_REAL) # for every traj and langevin steps store value and meas time
 
         self.kernel_bridge = KernelBridge(self, kernel_funcs=[obs_kernel], const_param=const_param, result=self.result)
         
@@ -186,7 +185,7 @@ class ObservableTracker:
                                  self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
         if self.langevin_history_full:
-            my_act_parallel_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_full, 
+            my_act_loop(update_history_full_kernel, self.equilibrated_trajs, self.trajs, self.history_counter_full, 
                                  self.history_result_full, self.history_meas_times_full, self.meas_time, self.result, self.history_grid_size)
             
             # EXPERIMENTAL: Manually append all traj data 
