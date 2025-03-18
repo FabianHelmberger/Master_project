@@ -116,7 +116,7 @@ class LangevinDynamics(Field):
 
     def kill_trajs(self):
         # my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.dS_max)
-        my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.ada)
+        my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.ada, self.ada_min)
 
     def swap(self):
         my_act_parallel_loop(swap_kernel, self.alive, self.trajs, self.phi0, self.phi1)

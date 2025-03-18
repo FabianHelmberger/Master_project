@@ -25,8 +25,9 @@ class Config:
         self.pullback=kwargs.get('pullback', 1.5)
         self.mass_modification=kwargs.get('mass_modification', 1)
         self.mean_dS_max=kwargs.get("mean_dS_max", 50)
-        self.history_grid_size = kwargs.get("dt", 1e-5)
-        self.steps: scal.IDX_TYPE = kwargs.get('steps', int(1e3))
+        self.ada_min = kwargs.get("ada_min", 1e-3)
+        self.history_grid_size = kwargs.get("history_grid_size", self.dt*10)
+        self.steps: scal.IDX_TYPE = kwargs.get('steps', int(self.max_langevin_time/(self.dt*self.ada_min)))
 
         
         super().__init__()  # Ensure compatibility with multiple inheritance
