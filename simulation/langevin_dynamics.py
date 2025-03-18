@@ -115,7 +115,8 @@ class LangevinDynamics(Field):
             # if use_cuda: cuda.synchronize() # just testing
 
     def kill_trajs(self):
-        my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.dS_max)
+        # my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.dS_max)
+        my_act_parallel_loop(kill_kernel, self.alive, self.trajs, self.alive, self.ada)
 
     def swap(self):
         my_act_parallel_loop(swap_kernel, self.alive, self.trajs, self.phi0, self.phi1)
