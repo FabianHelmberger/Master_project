@@ -227,85 +227,85 @@ parameters["pullback"] =  7.5
 # for key, value in parameters.items():
 #     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+1j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  6.5
+
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+1j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  3.5
+
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+
+
+
 
 ################################################################################################
 ################################################################################################
-################################################################################################
-################################################################################################
-sigma = -1+1j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  6.5
-
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-
-################################################################################################
-################################################################################################
-################################################################################################
-################################################################################################
-sigma = -1+1j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  3.5
-
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-
-
-
-
-################################################################################################
-################################################################################################
-################################################################################################
-################################################################################################
+###############################################################################################
+###############################################################################################
 sigma = -1+2j
 parameters["trajs"] = int(1e6)
 parameters["sigma_abs"] = np.abs(sigma)
@@ -398,188 +398,188 @@ run_sim(parameters)
 
 
 
-################################################################################################
-################################################################################################
-################################################################################################
-################################################################################################
-sigma = -1+3j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  13
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+3j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  13
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-################################################################################################
-################################################################################################
-sigma = -1+3j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  12
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+3j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  12
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-################################################################################################
-################################################################################################
-sigma = -1+3j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  6.25
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+3j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  6.25
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
 
-################################################################################################
-################################################################################################
-################################################################################################
-################################################################################################
-sigma = -1+4j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  20
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+4j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  20
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-################################################################################################
-################################################################################################
-sigma = -1+4j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  19
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+4j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  19
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
-################################################################################################
-################################################################################################
-sigma = -1+4j
-parameters["trajs"] = int(1e6)
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1
-parameters["pullback"] =  9.75
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
+# ################################################################################################
+# ################################################################################################
+# sigma = -1+4j
+# parameters["trajs"] = int(1e6)
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1
+# parameters["pullback"] =  9.75
 
-parameters["dt"] = 5e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 1e-3
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 1e-3
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
+# run_sim(parameters)
 
-parameters["dt"] = 5e-4
-for key, value in parameters.items():
-    print(key, "->", value)
+# parameters["dt"] = 5e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
 
-run_sim(parameters)
-parameters["dt"] = 1e-4
-for key, value in parameters.items():
-    print(key, "->", value)
-run_sim(parameters)
+# run_sim(parameters)
+# parameters["dt"] = 1e-4
+# for key, value in parameters.items():
+#     print(key, "->", value)
+# run_sim(parameters)
