@@ -290,11 +290,10 @@ def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, sigma, inter
 @myjit
 def adaptive_step_kernel(idx, dS_max, ada, DS_MAX_LOWER, mean_dS_max):
     this_dS_max = dS_max[idx]
-    # TODO: use mask and activated parallel loop
-    # ada[idx] = mean_dS_max / this_dS_max
 
+    ada[idx] = 1
     if this_dS_max > DS_MAX_LOWER and mean_dS_max < this_dS_max:
-        ada[idx] = mean_dS_max / this_dS_max    
+        ada[idx] = mean_dS_max / this_dS_max 
 @myjit
 def swap_kernel(traj_idx, phi0, phi1):
 
