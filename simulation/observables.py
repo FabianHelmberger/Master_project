@@ -86,6 +86,8 @@ class Observables(LangevinDynamics):
             tr.rolling_mean = np.sum(tr.rolling_mean, axis = 0)
             tr.rolling_sqr_mean_real= np.sum(tr.rolling_sqr_mean_real, axis = 0)
             tr.rolling_sqr_mean_imag = np.sum(tr.rolling_sqr_mean_imag, axis = 0)
+            tr.rolling_sqr_mean_cross = np.sum(tr.rolling_sqr_mean_cross, axis = 0)
+            
             tr.counter = np.sum(tr.counter, axis = 0)
 
             if tr.langevin_history:
@@ -156,8 +158,10 @@ class ObservableTracker:
         self.rolling_mean = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
         self.rolling_sqr_mean_abs = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE)
         self.rolling_sqr_mean_real = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
+        self.rolling_sqr_mean_cross = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.rolling_sqr_mean_imag = np.zeros(sim_instance.trajs, dtype=scal.SCAL_TYPE_REAL)
         self.counter = np.zeros(sim_instance.trajs, dtype=scal.IDX_TYPE)
+       
         if use_cuda:
             gpu_hanlder = GPU_handler(self)
             gpu_hanlder.to_device()
@@ -177,7 +181,7 @@ class ObservableTracker:
 
 
         my_act_parallel_loop(update_rolling_stats_scal_kernel, self.equilibrated_trajs, self.trajs, 
-                             self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.counter)
+                             self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.rolling_sqr_mean_cross, self.counter)
 
         if self.langevin_history:
 

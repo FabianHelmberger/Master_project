@@ -353,13 +353,13 @@ def fill_history_kernel(traj_idx, equilibrated_traj, in_array, out_array, adims)
         out_array[i] = in_array[i]
 
 @myjit
-def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, counter):
+def update_rolling_stats_scal_kernel(traj_idx, result, rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, rolling_sqr_mean_cross, counter):
     rolling_mean[traj_idx] += result[traj_idx]
     
     # Update squared means separately for real and imaginary parts
     rolling_sqr_mean_real[traj_idx] += math.pow(result[traj_idx].real, 2)
     rolling_sqr_mean_imag[traj_idx] += math.pow(result[traj_idx].imag, 2)
-    
+    rolling_sqr_mean_cross[traj_idx] += result[traj_idx].real * result[traj_idx].imag
     counter[traj_idx] += 1
 
 @myjit
@@ -369,7 +369,7 @@ def get_rolling_stats_scal_kernel(traj_idx, rolling_mean, rolling_sqr_mean, coun
     mean[traj_idx] = rolling_mean[traj_idx] / counter[traj_idx]
     
 
-def calculate_stats_complex(rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, counter):
+def calculate_stats_complex(rolling_mean, rolling_sqr_mean_real, rolling_sqr_mean_imag, rolling_sqr_mean_cross, counter):
     """
     Calculate mean and SEM for complex numbers with separate variance tracking.
 
@@ -395,22 +395,32 @@ def calculate_stats_complex(rolling_mean, rolling_sqr_mean_real, rolling_sqr_mea
     # Compute means
     mean_real = rolling_mean_real / counter
     mean_imag = rolling_mean_imag / counter
+    mean = mean_real + 1j * mean_imag
 
     # Compute variances separately for real and imaginary parts
     variance_real = (rolling_sqr_mean_real / counter) - mean_real**2
     variance_imag = (rolling_sqr_mean_imag / counter) - mean_imag**2
+    covariance_reim = (rolling_sqr_mean_cross / counter) - mean_real*mean_imag
+    # print(covariance, variance_real)
+    # cov_matrix = np.array([[variance_real, covariance],
+    #                    [covariance, variance_imag]], dtype=np.float64)
+    
+    # eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
+    # angle = np.arctan2(eigenvectors[1, 1], eigenvectors[0, 1]) * (180 / np.pi)
+
+    # sem_major = np.sqrt(eigenvalues[1]) / np.sqrt(counter)  # Largest eigenvalue
+    # sem_minor = np.sqrt(eigenvalues[0]) / np.sqrt(counter)  # Smallest eigenvalue
 
     # Ensure variances are non-negative
     variance_real = max(variance_real, 0)
     variance_imag = max(variance_imag, 0)
 
     # Compute standard errors separately
-    sem_real = np.sqrt(variance_real / counter)
-    sem_imag = np.sqrt(variance_imag / counter)
+    # sem_real = np.sqrt(variance_real / counter)
+    # sem_imag = np.sqrt(variance_imag / counter)
 
     # Return complex mean and separate SEMs
-    mean = mean_real + 1j * mean_imag
-    return mean, sem_real, sem_imag
+    return mean, variance_real, variance_imag, covariance_reim, counter
 
 # @myjit
 # def fill_result_kernel(traj_idx, equilibrated_traj, in_array, out_array):
