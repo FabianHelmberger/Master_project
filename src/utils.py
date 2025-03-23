@@ -8,6 +8,7 @@ from src.numba_target import myjit, use_cuda
 from simulation.constants import SQRT2
 
 if use_cuda: 
+    import numba.cuda as cuda
     from numba.cuda.random import xoroshiro128p_normal_float32 # type: ignore
     from cupy import multiply # type: ignore
     from numba import cuda
@@ -177,8 +178,8 @@ def update_histogram_complex(traj_idx, data, hist, bins, min_real, max_real, min
         bin_y = min(bin_y, bins - 1)
 
         # Atomic add to avoid race conditions
-        hist[bin_x, bin_y] += 1
-        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
+        # hist[bin_x, bin_y] += 1
+        cuda.atomic.add(hist, (bin_x, bin_y), 1)
 
 @myjit
 def update_histogram_real(traj_idx, data, hist, bins, min_real, max_real):
@@ -189,8 +190,8 @@ def update_histogram_real(traj_idx, data, hist, bins, min_real, max_real):
         bin_x = min(bin_x, bins - 1)  # Ensure within range
 
         # Atomic add to avoid race conditions
-        hist[bin_x] += 1
-        # cuda.atomic.add(hist, (bin_x, bin_y), 1)
+        # hist[bin_x] += 1
+        cuda.atomic.add(hist, bin_x, 1)
 
 # @myjit
 # def quadratic_modified_density_drift_kernel(idx, phi0, dS, dS_norm, mass_real, interaction, phi_singular, pullback):
