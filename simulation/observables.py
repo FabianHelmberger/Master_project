@@ -134,8 +134,9 @@ class ObservableTracker:
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         self.maximal_lt = maximal_lt
-        if history_grid_size==None: self.history_grid_size = 2*self.auto_corr 
-        else history_grid_size
+        if history_grid_size == None: self.history_grid_size = 2*self.auto_corr 
+        else : self.history_grid_size = history_grid_size
+        
         self.dtype = dtype
         self.init_history_size = 2*int(maximal_lt / self.history_grid_size)
         for key, val in const_param.items(): self.__setattr__(key, val)
