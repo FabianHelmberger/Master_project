@@ -102,7 +102,7 @@ class Observables(LangevinDynamics):
                 # bin the data 
                 
                 mask = tr.history_counter_full>0
-                tr.history_result_full  = np.where(mask, tr.history_result_full / tr.history_counter_full, np.nan)
+                tr.history_result_full  = np.where(mask, tr.history_result_full / tr.history_counter_full, np.nan+1j*np.nan)
                 tr.history_meas_times_full = np.where(mask, tr.history_meas_times_full / tr.history_counter_full, np.nan)
 
                 # mask = sim.trackers["2_moment"].history_counter_full>0
