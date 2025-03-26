@@ -37,7 +37,8 @@ class Observables(LangevinDynamics):
 
 
     def register_observable(self, obs_name: str, obs_kernel: Callable, shape = None, const_param={}, 
-                            langevin_history=False, langevin_history_full=False, thermal_time=5, auto_corr=0.1,maximal_lt=100, dtype=scal.SCAL_TYPE):
+                            langevin_history=False, langevin_history_full=False, thermal_time=5, auto_corr=0.1,maximal_lt=100, 
+                            history_grid_size=None, dtype=scal.SCAL_TYPE):
         """
         Register a new observable with the option to track Langevin time.
         """
@@ -48,7 +49,8 @@ class Observables(LangevinDynamics):
 
         self.trackers[obs_name] = ObservableTracker(sim_instance=self, obs_name=obs_name, shape=shape, obs_kernel=obs_kernel,
                                                     const_param=const_param, langevin_history=langevin_history, langevin_history_full = langevin_history_full,
-                                                    thermal_time=thermal_time, auto_corr=auto_corr, maximal_lt=maximal_lt, dtype=dtype)
+                                                    thermal_time=thermal_time, auto_corr=auto_corr, maximal_lt=maximal_lt,history_grid_size=history_grid_size,
+                                                      dtype=dtype)
         # assert not use_cuda or not langevin_history, print("Langevin history currently only in Python/Numba Mode!")
 
         # self.result[obs_name] = self.trackers[obs_name].result
@@ -100,7 +102,7 @@ class Observables(LangevinDynamics):
                 # bin the data 
                 
                 mask = tr.history_counter_full>0
-                tr.history_result_full  = np.where(mask, tr.history_result_full / tr.history_counter_full, np.nan)
+                tr.history_result_full  = np.where(mask, tr.history_result_full / tr.history_counter_full, np.nan+1j*np.nan)
                 tr.history_meas_times_full = np.where(mask, tr.history_meas_times_full / tr.history_counter_full, np.nan)
 
                 # mask = sim.trackers["2_moment"].history_counter_full>0
@@ -120,7 +122,8 @@ class Observables(LangevinDynamics):
 class ObservableTracker:
     def __init__(self, sim_instance: LangevinDynamics, obs_name, shape: tuple, 
                  obs_kernel: Callable, langevin_history=False, langevin_history_full=False,
-                 const_param={}, thermal_time=5, auto_corr=0.1,maximal_lt=50, dtype=scal.SCAL_TYPE):
+                 const_param={}, thermal_time=5, auto_corr=0.1,maximal_lt=None, history_grid_size=None,
+                 dtype=scal.SCAL_TYPE):
         
         self.obs_name = obs_name
         self.shape = shape
@@ -128,11 +131,14 @@ class ObservableTracker:
         self.langevin_history = langevin_history
         self.langevin_history_full = langevin_history_full
         self.const_param = const_param
-        self.init_history_size = 2*int(maximal_lt / sim_instance.history_grid_size)
         self.thermal_time = thermal_time
         self.auto_corr = auto_corr
         self.maximal_lt = maximal_lt
+        if history_grid_size == None: self.history_grid_size = 2*self.auto_corr 
+        else : self.history_grid_size = history_grid_size
+        
         self.dtype = dtype
+        self.init_history_size = 2*int(maximal_lt / self.history_grid_size)
         for key, val in const_param.items(): self.__setattr__(key, val)
         self.__dict__['_sim_instance'] = sim_instance
 
@@ -184,7 +190,6 @@ class ObservableTracker:
                              self.result, self.rolling_mean, self.rolling_sqr_mean_real, self.rolling_sqr_mean_imag, self.rolling_sqr_mean_cross, self.counter)
 
         if self.langevin_history:
-
             my_act_loop(update_history_kernel, self.equilibrated_trajs, self.trajs, self.history_counter, 
                                  self.history_result, self.history_meas_times, self.meas_time, self.result, self.history_grid_size)
             
