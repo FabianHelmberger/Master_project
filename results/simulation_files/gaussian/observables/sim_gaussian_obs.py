@@ -19,6 +19,7 @@ from simulation.gpu_handler import GPU_handler
 from src.obs_kernels import (
     n_moment_kernel, 
     dse_n_moment_kernel,
+    abs_drift
 )
 
 import src.scal as scal
@@ -28,6 +29,7 @@ from src.numba_target import (
 )
 from src.utils import (
     update_histogram_complex, 
+    update_histogram_real,
     calculate_stats_complex,
     gaussian_modified_density_drift_kernel
 )
@@ -64,9 +66,12 @@ def run_sim(params):
 
     bins_p = params["bins_p"]  # Number of p bins
     hist_p = np.zeros((bins_p, bins_p), dtype=scal.SCAL_TYPE_REAL)
+    bins_u = params["bins_u"]  # Number of p bins
+    hist_u = np.zeros(bins_u, dtype=scal.SCAL_TYPE_REAL)
     
     if use_cuda:
         hist_p = cuda.to_device(hist_p)
+        hist_u = cuda.to_device(hist_u)
         gpu_handler = GPU_handler(sim)
         gpu_handler.to_device()
 
@@ -78,7 +83,7 @@ def run_sim(params):
     
     sim.register_observable('dse_1_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 1}, langevin_history=False, thermal_time=10, auto_corr=2, maximal_lt=stop_lt)
     sim.register_observable('dse_3_moment', obs_kernel=dse_n_moment_kernel, const_param={'order': 3}, langevin_history=False, thermal_time=10, auto_corr=2, maximal_lt=stop_lt)
-    # sim.register_observable('abs_drift', obs_kernel=abs_drift, langevin_history=False, thermal_time=10, auto_corr=2, maximal_lt=stop_lt)
+    sim.register_observable('abs_drift', obs_kernel=abs_drift, langevin_history=False, thermal_time=10, auto_corr=2, maximal_lt=stop_lt)
     
     # run the sim,
     import cupy as cp
@@ -94,7 +99,9 @@ def run_sim(params):
 
             # update histograms
             p_tracker = sim.trackers["1_moment"]
+            u_tracker = sim.trackers["abs_drift"]
             my_act_parallel_loop(update_histogram_complex, p_tracker.equilibrated_trajs, params["trajs"], p_tracker.result, hist_p, params["bins_p"], params["p_min_real"], params["p_max_real"], params["p_min_imag"], params["p_max_imag"])
+            my_act_parallel_loop(update_histogram_real, u_tracker.equilibrated_trajs, params["trajs"], u_tracker.result, hist_p, params["bins_u"], params["u_min"], params["u_max"])
             if use_cuda: cuda.synchronize()
     
     sim.finish()
@@ -151,12 +158,15 @@ def run_sim(params):
             npz_filename = f"{param_key}_{name}.npz"
             npz_path = os.path.join(base_path, npz_filename)
             np.savez(npz_path, result=res, meas_times=lt)
-
             print(f"Saved NPZ: {npz_path}")
     
 
 
     npy_filename = f"{param_key}_hist_p.npy"
+    npy_path = os.path.join(base_path, npy_filename)
+    np.save(npy_path, hist_p)
+
+    npy_filename = f"{param_key}_hist_u.npy"
     npy_path = os.path.join(base_path, npy_filename)
     np.save(npy_path, hist_p)
 
@@ -180,48 +190,64 @@ parameters = {
         "p_max_real": 10,
         "p_min_imag": -10,
         "p_max_imag": 10,
+        "u_min": 0,
+        "u_max": int(1e4),
+        "bins_u": int(1e4),
         "mean_dS_max": 50,
         "stop_lt": 100
     }
 
 
-SIGMAS = [-1+4j, 1+1j, -1+2j, 1+2j, -1+3j, 1+3j, -1+4j, 1+4j]
-MAX_LTS = [50, 60, 70]
-LAMBDAS = [1,2]
 
 import argparse
-import itertools
-# Generate all possible parameter combinations
-param_permutations = list(itertools.product(SIGMAS, LAMBDAS, MAX_LTS))
-
-
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--slurm_idx", type=int, required=True)
 args = parser.parse_args()
 
 
-###############################################################################################
-###############################################################################################
-###############################################################################################
-###############################################################################################
-sigma = -1+1j
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 2.88888
-crit_r = 3.906250
+SIGMAS = [-1+1j, -1+2j, -1+3j, -1+4j]
+PULLBACKS = [3.906250, 6.4375, 12.265625, 19.140625]
+MASS_MODS = [2.88888, 1.425, 1.111111, 1.222222]
 
+# choose sigma and mass mod
+sigma_idx = args.slurm_idx//4
+sigma = SIGMAS[sigma_idx]
+mass_modification = MASS_MODS[sigma_idx]
+parameters["sigma_abs"] = np.abs(SIGMAS[sigma_idx])
+parameters["sigma_phase"] = np.angle(SIGMAS[sigma_idx])
+parameters["mass_modification"] = mass_modification
+
+crit_r = PULLBACKS[sigma_idx]
 pullbacks = [crit_r/2, crit_r-1, crit_r+1, crit_r*2]
-parameters["pullback"] =  pullbacks[args.slurm_idx]
+parameters["pullback"] =  pullbacks[args.slurm_idx%4]
 
 for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
     parameters["dt"] = dt
     for key, value in parameters.items():
         print(key, "->", value)
     run_sim(parameters)
+
+# ###############################################################################################
+# ###############################################################################################
+# ###############################################################################################
+# ###############################################################################################
+# sigma = -1+1j
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 2.88888
+# crit_r = 3.906250
+
+# pullbacks = [crit_r/2, crit_r-1, crit_r+1, crit_r*2]
+# parameters["pullback"] =  pullbacks[args.slurm_idx]
+
+# for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
+#     parameters["dt"] = dt
+#     for key, value in parameters.items():
+#         print(key, "->", value)
+#     run_sim(parameters)
     
-###############################################################################################
+# ###############################################################################################
 # sigma = -1+2j
 # parameters["sigma_abs"] = np.abs(sigma)
 # parameters["sigma_phase"] = np.angle(sigma)
