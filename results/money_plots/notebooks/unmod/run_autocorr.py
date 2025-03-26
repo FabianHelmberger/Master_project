@@ -116,21 +116,21 @@ def run_sim(dt, maximal_lt, sigma, interaction, auto_corr=None, thermal_time=Non
 
 # Define parameter values
 SIGMAS = [-1+1j, 1+1j, -1+2j, 1+2j, -1+3j, 1+3j, -1+4j, 1+4j]
-DTS = [1e-2, 5e-3]
 MAX_LTS = [50, 60, 70]
-
+LAMBDAS = [1,2]
 
 import argparse
 import itertools
 # Generate all possible parameter combinations
-param_permutations = list(itertools.product(SIGMAS, DTS, MAX_LTS))
+param_permutations = list(itertools.product(SIGMAS, LAMBDAS, MAX_LTS))
 
 import copy
 def main(slurm_idx):
-    sigma, dt, max_lt = param_permutations[slurm_idx]
+    dt = 5e-4
+    sigma, interaction, max_lt = param_permutations[slurm_idx]
     # run simulation
 
-    sim = run_sim(dt, max_lt, sigma = sigma, interaction=2, auto_corr=dt, thermal_time = 0)
+    sim = run_sim(dt, max_lt, sigma = sigma, interaction=interaction, auto_corr=dt, thermal_time = 0)
 
     tr = sim.trackers["2_moment"]
     for name, tr in sim.trackers.items():
