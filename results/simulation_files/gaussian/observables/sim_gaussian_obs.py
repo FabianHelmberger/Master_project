@@ -184,6 +184,18 @@ parameters = {
         "stop_lt": 100
     }
 
+
+SIGMAS = [-1+4j, 1+1j, -1+2j, 1+2j, -1+3j, 1+3j, -1+4j, 1+4j]
+MAX_LTS = [50, 60, 70]
+LAMBDAS = [1,2]
+
+import argparse
+import itertools
+# Generate all possible parameter combinations
+param_permutations = list(itertools.product(SIGMAS, LAMBDAS, MAX_LTS))
+
+
+
 ###############################################################################################
 ###############################################################################################
 ###############################################################################################
@@ -208,7 +220,8 @@ parameters["sigma_phase"] = np.angle(sigma)
 parameters["mass_modification"] = 1.425
 crit_r = 6.4375
 
-for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
+# for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
+for pullback in [crit_r/2]:
     parameters["pullback"] =  pullback
 
     for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
@@ -216,34 +229,34 @@ for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
         for key, value in parameters.items():
             print(key, "->", value)
         run_sim(parameters)
-###############################################################################################
-sigma = -1+3j
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1.111111
-crit_r = 12.265625 
+# ###############################################################################################
+# sigma = -1+3j
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1.111111
+# crit_r = 12.265625 
 
-for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
-    parameters["pullback"] =  pullback
+# for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
+#     parameters["pullback"] =  pullback
 
-    for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
-        parameters["dt"] = dt
-        for key, value in parameters.items():
-            print(key, "->", value)
-        run_sim(parameters)
-###############################################################################################
-sigma = -1+4j
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1.222222
-crit_r = 19.140625
+#     for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
+#         parameters["dt"] = dt
+#         for key, value in parameters.items():
+#             print(key, "->", value)
+#         run_sim(parameters)
+# ###############################################################################################
+# sigma = -1+4j
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1.222222
+# crit_r = 19.140625
 
-for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
-    parameters["pullback"] =  pullback
+# for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
+#     parameters["pullback"] =  pullback
 
-    for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
-        parameters["dt"] = dt
-        for key, value in parameters.items():
-            print(key, "->", value)
-        run_sim(parameters)
-###############################################################################################
+#     for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
+#         parameters["dt"] = dt
+#         for key, value in parameters.items():
+#             print(key, "->", value)
+#         run_sim(parameters)
+# ###############################################################################################
