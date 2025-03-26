@@ -82,7 +82,7 @@ def autocorrelate(dat, tmax=10000):
 
 import tqdm
 def run_sim(dt, maximal_lt, sigma, interaction, auto_corr=None, thermal_time=None):
-    config = Config(trajs=int(1e4), dt = dt, ada_step = True, sigma = sigma, interaction = interaction)
+    config = Config(trajs=int(1e3), dt = dt, ada_step = True, sigma = sigma, interaction = interaction)
     sim = ComplexLangevinSimulation(config)
     if auto_corr == None: auto_corr = dt
     if thermal_time == None: thermal_time = 0
@@ -116,13 +116,15 @@ def run_sim(dt, maximal_lt, sigma, interaction, auto_corr=None, thermal_time=Non
 
 # Define parameter values
 SIGMAS = [-1+1j, 1+1j, -1+2j, 1+2j, -1+3j, 1+3j, -1+4j, 1+4j]
-MAX_LTS = [50, 60, 70]
+MAX_LTS = [20, 60, 70]
 LAMBDAS = [1,2]
 
 import argparse
 import itertools
 # Generate all possible parameter combinations
 param_permutations = list(itertools.product(SIGMAS, LAMBDAS, MAX_LTS))
+
+from joblib import Parallel, delayed
 
 import copy
 def main(slurm_idx):
@@ -143,20 +145,53 @@ def main(slurm_idx):
             acfs = []
             lts = []
             dats = []
-            for traj_idx in tqdm.tqdm(range(sim.trajs)):
-                # fetch traj data and langevin measure times
+
+            # for traj_idx in tqdm.tqdm(range(sim.trajs)):
+            #     # fetch traj data and langevin measure times
+            #     this_res = part(res)[:, traj_idx]
+            #     this_lt = lt[:, traj_idx]
+
+            #     # remove nans
+            #     this_res = this_res[~np.isnan(this_res)]
+            #     this_lt = this_lt[~np.isnan(this_lt)]
+
+            #     # calculate acf
+            #     this_acf = autocorrelate(this_res, tmax=len(this_res))
+            #     acfs.append(this_acf)
+            #     lts.append(this_lt)
+            #     dats.append(this_res)
+
+            res = copy.deepcopy(tr.history_result_full)
+            lt = copy.deepcopy(tr.history_meas_times_full)
+
+            # Prepare lists to store results
+            acfs = [None] * sim.trajs
+            lts = [None] * sim.trajs
+            dats = [None] * sim.trajs
+
+            def process_trajectory(traj_idx):
+                """Process a single trajectory: clean data and compute ACF."""
                 this_res = part(res)[:, traj_idx]
                 this_lt = lt[:, traj_idx]
 
-                # remove nans
-                this_res = this_res[~np.isnan(this_res)]
-                this_lt = this_lt[~np.isnan(this_lt)]
+                # Remove NaNs
+                valid_mask = ~np.isnan(this_res)
+                this_res = this_res[valid_mask]
+                this_lt = this_lt[valid_mask]
 
-                # calculate acf
+                # Compute ACF
                 this_acf = autocorrelate(this_res, tmax=len(this_res))
-                acfs.append(this_acf)
-                lts.append(this_lt)
-                dats.append(this_res)
+
+                return traj_idx, this_acf, this_lt, this_res
+
+            # Run in parallel
+            results = Parallel(n_jobs=-1)(delayed(process_trajectory)(i) for i in tqdm.tqdm(range(sim.trajs)))
+
+            # Store results
+            for traj_idx, this_acf, this_lt, this_res in results:
+                acfs[traj_idx] = this_acf
+                lts[traj_idx] = this_lt
+                dats[traj_idx] = this_res
 
             # draw acfs individually
             for acf, lt in zip(acfs, lts):
