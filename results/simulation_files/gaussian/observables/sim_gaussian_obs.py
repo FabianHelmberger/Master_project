@@ -196,6 +196,12 @@ param_permutations = list(itertools.product(SIGMAS, LAMBDAS, MAX_LTS))
 
 
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--slurm_idx", type=int, required=True)
+args = parser.parse_args()
+
+
 ###############################################################################################
 ###############################################################################################
 ###############################################################################################
@@ -205,30 +211,32 @@ parameters["sigma_abs"] = np.abs(sigma)
 parameters["sigma_phase"] = np.angle(sigma)
 parameters["mass_modification"] = 2.88888
 crit_r = 3.906250
-for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
-    parameters["pullback"] =  pullback
 
-    for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
-        parameters["dt"] = dt
-        for key, value in parameters.items():
-            print(key, "->", value)
-        run_sim(parameters)
+pullbacks = [crit_r/2, crit_r-1, crit_r+1, crit_r*2]
+parameters["pullback"] =  pullbacks[args.slurm_idx]
+
+for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
+    parameters["dt"] = dt
+    for key, value in parameters.items():
+        print(key, "->", value)
+    run_sim(parameters)
+    
 ###############################################################################################
-sigma = -1+2j
-parameters["sigma_abs"] = np.abs(sigma)
-parameters["sigma_phase"] = np.angle(sigma)
-parameters["mass_modification"] = 1.425
-crit_r = 6.4375
+# sigma = -1+2j
+# parameters["sigma_abs"] = np.abs(sigma)
+# parameters["sigma_phase"] = np.angle(sigma)
+# parameters["mass_modification"] = 1.425
+# crit_r = 6.4375
 
-# for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
-for pullback in [crit_r/2]:
-    parameters["pullback"] =  pullback
+# # for pullback in [crit_r/2, crit_r-1, crit_r+1, crit_r*2]:
+# for pullback in [crit_r/2]:
+#     parameters["pullback"] =  pullback
 
-    for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
-        parameters["dt"] = dt
-        for key, value in parameters.items():
-            print(key, "->", value)
-        run_sim(parameters)
+#     for dt in [5e-3, 1e-3, 5e-4, 1e-4]:
+#         parameters["dt"] = dt
+#         for key, value in parameters.items():
+#             print(key, "->", value)
+#         run_sim(parameters)
 # ###############################################################################################
 # sigma = -1+3j
 # parameters["sigma_abs"] = np.abs(sigma)
