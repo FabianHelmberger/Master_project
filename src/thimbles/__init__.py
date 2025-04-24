@@ -1,12 +1,13 @@
-# src/thimbles/__init__.py
 from .drift import DriftModel
 from .sdflow import SDFlow
 from .critical import CriticalPointFinder
 from .analyzer import ThimbleAnalyzer
+from .scanner import ThimbleScanner
 
 __all__ = [
-    "DriftFunction",
+    "DriftModel",
     "SDFlow",
     "CriticalPointFinder",
     "ThimbleAnalyzer",
+    "ThimbleScanner",
 ]
