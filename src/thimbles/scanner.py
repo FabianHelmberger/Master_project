@@ -34,7 +34,7 @@ class ThimbleScanner:
 
     def run_scan(self):
         print(f"Scanning {len(self.param_grid)} parameter pairs...")
-        self.results = Parallel(n_jobs=self.n_jobs)(
+        self.results = Parallel(n_jobs=self.n_jobs, batch_size="auto")(
             delayed(self._compute_num)(pb, mm) for (mm, pb) in tqdm(self.param_grid, desc="Sweeping parameter space")
         )
         self.results = np.array(self.results).reshape((len(self.mass_mod_vals), len(self.pullback_vals)))
@@ -44,14 +44,19 @@ class ThimbleScanner:
             raise RuntimeError("Scan not yet run. Call `run_scan()` first.")
 
         plt.figure(figsize=(8, 6))
-        plt.imshow(self.results.T, aspect='auto', interpolation='nearest', origin='lower', cmap='viridis')
 
+        X, Y = np.meshgrid(self.mass_mod_vals, self.pullback_vals)
+        plt.pcolormesh(X, Y, self.results.T, shading='auto', cmap='viridis')
+
+        plt.xscale('log')
+        plt.yscale('log')
+        
         plt.xlabel('Mass Modification Values')
         plt.ylabel('Pullback Values')
         plt.title('Heatmap of Relevant Thimbles Count')
 
-        plt.xticks(np.arange(len(self.mass_mod_vals)), [f'{m:.2f}' for m in self.mass_mod_vals], rotation=90)
-        plt.yticks(np.arange(len(self.pullback_vals)), [f'{p:.2f}' for p in self.pullback_vals])
+        # plt.xticks(np.arange(len(self.mass_mod_vals)), [f'{m:.2f}' for m in self.mass_mod_vals], rotation=90)
+        # plt.yticks(np.arange(len(self.pullback_vals)), [f'{p:.2f}' for p in self.pullback_vals])
         plt.colorbar(label='Relevant Thimbles Count')
         plt.tight_layout()
         plt.show()

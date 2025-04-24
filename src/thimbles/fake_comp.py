@@ -10,8 +10,8 @@ def fake_computation(x, y):
     return x * y + os.getpid()  # Include process ID to observe parallelism
 
 def test_parallel_execution():
-    x_vals = np.linspace(1, 5, 5)
-    y_vals = np.linspace(1, 5, 5)
+    x_vals = np.linspace(100, 100, 100)
+    y_vals = np.linspace(100, 100, 100)
     grid = list(product(x_vals, y_vals))
 
     print(f"Running test on {len(grid)} parameter pairs using joblib...")
