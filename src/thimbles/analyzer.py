@@ -1,10 +1,10 @@
 # src/thimbles/analyzer.py
 import numpy as np
 from .sdflow import SDFlow
-from .drift import DriftFunction
+from .drift import DriftModel
 
 class ThimbleAnalyzer:
-    def __init__(self, drift_fn: DriftFunction, steps=200000, nudge_amplitude=0.01, num_nudges=16):
+    def __init__(self, drift_fn: DriftModel, steps=200000, nudge_amplitude=0.01, num_nudges=16):
         self.drift_fn = drift_fn
         self.steps = steps
         self.nudge_amplitude = nudge_amplitude

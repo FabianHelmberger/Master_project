@@ -1,10 +1,10 @@
 
 # src/thimbles/sdflow.py
 import numpy as np
-from .drift import DriftFunction
+from .drift import DriftModel
 
 class SDFlow:
-    def __init__(self, drift_fn: DriftFunction, steps=100, eps=1e-3, max_abs_r=10., bound=1e-3, dual=False):
+    def __init__(self, drift_fn: DriftModel, steps=100, eps=1e-3, max_abs_r=10., bound=1e-3, dual=False):
         self.drift_fn = drift_fn
         self.steps = steps
         self.eps = eps

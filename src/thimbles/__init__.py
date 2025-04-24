@@ -1,5 +1,5 @@
 # src/thimbles/__init__.py
-from .drift import DriftFunction
+from .drift import DriftModel
 from .sdflow import SDFlow
 from .critical import CriticalPointFinder
 from .analyzer import ThimbleAnalyzer
