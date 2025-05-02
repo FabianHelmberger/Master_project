@@ -4,19 +4,20 @@ from scipy.optimize import newton
 from .drift import DriftModel
 
 class CriticalPointFinder:
-    def __init__(self, drift_fn: DriftModel, x_range=[-5, 5], y_range=[-5, 5], x_n=50, y_n=50):
-        self.drift_fn = drift_fn
+    def __init__(self, dm: DriftModel, x_range=[-5, 5], y_range=[-5, 5], x_n=50, y_n=50):
+        self.dm = dm
         self.x_range = x_range
         self.y_range = y_range
         self.x_n = x_n
         self.y_n = y_n
+        self.critical_points = None
 
     def find(self) -> np.ndarray:
-        analytic = self.drift_fn.critical_points()
+        analytic = self.dm.critical_points()
         if analytic is not None:
             return analytic
 
-        drift = lambda z: self.drift_fn.evaluate(z)
+        drift = lambda z: self.dm.evaluate(z)
         x_vals = np.linspace(*self.x_range, self.x_n)
         y_vals = np.linspace(*self.y_range, self.y_n)
         X, Y = np.meshgrid(x_vals, y_vals)
@@ -32,4 +33,5 @@ class CriticalPointFinder:
                     pass
 
         points = np.array(np.unique(np.round(points, 8)))
+        self.critical_points = points
         return points
