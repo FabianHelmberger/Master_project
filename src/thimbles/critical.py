@@ -4,7 +4,7 @@ from scipy.optimize import newton
 from .drift import DriftModel
 
 class CriticalPointFinder:
-    def __init__(self, dm: DriftModel, x_range=[-5, 5], y_range=[-5, 5], x_n=50, y_n=50):
+    def __init__(self, dm: DriftModel, x_range=[-5, 5], y_range=[-5, 5], x_n=200, y_n=200):
         self.dm = dm
         self.x_range = x_range
         self.y_range = y_range

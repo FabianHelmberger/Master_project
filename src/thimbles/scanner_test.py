@@ -28,8 +28,8 @@ def make_mod_drift(sigma, lamb, pullback, mass_modification):
 
     return drift
 
-mass_mod_vals = np.logspace(np.log10(0.6), np.log10(4.0), 20)
-pullback_vals = np.logspace(np.log10(4.0), np.log10(80.0), 20)
+mass_mod_vals = np.logspace(np.log10(0.6), np.log10(4.0), 10)
+pullback_vals = np.logspace(np.log10(4.0), np.log10(80.0), 10)
 
 scanner = ThimbleScanner(
     make_drift_fn=make_mod_drift,
@@ -39,5 +39,7 @@ scanner = ThimbleScanner(
     lamb=2.0,
     steps=20000  # or whatever you prefer
 )
-scanner.run_scan()
-scanner.plot_results()
+scanner.plot_thimble_flows(pullback=20.0, mass_mod=1.0)
+
+# scanner.run_scan()
+# scanner.plot_results()
